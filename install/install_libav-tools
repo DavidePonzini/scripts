@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ `whoami` != "root" ]; then
+	echo "Need to be root." >&2
+	exit 250
+fi
+
+apt-get install libav-tools -y
+
+exit 0

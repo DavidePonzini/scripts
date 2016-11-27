@@ -1,0 +1,26 @@
+#!/bin/bash
+if [ `whoami` != 'root' ]; then
+	echo "Need to be root" >&2
+	exit 250
+fi
+
+
+
+# Try adding the apt repository
+add-apt-repository ppa:webupd8team/sublime-text-3
+
+
+if [ $? == '0' ]; then
+# We added the repository successfully, continue installing through apt-get
+	set -e
+	apt-get update
+	apt-get install sublime-text-installer
+else
+# We couldn't add the repository, install it manually
+	set -e
+	cd /tmp/
+	wget -c http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
+	dpkg -i sublime-text_build-3083_amd64.deb
+fi
+
+exit 0

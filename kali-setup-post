@@ -1,0 +1,38 @@
+#!/bin/bash
+if [ `whoami` != 'root' ]; then
+	echo "Need to be root." >&2
+	exit 250
+fi
+
+# Update repositories
+	# If this command doesn't succeed, there's no point in continuing
+	set -e
+apt-get update
+	# Remove "e" flag to allow successive programs to fail
+	set +e
+
+# Install programs
+/functions/install_ssh.sh
+/functions/install_proxychains.sh
+/functions/install_youtube-dl.sh
+/functions/install_libav-tools.sh
+apt-get install chkconfig gedit transmission-gtk geoip-bin -y
+
+# Remove gdm3 from auto-start
+chkconfig --del gdm3
+
+# Configure Metasploit
+service postgresql start
+service metasploit start
+
+# Remove password reset at start-up
+replace "usermod -p 'X014elvznJq7E' root" "#usermod -p 'X014elvznJq7E' root" -- /lib/live/config/0031-root-password
+
+# Remove autologin at start-up
+#replace " -f root" "" -- /etc/inittab
+
+# Remove motd
+> /etc/motd
+echo -e "\n\nRemember to edit /etc/init.d/motd\t(look for /run/motd.dynamic)\n\n"
+
+exit 0

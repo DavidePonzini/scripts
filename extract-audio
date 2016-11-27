@@ -1,0 +1,49 @@
+#!/bin/bash -e
+
+if [ -z "$1" -o -z "$2" ]; then
+	echo	"Usage:" >&2
+	echo -e "\t"	"$0 <url> <name> [<format>]" >&2
+	exit 200
+fi
+
+#=======================================
+
+URL="$1"
+NAME="$2"
+
+if [ -z "$3" ]; then
+	echo "Format not specified, using mp3." >&2
+	FORMAT='mp3'
+else
+	FORMAT="$3"
+fi
+
+CURR_DIR=`pwd`
+TMP_DIR=`mktemp -d`
+
+### DEBUG ###
+#	echo "Temporary directory: $TMP_DIR" >&2
+#	echo "File name will be: $NAME.$FORMAT" >&2
+#	echo
+### DEBUG ###
+
+#=======================================
+
+# Move to temporary folder
+	cd $TMP_DIR
+# Download video
+	youtube-dl $URL
+# Extract audio
+	avconv -i * -vn -f "$FORMAT" "$NAME.$FORMAT"
+# Set tags
+	/functions/mp3-set-tags "$NAME.$FORMAT"
+# Move file
+	mv -v "$NAME.$FORMAT" $CURR_DIR
+
+# Return to original folder
+	cd $CURR_DIR
+# Clean up
+	rm -f $TMP_DIR/*
+	rmdir $TMP_DIR
+
+exit 0

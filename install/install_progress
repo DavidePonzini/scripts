@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+if [ `whoami` != "root" ]; then
+	echo "Need to be root." >&2
+	exit 250
+fi
+
+cd /tmp/
+git clone http://github.com/Xfennec/progress
+apt-get install libncurses5-dev -y
+cd progress/
+make && make install
+
+exit 0

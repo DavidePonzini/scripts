@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+SRV=($@)
+SRV_NO=`expr ${#SRV[@]} - 2`
+
+# check if there are enough arguments
+if [ $SRV_NO -lt 0 ]; then
+	echo "Not enough arguments." >&2
+	exit 200
+fi
+
+COMM=${SRV[`expr $SRV_NO + 1`]}
+
+
+
+for i in `seq 0 $SRV_NO`; do
+	service ${SRV[i]} $COMM
+done
+
+
+exit 0

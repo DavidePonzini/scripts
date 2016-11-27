@@ -1,0 +1,20 @@
+#!/bin/bash
+if [ `whoami` != root ]; then
+	echo "Need to be root." >&2
+	exit 250
+fi
+
+folder_name=".proxychains_files"
+
+# Install proxychains, tor and privoxy
+apt-get install proxychains tor privoxy -y
+
+# Copy configuration files
+cp -v $folder_name/config /etc/privoxy/
+cp -v $folder_name/proxychains.conf /etc/
+
+# Restart services
+service tor restart
+service privoxy restart
+
+exit 0

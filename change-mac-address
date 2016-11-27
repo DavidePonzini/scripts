@@ -1,0 +1,28 @@
+#!/bin/bash -e
+if [ -z "$1" ]; then
+	echo 	"Usage:" >&2
+	echo -e "\t"	"$0 <interface>" >&2
+	exit 200
+fi
+
+interface=$1
+net = "network-manager"
+service $net status > /dev/null
+net_st=$?
+
+# bring down interface
+	if [ $net_st == 0 ]; then
+		service $net stop
+	fi
+	ifconfig $interface down
+
+# change mac address
+macchanger -A $interface
+
+# bring up interface
+	ifconfig $interface up
+	if [ $net_st == 0 ]; then
+		service $net start
+	fi
+
+exit 0

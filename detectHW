@@ -1,0 +1,61 @@
+#!/bin/bash -e
+
+
+if [ `whoami` != 'root' ]; then
+	echo "Need to be root." >&2
+	exit 250
+fi
+
+
+
+# Determines how the output is formatted
+FORMAT="\t%s\n"
+
+# Temporary file used by `print()`
+tmp=`mktemp`
+
+# Temporary file used by `lshw`
+HW=`mktemp`
+
+
+
+
+# Get relevant lines,
+#	remove formatting,
+#	print them according to $FORMAT
+function print
+{
+	grep "$1" $HW > $tmp
+
+	while read line; do
+		line=`echo $line`
+		printf $FORMAT "${line#*$1 }"
+	done < $tmp
+}
+
+
+
+
+
+# Save a list of current hardware to a temporary file
+lshw -short > $HW
+
+# Print relevant information
+echo "Processor:"
+	print "processor"
+echo "Memory:"
+	print "memory"
+echo "Graphic Cards:"
+	print "display"
+echo "Network:"
+	print "network"
+echo "Disks:"
+	print "disk"
+echo "Volumes:"
+	print "volume"
+
+# remove temporary files
+rm -f $TMP $HW
+
+
+exit 0

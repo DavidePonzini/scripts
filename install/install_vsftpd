@@ -1,0 +1,13 @@
+#!/bin/bash
+if [ `whoami` != 'root' ]; then
+	echo "Need to be root" >&2
+	exit 250
+fi
+
+# Install vsftpd
+apt-get install vsftpd -y
+
+# Allow root login
+replace '\^root\$' '# root' -- /etc/ftpusers
+
+exit 0

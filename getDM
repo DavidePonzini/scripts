@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+# Gets current Desktop Manager (DM)
+
+ps auxf | awk '{print $11}' | \grep -e "^.*dm" -e "^.*slim$ |"
+
+exit 0

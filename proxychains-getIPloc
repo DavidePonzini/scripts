@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+
+# get IP address
+IPhtml=`proxychains curl -s checkip.dyndns.org`
+IP=`echo $IPhtml | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'`
+
+# print IP address and location
+echo IP: $IP >&2
+geoiplookup $IP | head -n 2
+
+# retry with a different proxy
+echo 'Press ENTER to retry, Ctrl+C to exit'; trap "exit 0" INT
+read tmp
+service tor restart
+sleep 1
+$0
+
+exit 0
