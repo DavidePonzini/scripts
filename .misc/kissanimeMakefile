@@ -1,7 +1,0 @@
-START = 00
-
-split:
-	split -a 2 -l 40 --numeric-suffixes=$(START) in in
-	ls -1 in??
-clean:
-	rm -fv in??
