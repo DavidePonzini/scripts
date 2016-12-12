@@ -1,3 +1,5 @@
+#!/bin/bash -e
+
 # Using john the ripper to brute-force a luks container
 startTime=$(date)
 if [ $(file $1 | grep -c "LUKS encrypted file") ]; then
