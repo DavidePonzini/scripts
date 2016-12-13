@@ -86,3 +86,4 @@ fi
 #    . /etc/bash_completion
 #fi
 
+source /home/dav/.rvm/scripts/rvm
