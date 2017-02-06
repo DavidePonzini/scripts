@@ -87,3 +87,5 @@ fi
 #fi
 
 source /home/dav/.rvm/scripts/rvm
+
+source /scripts/config/PS1

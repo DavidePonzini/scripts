@@ -1,4 +1,12 @@
 #!/bin/bash
+
+site='http://kissanime.ru'
+browser='firefox'
+
+url_file=
+out_file=
+
+
 if [ -z "$1" -o -z "$2" ]; then
 	echo -e "Usage:" >&2
 	echo -e "\t"	"$0 <url file> <out file>" >&2
@@ -17,20 +25,21 @@ fi
 
 clear
 # open firefox
-	firefox http://www.kissanime.com/ 2>/dev/null 1>/dev/null &
+	$browser $site 2>/dev/null 1>/dev/null &
 # wait for login
 	echo -n "Press Enter to begin... "
 	read
 # open out file
 	gnome-terminal			# open new terminal
+	sleep 1
 	xdotool type "nano $2"		# open file in nano
 	xdotool key Return
-	xdotool key Down		# skip first line
+#	xdotool key Down		# skip first line
 
 
 while read url; do
 	# open tab
-		firefox "$url" 2> /dev/null
+		$browser "$url" 2> /dev/null
 		sleep 10
 
 	# search url
@@ -57,7 +66,7 @@ while read url; do
 		xdotool key ctrl+shift+v
 		sleep 0.5
 	# get ready for writing the next line
-		xdotool key Down Down
+		xdotool key Down #Down
 		sleep 0.5
 
 	# get back to firefox
@@ -68,8 +77,12 @@ while read url; do
 		sleep 0.5
 done < $1
 
-# get back to nano, save and close it
+
+# get back to nano	### [, save and close it]
 	xdotool key alt+Tab
+exit 0
+
+
 	xdotool key ctrl+o Return
 	xdotool key ctrl+x
 	sleep 0.2
