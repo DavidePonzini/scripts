@@ -42,7 +42,9 @@ fi
 PS1='\
 \[$(colour "00;00m")\]${debian_chroot:+($debian_chroot)}\
 \[$(colour "$priv" )\]\u@\h\
-\[$(colour "01;35m")\] (`local_ip`)\
 \[$(colour "00;00m")\]:\
-\[$(colour "01;36m")\] \w\
+\[$(colour "01;36m")\]\w\
 \[$(colour "00;00m")\]\$ '
+
+# \[$(colour "01;35m")\] (`local_ip`)\
+
