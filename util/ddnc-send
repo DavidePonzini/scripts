@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+input=$1
+host=$2
+port=$3
+
+dd if=$input bs=900K | bzip2 -9 | nc -v $host $port

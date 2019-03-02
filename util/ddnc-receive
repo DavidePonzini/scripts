@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+output=$1
+port=$2
+
+nc -vl $port | bzip2 -d | dd of=$output bs=900K
