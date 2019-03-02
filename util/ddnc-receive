@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-output=$1
-port=$2
+port=$1
 
-nc -vl $port | bzip2 -d | dd of=$output bs=900K
+nc -vl $port | bzip2 -d | dd bs=900K status=progress

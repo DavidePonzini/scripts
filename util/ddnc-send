@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
-input=$1
-host=$2
-port=$3
+host=$1
+port=$2
 
-dd if=$input bs=900K | bzip2 -9 | nc -v $host $port
+dd bs=900K status=progress | bzip2 -9 | nc -v $host $port
