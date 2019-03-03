@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while read url; do
+	transmission-cli "$url" -w ./ & disown
+done
