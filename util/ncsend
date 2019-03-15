@@ -1,0 +1,20 @@
+#!/bin/bash -e
+
+
+if [ $# -lt 1 ]; then
+	echo "Usage: $0 <host> [port]" >&2
+	exit 1
+fi
+
+host=$1
+
+
+if [ -z "$2" ]; then
+	echo -e "\033[32m[WARN]\033[0m Setting port to 41144" >&2
+	port=41144
+else
+	port=$2
+fi
+
+
+dd bs=900K status=progress | bzip2 -9 | nc -v $host $port
