@@ -24,3 +24,5 @@ for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' '1;32m' '  33
 done
 
 echo
+
+echo -e 'Example: \033[01;32mGREEN\033[m is \\033[01;32m'
