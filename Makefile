@@ -4,7 +4,6 @@ update:
 	apt dist-upgrade -y
 	apt autoremove -y
 	apt autoclean
-
 npm:
 	apt install npm -y
 ipython3:
@@ -13,8 +12,8 @@ ssh:
 	apt install openssh-client openssh-server -y
 	service ssh start
 	ssh-keygen -t rsa
-
 svftpd:
 	apt install vsftpd -y
 	replace '\^root\$' '# root' -- /etc/ftpusers	# Allow root login
-
+transmission-cli:
+	apt install transmission-cli -y
