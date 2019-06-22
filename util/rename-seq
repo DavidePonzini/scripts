@@ -1,0 +1,10 @@
+#!/bin/bash
+
+i=1
+
+prefix=$1
+
+for f in `ls -v`; do
+	mv $f ${prefix}_${i}
+	((i++))
+done
