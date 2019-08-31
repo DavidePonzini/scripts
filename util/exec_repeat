@@ -3,6 +3,16 @@
 USAGE="$0 <command> [delay ...]"
 
 
+run_command() {
+	$command
+	ret=$?
+
+	if [[ ret -ne 0 ]]; then
+		echo "Command exit status: $ret"
+		exit $ret
+	fi
+}
+
 if [ "$#" == "0" ]; then
 	echo "$USAGE"
 	exit 1
@@ -12,16 +22,11 @@ command="$1"
 shift
 
 while (( "$#" )); do
-	"$command"
-	ret=$?
-
-	if [[ ret -ne 0 ]]; then
-		echo "Command exit status: $ret"
-		exit $ret
-	fi
-
+	run_command
 	echo "Sleeping for $1..."
 	sleep "$1"
 
 	shift
 done
+
+run_command
