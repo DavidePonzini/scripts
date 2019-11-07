@@ -1,0 +1,32 @@
+#!/bin/bash
+
+USAGE="$0 <command> [delay ...]"
+
+
+run_command() {
+	$command
+	ret=$?
+
+	if [[ ret -ne 0 ]]; then
+		echo "Command exit status: $ret"
+		exit $ret
+	fi
+}
+
+if [ "$#" == "0" ]; then
+	echo "$USAGE"
+	exit 1
+fi
+
+command="$1"
+shift
+
+while (( "$#" )); do
+	run_command
+	echo "Sleeping for $1..."
+	sleep "$1"
+
+	shift
+done
+
+run_command
