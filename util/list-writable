@@ -1,5 +1,11 @@
 #!/bin/bash
 
+files=()
+
 for f in *; do
-	[ -f $f ] && [ -w $f ] && echo $f
+	if [ -f $f ] && [ -w $f ]; then
+		files+=("$f")
+	fi
 done
+
+ls -l ${files[@]}
