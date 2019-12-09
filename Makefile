@@ -5,9 +5,8 @@ update:
 	apt autoremove -y
 	apt autoclean
 bash_conf:
-	rm ~/.bash_aliases
+	rm -f ~/.bash_aliases ~/.bashrc
 	ln /scripts/config/.bash_aliases ~/.bash_aliases
-	rm ~/.bashrc
 	ln /scripts/config/.bashrc ~/.bashrc
 npm:
 	apt install npm -y

@@ -2,12 +2,12 @@
 
 files=()
 
-for f in *; do
+for f in `ls -a $1`; do
 	if [ -f "$f" -a -w "$f" ]; then
 		files+=("$f")
 	fi
 done
 
 if [ ${#files[@]} -gt 0 ]; then
-	ls -l ${files[@]}
+	ls -lhv --color=auto --group-directories-first ${files[@]}
 fi
