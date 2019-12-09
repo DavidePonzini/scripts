@@ -3,9 +3,11 @@
 files=()
 
 for f in *; do
-	if [ -f $f ] && [ -w $f ]; then
+	if [ -f "$f" -a -w "$f" ]; then
 		files+=("$f")
 	fi
 done
 
-ls -l ${files[@]}
+if [ ${#files[@]} -gt 0 ]; then
+	ls -l ${files[@]}
+fi
