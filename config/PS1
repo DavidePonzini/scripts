@@ -40,6 +40,7 @@ fi
 
 # Set PS1
 PS1='\
+\[$(colour "01;30m")\]($SHLVL) \
 \[$(colour "00;00m")\]${debian_chroot:+($debian_chroot)}\
 \[$(colour "$priv" )\]\u@\h\
 \[$(colour "00;00m")\]:\
