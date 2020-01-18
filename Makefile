@@ -11,10 +11,7 @@ lid_close:
 	sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
 	systemctl restart systemd-logind.service
 bash_conf:
-	rm -f ~/.bash_aliases ~/.bashrc ~/.dircolors
-	ln -s /scripts/config/.bash_aliases ~/.bash_aliases
-	ln -s /scripts/config/.bashrc ~/.bashrc
-	ln -s /scripts/config/.dircolors ~/.dircolors
+	./config/setup_bash
 npm:
 	apt install npm -y
 ipython3:

@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+if [ -z "${1}" ]; then
+	DIR="$HOME"
+else
+	DIR="${1}"
+fi
+
+
+copy(){
+	rm -fv "${DIR}/${1}"
+	ln -sv "/script/config/${1}" "${DIR}/${1}"
+}
+
+
+copy .bash_aliases
+copy .bashrc
+copy .dircolors
+
