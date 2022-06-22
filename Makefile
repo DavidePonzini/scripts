@@ -16,6 +16,7 @@ npm:
 	apt install npm -y
 ipython3:
 	apt install ipython3 -y
+	apt install python3-pip -y
 ssh:
 	apt install openssh-client openssh-server -y
 	service ssh start
