@@ -1,9 +1,0 @@
-#/bin/bash
-
-if [ -z "${1}" ]; then
-	DIR="."
-else
-	DIR="${1}"
-fi
-
-find "${DIR}" -type f -print0 | xargs -0 egrep 'style([\s]+)?=' | grep -vf /scripts/ver/4-inline-style_exclude-patterns

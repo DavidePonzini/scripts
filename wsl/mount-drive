@@ -1,0 +1,11 @@
+#!/bin/bash
+
+USAGE="$0 <drive> <folder>"
+
+if [ "$#" == "0" ]; then
+	echo "$USAGE"
+	exit 1
+fi
+
+mkdir -p $2
+mount -t drvfs $1 $2
