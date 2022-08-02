@@ -87,6 +87,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # set PS1 to something more fancy
-source /scripts/config/PS1
+source /scripts/config/.PS1
 
 
