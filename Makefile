@@ -10,10 +10,6 @@ git_config:
 lid_close:
 	sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
 	systemctl restart systemd-logind.service
-bash_conf:
-	./config/setup_bash
-npm:
-	apt install npm -y
 ipython3:
 	apt install ipython3 -y
 	apt install python3-pip -y
