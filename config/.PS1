@@ -30,7 +30,7 @@ fi
 
 
 # Set prompt colour based on user privileges
-if [ $(whoami) == 'root' ]; then
+if [ $EUID -eq 0  ]; then
     priv='01;31m'    # Red
 elif [ ! -z "$(id | grep 'sudo')" ]; then
     priv='01;33m'    # Yellow
