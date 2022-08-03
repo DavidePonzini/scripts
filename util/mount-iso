@@ -1,19 +1,14 @@
 #!/bin/bash -e
 
-if [ "$#" -lt 1 ]; then
-	echo "$0 <iso-file> [offset]"
+if [ "$#" -lt 2 ]; then
+	echo "$0 <iso-file> <mount-dir> [offset]"
 	exit 1
 fi
 
-iso=$1
-
-if [ -z "$2" ];then
+if [ -z "$3" ];then
 	offset=0
 else
-	offset=$(expr 512 \* "$2")	# "*" must be escaped to avoid shell expansion
+	offset=$(expr 512 \* "$3")	# "*" must be escaped to avoid shell expansion
 fi
 
-dir=`mktemp -d`
-mount -o loop,offset=$offset "$iso" "$dir"
-
-echo "Mounted on: $dir"
+mount -o loop,offset=$offset "$1" "$2"
