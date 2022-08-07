@@ -4,5 +4,11 @@ git add .
 git status
 
 read -p 'Reason: ' r
+
+if [ -z "$r" ]; then
+	r="Quick commit - `date +%d%m%y`"
+	echo "Using default commit message: $r"
+fi
+
 git commit -m "$r"
 git push
