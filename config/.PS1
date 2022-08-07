@@ -1,15 +1,5 @@
 #!/bin/bash
 
-### IP ###
-#static_ip=`cat /config/IP`
-
-local_ip()
-{
-	ip_addr=`hostname -I | cut -d ' ' -f 2`
-	echo -n $ip_addr
-}
-
-
 ### COLOR ###
 color_prompt=yes
 
@@ -46,6 +36,3 @@ PS1='\
 \[$(colour "00;00m")\]:\
 \[$(colour "01;36m")\]\w\
 \[$(colour "00;00m")\]\$ '
-
-# \[$(colour "01;35m")\] (`local_ip`)\
-

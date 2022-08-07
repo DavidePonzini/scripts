@@ -25,4 +25,5 @@ done
 
 echo
 
-echo -e 'Example: \033[01;32mGREEN\033[m is \\033[01;32m'
+echo -e 'Example 1: \033[01;32mGREEN\033[m is \\033[01;32m'
+echo -e 'Example 2: \033[01;30;47mGRAY ON WHITE\033[m is \\033[01;30;47m'
