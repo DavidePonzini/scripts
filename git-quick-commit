@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+source /scripts/lib/colored-text
+
 if [ -z "$(git status --porcelain)" ]; then
 	echo 'Nothing to commit. Exiting.'
 	exit 0
@@ -8,12 +10,13 @@ fi
 git add .
 git status
 
-echo -ne '\033[01;34mReason:\033[m '
+_color_n $_TEXT_STYLE_NORMAL $_TEXT_COLOR_BLUE $_TEXT_BACKGROUND_NONE 'Reason: '
 read r
 
 if [ -z "$r" ]; then
 	r="Quick commit - `date +%d%m%y`"
-	echo -e "\033[33mUsing default commit message:\033[m $r"
+	_color_n $_TEXT_STYLE_NORMAL $_TEXT_COLOR_YELLOW $_TEXT_BACKGROUND_NONE "Using default commit message: "
+	_color_n $_TEXT_STYLE_ITALIC $_TEXT_COLOR_YELLOW $_TEXT_BACKGROUND_NONE "$r"
 fi
 
 git commit -m "$r"
