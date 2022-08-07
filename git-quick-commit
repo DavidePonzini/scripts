@@ -1,14 +1,15 @@
 #!/bin/bash -e
 
 if [ -z "$(git status --porcelain)" ]; then
-	echo 'Nothing to commit. Exiting'
+	echo 'Nothing to commit. Exiting.'
 	exit 0
 fi
 
 git add .
 git status
 
-read -p 'Reason: ' r
+echo -ne '\033[01;34mReason:\033[m '
+read r
 
 if [ -z "$r" ]; then
 	r="Quick commit - `date +%d%m%y`"
