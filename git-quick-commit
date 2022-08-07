@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-source /scripts/lib/colored-text
+source $SCRIPTS/lib/text-color
 
 if [ -z "$(git status --porcelain)" ]; then
 	echo 'Nothing to commit. Exiting.'

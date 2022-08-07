@@ -86,7 +86,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# set PS1 to something more fancy
-source /scripts/config/.PS1
 
+# set SCRIPTS environmental variable
+export SCRIPTS=/scripts
+
+# set PS1 to something more fancy
+source $SCRIPTS/config/.PS1
 
