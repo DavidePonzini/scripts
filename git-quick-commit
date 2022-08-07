@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+if [ -z "$(git status --porcelain)" ]; then
+	echo 'Nothing to commit. Exiting'
+	exit 0
+fi
+
 git add .
 git status
 
