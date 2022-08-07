@@ -15,3 +15,5 @@ import_terminal_profile:
 disable_lid_close:
 	sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
 	systemctl restart systemd-logind.service
+bios_local_time:
+	timedatectl set-local-rtc 1 --adjust-system-clock
