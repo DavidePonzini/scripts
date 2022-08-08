@@ -6,40 +6,57 @@ source ${SCRIPTS}/lib/text-color
 function _msg_usage() {
 	if [ "$#" -lt 1 ]; then
 		echo 'Usage: _msg_usage <message1> [message2] ...'
-		return
+		return 255
 	fi
 
-	_colored_text "Usage:" $_TEXT_STYLE_BOLD
+	_colored_text "Usage:" $_TEXT_STYLE_BOLD 1>&2
 
 	for m in "$@"; do
-		_colored_text "\t$m" $_TEXT_STYLE_ITALIC
+		_colored_text "\t$m" $_TEXT_STYLE_ITALIC 1>&2
 	done
 }
 
 function _msg_error() {
 	msg=${1:?Usage: _msg_error <message>}
 
-	_colored_text "$msg" $_TEXT_COLOR_RED
+	_colored_text "$msg" $_TEXT_COLOR_RED 1>&2
 }
 
 function _msg_warning() {
 	msg=${1:?Usage: _msg_warning <message>}
 
-	_colored_text "$msg" $_TEXT_COLOR_YELLOW
+	_colored_text "$msg" $_TEXT_COLOR_YELLOW 1>&2
 }
 
 function _msg_info() {
 	msg=${1:?Usage: _msg_info <message>}
 
-	_colored_text "$msg" $_TEXT_COLOR_CYAN
+	_colored_text "$msg" $_TEXT_COLOR_CYAN 1>&2
+}
+
+function _msg_ask() {
+	question=${1?Usage: _msg_ask <question>}
+
+	_text_color_reset 1>&2
+
+	_text_color_set $_TEXT_STYLE_BOLD $_TEXT_COLOR_BLUE 1>&2
+	echo -ne "${question}: " 1>&2
+
+	_text_color_reset 1>&2
+	_text_color_set $_TEXT_STYLE_ITALIC $_TEXT_COLOR_BLUE 1>&2
+	read answer
+
+	_text_color_reset 1>&2
+
+	echo "$answer"
 }
 
 function _msg_success() {
-	msg=${1:?Usage: _msg_success <message>}
+	msg=${1:?Usage: _msg_success <message>} 1>&2
 
 	_colored_text "$msg" $_TEXT_COLOR_GREEN
 }
 
 function _msg_done() {
-	_colored_text ' Done ' $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN
+	_colored_text ' Done ' $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN 1>&2
 }
