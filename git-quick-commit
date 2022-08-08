@@ -14,8 +14,7 @@ r=`_msg_ask 'Reason'`
 
 if [ -z "$r" ]; then
 	r="Quick commit - `date +%d%m%y`"
-	_colored_text_n $_TEXT_STYLE_NORMAL $_TEXT_COLOR_YELLOW $_TEXT_BACKGROUND_NONE "Using default commit message: "
-	_colored_text $_TEXT_STYLE_ITALIC $_TEXT_COLOR_YELLOW $_TEXT_BACKGROUND_NONE "$r"
+	_msg_warning "Using default commit message" "$r"
 fi
 
 git commit -m "$r"

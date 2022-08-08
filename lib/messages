@@ -5,42 +5,89 @@ source ${SCRIPTS}/lib/text-color
 
 function _msg_usage() {
 	if [ "$#" -lt 1 ]; then
-		echo 'Usage: _msg_usage <message1> [message2] ...'
+		_msg_usage '_msg_usage <message1> [message2] ...'
 		return 255
 	fi
 
 	_colored_text "Usage:" $_TEXT_STYLE_BOLD 1>&2
 
+	_text_color_set $_TEXT_STYLE_ITALIC 1>&2
 	for m in "$@"; do
-		_colored_text "\t$m" $_TEXT_STYLE_ITALIC 1>&2
+		echo -e "\t${m}" 1>&2
 	done
+	_text_color_reset 1>&2
 }
 
 function _msg_error() {
-	msg=${1:?Usage: _msg_error <message>}
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_error <message>' '_msg_error <title> <message>'
+		return 255
+	fi
 
-	_colored_text "$msg" $_TEXT_COLOR_RED 1>&2
+	if [ "$#" -lt 2 ]; then
+		_colored_text "$1" $_TEXT_COLOR_RED 1>&2
+	else
+		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
+		_colored_text "${2}" $_TEXT_COLOR_RED 1>&2
+	fi
 }
 
 function _msg_warning() {
-	msg=${1:?Usage: _msg_warning <message>}
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_warning <message>' '_msg_warning <title> <message>'
+		return 255
+	fi
 
-	_colored_text "$msg" $_TEXT_COLOR_YELLOW 1>&2
+	if [ "$#" -lt 2 ]; then
+		_colored_text "$1" $_TEXT_COLOR_YELLOW 1>&2
+	else
+		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
+		_colored_text "${2}" $_TEXT_COLOR_YELLOW 1>&2
+	fi
 }
 
 function _msg_info() {
-	msg=${1:?Usage: _msg_info <message>}
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_info <message>' '_msg_info <title> <message>'
+		return 255
+	fi
 
-	_colored_text "$msg" $_TEXT_COLOR_CYAN 1>&2
+	if [ "$#" -lt 2 ]; then
+		_colored_text "$1" $_TEXT_COLOR_CYAN 1>&2
+	else
+		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_CYAN 1>&2
+		_colored_text "${2}" $_TEXT_COLOR_CYAN 1>&2
+	fi
+}
+
+function _msg_success() {
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_success <message>' '_msg_success <title> <message>'
+		return 255
+	fi
+
+	if [ "$#" -lt 2 ]; then
+		_colored_text "$1" $_TEXT_COLOR_GREEN 1>&2
+	else
+		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_GREEN 1>&2
+		_colored_text "${2}" $_TEXT_COLOR_GREEN 1>&2
+	fi
+}
+
+function _msg_done() {
+	_colored_text ' Done ' $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN 1>&2
 }
 
 function _msg_ask() {
-	question=${1?Usage: _msg_ask <question>}
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_ask <question>'
+		return 255
+	fi
 
 	_text_color_reset 1>&2
 
 	_text_color_set $_TEXT_STYLE_BOLD $_TEXT_COLOR_BLUE 1>&2
-	echo -ne "${question}: " 1>&2
+	echo -ne "${1}: " 1>&2
 
 	_text_color_reset 1>&2
 	_text_color_set $_TEXT_STYLE_ITALIC $_TEXT_COLOR_BLUE 1>&2
@@ -49,14 +96,4 @@ function _msg_ask() {
 	_text_color_reset 1>&2
 
 	echo "$answer"
-}
-
-function _msg_success() {
-	msg=${1:?Usage: _msg_success <message>} 1>&2
-
-	_colored_text "$msg" $_TEXT_COLOR_GREEN
-}
-
-function _msg_done() {
-	_colored_text ' Done ' $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN 1>&2
 }
