@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-data=`grep 'psk=' /etc/NetworkManager/system-connections/*`
+data=`grep -H 'psk=' /etc/NetworkManager/system-connections/*`
 
 for line in $data; do
 	wifi=`echo $line | cut -d : -f 1 | cut -d / -f 5 | cut -d . -f 1`
