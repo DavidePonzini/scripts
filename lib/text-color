@@ -67,7 +67,7 @@ function _colored_text_n() {
 }
 
 function _colored_text() {
-	_colored_text_n $@
+	_colored_text_n "$@"
 
 	echo
 }
