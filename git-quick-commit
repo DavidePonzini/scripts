@@ -3,7 +3,7 @@
 source $SCRIPTS/lib/messages
 
 if [ -z "$(git status --porcelain)" ]; then
-	_msg_info 'Nothing to commit. Exiting.'
+	_msg_success 'Nothing to commit.'
 	exit 0
 fi
 
