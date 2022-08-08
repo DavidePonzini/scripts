@@ -9,37 +9,37 @@ function _msg_usage() {
 		return
 	fi
 
-	_colored_text $_TEXT_STYLE_BOLD '' '' "Usage:"
+	_colored_text "Usage:" $_TEXT_STYLE_BOLD
 
 	for m in "$@"; do
-		_colored_text $_TEXT_STYLE_ITALIC '' '' "\t$m"
+		_colored_text "\t$m" $_TEXT_STYLE_ITALIC
 	done
 }
 
 function _msg_error() {
 	msg=${1:?Usage: _msg_error <message>}
 
-	_colored_text '' $_TEXT_COLOR_RED '' "$text"
+	_colored_text "$msg" $_TEXT_COLOR_RED
 }
 
 function _msg_warning() {
 	msg=${1:?Usage: _msg_warning <message>}
 
-	_colored_text '' $_TEXT_COLOR_YELLOW '' "$text"
+	_colored_text "$msg" $_TEXT_COLOR_YELLOW
 }
 
 function _msg_info() {
 	msg=${1:?Usage: _msg_info <message>}
 
-	_colored_text '' $_TEXT_COLOR_CYAN '' "$text"
+	_colored_text "$msg" $_TEXT_COLOR_CYAN
 }
 
 function _msg_success() {
 	msg=${1:?Usage: _msg_success <message>}
 
-	_colored_text '' $_TEXT_COLOR_GREEN '' "$text"
+	_colored_text "$msg" $_TEXT_COLOR_GREEN
 }
 
 function _msg_done() {
-	_colored_text $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN ' Done '
+	_colored_text ' Done ' $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN
 }
