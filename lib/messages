@@ -1,0 +1,45 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/text-color
+
+
+function _msg_usage() {
+	if [ "$#" -lt 1 ]; then
+		echo 'Usage: _msg_usage <message1> [message2] ...'
+		return
+	fi
+
+	_colored_text $_TEXT_STYLE_BOLD '' '' "Usage:"
+
+	for m in "$@"; do
+		_colored_text $_TEXT_STYLE_ITALIC '' '' "\t$m"
+	done
+}
+
+function _msg_error() {
+	msg=${1:?Usage: _msg_error <message>}
+
+	_colored_text '' $_TEXT_COLOR_RED '' "$text"
+}
+
+function _msg_warning() {
+	msg=${1:?Usage: _msg_warning <message>}
+
+	_colored_text '' $_TEXT_COLOR_YELLOW '' "$text"
+}
+
+function _msg_info() {
+	msg=${1:?Usage: _msg_info <message>}
+
+	_colored_text '' $_TEXT_COLOR_CYAN '' "$text"
+}
+
+function _msg_success() {
+	msg=${1:?Usage: _msg_success <message>}
+
+	_colored_text '' $_TEXT_COLOR_GREEN '' "$text"
+}
+
+function _msg_done() {
+	_colored_text $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN ' Done '
+}
