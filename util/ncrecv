@@ -7,4 +7,4 @@ else
 	port=$1
 fi
 
-nc -vl $port | dd status=progress
+nc -vl $port | bunzip2 | dd status=progress
