@@ -10,20 +10,23 @@
 
 T='gYw'   # The test text
 
+echo
+
 echo -e 'Syntax: \\e[\e[1;31mSTYLE\e[0m;\e[1;32mCOLOR\e[0m;\e[1;33mBACKGROUND\e[0mm'
 echo
 
-echo -e '1m   \e[1mbold\e[0m'
-echo -e '2m   \e[2mdim\e[0m'
-echo -e '3m   \e[3mitalic\e[0m'
-echo -e '4m   \e[4munderline\e[0m'
-echo -e '4:2m \e[4:2mdouble underline\e[0m'
-echo -e '4:3m \e[4:3mcurly underline\e[0m'
-echo -e '5m   \e[5mblink\e[0m'
-echo -e '7m   \e[7mreverse\e[0m'
-echo -e '8m   \e[8minvisible\e[0m <- invisible (but copy-pasteable)'
-echo -e '9m   \e[9mstrikethrough\e[0m'
-echo -e '53   \e[53moverline\e[0m'
+echo -e 'm    \e[mnormal\e[m'
+echo -e '1m   \e[1mbold\e[m'
+echo -e '2m   \e[2mdim\e[m'
+echo -e '3m   \e[3mitalic\e[m'
+echo -e '4m   \e[4munderline\e[m'
+echo -e '4:2m \e[4:2mdouble underline\e[m'
+echo -e '4:3m \e[4:3mcurly underline\e[m'
+echo -e '5m   \e[5mblink\e[m'
+echo -e '7m   \e[7mreverse\e[m'
+echo -e '8m   \e[8minvisible\e[m <- invisible (but copy-pasteable)'
+echo -e '9m   \e[9mstrikethrough\e[m'
+echo -e '53m  \e[53moverline\e[m'
 echo
 
 echo "                 40m     41m     42m     43m     44m     45m     46m     47m"
@@ -40,10 +43,12 @@ done
 
 echo
 
-echo -e '\e[1mExample 1:\e[m \033[01;32mGREEN\033[m is \\033[01;32m'
-echo -e '\e[1mExample 2:\e[m \033[01;30;47mGRAY ON WHITE\033[m is \\033[01;30;47m'
-echo -e '\e[1mExample 3:\e[m \033[1m\033[5m\033[3;33mBOLD BLINKING ITALIC YELLOW\033[m is \\033[1m\\033[5m\\033[3;33m'
+echo -e '\e[1mExample 1:\e[m             \e[1;32mBOLD GREEN\e[m is \\e[1;32m'
+echo -e '\e[1mExample 2:\e[m          \e[30;47mGRAY ON WHITE\e[m is \\e[30;47m'
+echo -e '\e[1mExample 3:\e[m \e[5m\e[3;33mBLINKING ITALIC YELLOW\e[m is \\e[5m\\e[3;33m'
 
 echo
 echo -e '\e[1mNote 1:\e[m \e[7m\\e[\e[m and \e[7m\\033[\e[m are equivalent'
 echo -e '\e[1mNote 2:\e[m \e[7m\\e[1;30;47m\e[m and \e[7m\\e[1m\\e[30m\\e[47m\e[m are equivalent'
+
+echo
