@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+source $SCRIPTS/lib/messages
+source $SCRIPTS/lib/text-color
+
 # Define the dialog exit status codes
 DIALOG_OK=0
 DIALOG_CANCEL=1
@@ -13,29 +16,48 @@ exec 3>&1
 trap cleanup 0 1 2 5 15
 
 # Command builder
-command='nmap 192.168.1.*'
+command='nmap'
 
 
 #############################################################################
 
 function close() {
-	echo 'Quitting'
+	_msg_info 'Quitting' >&2
 	exit 99
 }
 
 function cleanup() {
-	echo 'Cleaning up...'
+	_msg_info 'Cleaning up...' >&2
 	exec 3>&-
 }
 
+function select_host() {
+	ans=$(dialog --inputbox 'Target' 0 0 \
+		'192.168.1.*' \
+		2>&1 1>&3)
+	ret=$?
+	case $ret in
+		$DIALOG_OK)
+			echo "$ans"
+			;;
+		$DIALOG_CANCEL)
+			close
+			;;
+		$DIALOG_ESC)
+			close
+			;;
+	esac
+}
+
 function select_action() {
-	action=$(dialog --menu 'Select action' 0 0 0 \
+	ans=$(dialog --menu 'Select action' 0 0 0 \
 		'Host discovery' '' \
 		'Port scan' '' \
 		2>&1 1>&3)
+	ret=$?
 	case $ret in
 		$DIALOG_OK)
-			echo "$action"
+			echo "$ans"
 			;;
 		$DIALOG_CANCEL)
 			close
@@ -47,22 +69,22 @@ function select_action() {
 }
 
 function select_scan_type() {
-	scan_type=$(dialog --radiolist 'Select scan type' 0 0 0 \
-		'-sL' 'List scan' \
-		'-sn' 'No port scan' \
-		'-Pn' 'No ping' \
-		'-PS' 'TCP SYN ping' \
-		'-PA' 'TCP ACK ping' \
-		'-PU' 'UPD ping' \
-		'-PR' 'ARP ping' \
+	ans=$(dialog --radiolist 'Select scan type' 0 0 7 \
+		'-sL' 'List scan' off \
+		'-sn' 'No port scan' off \
+		'-Pn' 'No ping' off \
+		'-PS' 'TCP SYN ping' off \
+		'-PA' 'TCP ACK ping' off \
+		'-PU' 'UPD ping' off \
+		'-PR' 'ARP ping' off \
 		2>&1 1>&3)
 	ret=$?
 	case $ret in
 		$DIALOG_OK)
-			if [ -z "$scan_type" ]; then
+			if [ -z "$ans" ]; then
 				select_scan_type
 			else
-				echo "$scan_type"
+				echo "$ans"
 			fi
 			;;
 		$DIALOG_CANCEL)
@@ -75,7 +97,7 @@ function select_scan_type() {
 }
 
 function select_speed() {
-	speed=$(dialog --radiolist 'Select Speed' 0 0 0 \
+	ans=$(dialog --radiolist 'Select speed' 0 0 0 \
 		'-T0' 'Paranoid' off \
 		'-T1' 'Sneaky' off \
 		'-T2' 'Polite' off \
@@ -83,10 +105,10 @@ function select_speed() {
 		'-T4' 'Aggressive' off \
 		'-T5' 'Insane' off \
 		2>&1 1>&3)
-	ret=$?
+	ret=$?;
 	case $ret in
 		$DIALOG_OK)
-			echo "$speed"
+			echo "$ans"
 			;;
 		$DIALOG_CANCEL)
 			close
@@ -97,18 +119,55 @@ function select_speed() {
 	esac
 }
 
+function select_verbosity() {
+	ans=$(dialog --radiolist 'Select verbosity' 0 0 0 \
+		'' 'Off' on \
+		'-v' 'Verbose' off \
+		'-vv' 'Very verbose' off \
+		2>&1 1>&3)
+	ret=$?;
+	case $ret in
+		$DIALOG_OK)
+			echo "$ans"
+			;;
+		$DIALOG_CANCEL)
+			close
+			;;
+		$DIALOG_ESC)
+			close
+			;;
+	esac
+}
+
+
 #############################################################################
 
-# Select action
-action=$(select_action)
+command="$command $(select_host)"
 
+action=$(select_action)
 if [ "$action" == 'Host discovery' ]; then
 	command="$command $(select_scan_type)"
+elif [ "$action" == 'Port scan' ]; then
+	:
 fi
 
-# Select speed
 command="$command $(select_speed)"
+command="$command $(select_verbosity)"
 
-echo $command
 
 
+
+clear
+echo -n 'Generated command: '
+_colored_text "$command" $_TEXT_STYLE_ITALIC $_TEXT_STYLE_UNDERLINE
+
+while true; do
+	read -p 'Execute? (Y/n)' ans
+
+	if [[ -z "$ans" || "$ans" == 'y' || "$ans" == 'Y' ]]; then
+		exec $command
+		break
+	elif [[ "$ans" == 'n' || "$ans" == 'N' ]]; then
+		break
+	fi
+done
