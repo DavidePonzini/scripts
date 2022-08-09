@@ -53,10 +53,10 @@ function _msg_info() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
-		_colored_text "$1" $_TEXT_COLOR_CYAN 1>&2
+		_colored_text "$1" 1>&2
 	else
-		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_CYAN 1>&2
-		_colored_text "${2}" $_TEXT_COLOR_CYAN 1>&2
+		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD 1>&2
+		_colored_text "${2}" 1>&2
 	fi
 }
 
@@ -96,4 +96,18 @@ function _msg_ask() {
 	_text_color_reset 1>&2
 
 	echo "$answer"
+}
+
+function _msg_tmp() {
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_success <message>' '_msg_success <title> <message>'
+		return 255
+	fi
+
+	if [ "$#" -lt 2 ]; then
+		_colored_text_n "$1\r" $_TEXT_STYLE_DIM 1>&2
+	else
+		_colored_text_n "${1}: " 1>&2
+		_colored_text_n "${2}\r" $_TEXT_STYLE_DIM 1>&2
+	fi
 }
