@@ -1,0 +1,22 @@
+#!/bin/bash -e
+
+source $SCRIPTS/lib/messages
+
+_msg_tmp  '         IP Address'
+_msg_info '         IP Address' $(hostname -I)
+
+_msg_tmp  'External IP Address'
+_msg_info 'External IP Address' $($SCRIPTS/net/getIP)
+
+echo
+_msg_tmp 'Speedtest...'
+speedtest=$(speedtest --simple --bytes)
+speedtest=$(speedtest --json | jq '.ping,.download,.upload')
+    ping=$(echo "$speedtest" | cut -d , -f 1)
+download=$(echo "$speedtest" | cut -d , -f 2)
+  upload=$(echo "$speedtest" | cut -d , -f 3)
+
+_msg_info '               Ping' "${ping} ms)"
+_msg_info '           Download' "${download} Mbps)"
+_msg_info '             Upload' "${upload} Mbps)"
+
