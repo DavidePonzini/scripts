@@ -52,3 +52,4 @@ alias lsblk='lsblk -o NAME,PATH,SIZE,STATE,TYPE,MODE,MODEL,FSTYPE,FSVER,MOUNTPOI
 alias mktempdir='mktemp -d'
 alias mkfs.fat32='mkfs.fat -F 32'
 alias DM='sudo service gdm3 start'
+alias speedtest="speedtest --bytes --simple"
