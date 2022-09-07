@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+# Failsafe for new installations
+if [ -z "$SCRIPTS" ]; then
+	SCRIPTS=/scripts
+fi
+
 source $SCRIPTS/lib/messages
 
 
