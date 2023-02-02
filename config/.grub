@@ -5,15 +5,16 @@
 
 
 # Default option: user specified
-GRUB_DEFAULT=0
+GRUB_DEFAULT=2
 
 # Default option: last selected
 #GRUB_DEFAULT=saved
 #GRUB_SAVEDEFAULT=true
 
 # Timeout
-GRUB_TIMEOUT_STYLE=hidden
-GRUB_TIMEOUT=-1
+# GRUB_TIMEOUT_STYLE=hidden
+# GRUB_TIMEOUT=-1
+GRUB_TIMEOUT=5
 
 # Force OS-PROBER
 GRUB_DISABLE_OS_PROBER=false

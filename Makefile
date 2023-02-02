@@ -16,9 +16,10 @@ bash:
 	./config/setup_bash
 
 grub:
-	rm -fv /etc/default/grub
+	rm -fv /etc/default/grub /etc/grub.d/40_custom
 	ln -v ./config/.grub /etc/default/grub
-	sudo update-grub2
+	ln -v ./config/.grub_40_custom /etc/grub.d/40_custom
+	sudo update-grub
 
 disable_gdm:
 	sudo systemctl set-default multi-user
