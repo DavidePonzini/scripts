@@ -2,6 +2,7 @@ SCRIPTS = /scripts
 
 
 update:
+	git pull
 	apt update
 	apt dist-upgrade -y
 	apt autoremove -y
