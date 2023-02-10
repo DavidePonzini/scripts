@@ -17,7 +17,7 @@ fi
 
 copy(){
 	rm -fv "${DIR}/${1}"
-	ln -v "${SCRIPTS}/config/${1}" "${DIR}/${1}"
+	ln -sv "${SCRIPTS}/config/${1}" "${DIR}/${1}"
 }
 
 
