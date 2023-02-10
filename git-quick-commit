@@ -13,7 +13,7 @@ git status
 r=`_msg_ask 'Reason'`
 
 if [ -z "$r" ]; then
-	r="Quick commit - `date +%d-%m-%y`"
+	r="Quick commit (`date +%d-%m-%y`)"
 	_msg_warning "Using default commit message" "$r"
 fi
 
