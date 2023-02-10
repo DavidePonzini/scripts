@@ -1,7 +1,7 @@
 SCRIPTS = /scripts
 
 
-update-all:
+full-update:
 	git pull
 	make -C $(SCRIPTS) update
 
