@@ -1,8 +1,11 @@
 SCRIPTS = /scripts
 
 
-update:
+update-all:
 	git pull
+	make -C $(SCRIPTS) update
+
+update:
 	apt update
 	apt dist-upgrade -y
 	apt autoremove -y
@@ -42,6 +45,3 @@ bios_local_time:
 	timedatectl set-local-rtc 1 --adjust-system-clock
 	systemctl restart systemd-logind.service
 
-ipython3:
-	apt install ipython3 -y
-	apt install python3-pip -y
