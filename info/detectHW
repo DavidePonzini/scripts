@@ -1,11 +1,8 @@
 #!/bin/bash -e
 
+source ${SCRIPTS}/lib/user
 
-if [ `whoami` != 'root' ]; then
-	echo "Need to be root." >&2
-	exit 250
-fi
-
+_require_root
 
 
 # Determines how the output is formatted
