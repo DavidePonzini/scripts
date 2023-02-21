@@ -1,0 +1,32 @@
+#!/bin/bash -e
+
+source $SCRIPTS/lib/messages
+source $SCRIPTS/lib/user
+
+_require_root
+
+if [ "$#" -lt 1 ]; then
+	_msg_usage "$0 <device>"
+	exit 1
+fi
+
+device="$1"
+
+# format device
+mkfs.fat -F 32 -n DAVRESCUE $device
+
+# mount
+dir=$(mktemp -d)
+mount $device $dir
+
+# copy config
+mkdir -p $dir/EFI/boot
+#cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
+cp -v $SCRIPTS/rescue/.grub.efi $dir/EFI/boot/bootx64.efi
+
+# install GRUB
+grub-install --target=x86_64-efi --boot-directory=$dir --efi-directory=$dir --removable $device
+
+# unmount and clean-up
+umount $dir
+rmdir $dir
