@@ -4,9 +4,20 @@ exec tail -n +3 $0
 # menu entries you want to add after this comment.  Be careful not to change
 # the 'exec tail' line above.
 
-menuentry "Clonezilla" {
+menuentry "Ubuntu Live" {
+	set isofile="/iso/ubuntu"
+	set gfxpayload=keep
+	loopback loop (hd0,gpt5)$isofile
+	linux (loop)/casper/vmlinuz boot=casper iso-scan/filename=$isofile noprompt noeject
+	initrd (loop)/casper/initrd
+
+}
+
+menuentry "Clonezilla Live" {
 	set isofile="/iso/clonezilla"
-	loopback loop (hd0,5)$isofile
+	loopback loop (hd0,gpt5)$isofile
 	linux (loop)/live/vmlinuz boot=live components config findiso=$isofile ip=frommedia toram=filesystem.squashfs union=overlay username=user locales=en_US.UTF-8 keyboard-layouts=us
 	initrd (loop)/live/initrd.img
 }
+
+

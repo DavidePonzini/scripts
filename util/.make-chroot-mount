@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+_source $SCRIPTS/user
+
+_require_root
+
+mount --verbose --bind /dev $dir/dev
+mount --verbose --bind /dev/pts $dir/dev/pts
+mount --verbose --bind /proc $dir/proc
+mount --verbose --bind /sys $dir/sys

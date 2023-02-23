@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+source $SCRIPTS/user
+
+_require_root
+
+umount --verbose dev/pts
+umount --verbose dev
+umount --verbose proc
+umount --verbose sys

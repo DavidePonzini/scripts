@@ -23,6 +23,8 @@ mount $device $dir
 mkdir -p $dir/EFI/boot
 #cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
 cp -v $SCRIPTS/rescue/.grub.efi $dir/EFI/boot/bootx64.efi
+mkdir -p $dir/boot/grub
+cp -v -r $SCRIPTS/rescue/.grub $dir/boot/grub
 
 # install GRUB
 grub-install --target=x86_64-efi --boot-directory=$dir --efi-directory=$dir --removable $device

@@ -1,0 +1,30 @@
+#!/bin/bash -e
+
+source $SCRIPTS/lib/messages
+source $SCRIPTS/lib/user
+
+_require_root
+
+if [ "$#" -lt 1 ]; then
+	dir=$(mktemp -d)
+	_msg_info "Using folder $dir"
+else
+	dir="$1"
+fi
+
+# install minimal debian distro
+debootstrap focal $dir
+
+# prepare for chroot
+mount --verbose --bind /dev $dir/dev
+mount --verbose --bind /dev/pts $dir/dev/pts
+mount --verbose --bind /proc $dir/proc
+mount --verbose --bind /sys $dir/sys
+
+# copy mount-unmount scripts
+cp -v $SCRIPTS/util/.make-chroot-mount $dir/mount
+cp -v $SCRIPTS/util/.make-chroot-umount $dir/umount
+cp -v -r $SCRIPTS $dir/
+$SCRIPTS/config/setup_bash $dir/root
+
+chroot $dir
