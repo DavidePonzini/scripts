@@ -20,9 +20,9 @@ bash:
 	./config/setup_bash
 
 grub:
-	rm -fv /etc/default/grub /etc/grub.d/40_custom
-	ln -v ./config/.grub /etc/default/grub			# grub config
-	ln -v ./config/.grub_40_custom /etc/grub.d/40_custom	# clonezilla entry
+	rm -f /etc/default/grub /etc/grub.d/40_custom
+	cp ./config/.grub /etc/default/grub			# grub config
+	cp ./config/.grub_40_custom /etc/grub.d/40_custom	# clonezilla entry
 	sudo update-grub
 
 disable_gdm:
