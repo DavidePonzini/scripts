@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+source ${SCRIPTS}/lib/user
+
+
+function _auto_install() {
+	_require_root
+
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_auto_install <package1> [package2] ...'
+		return 255
+	fi
+
+	apt install -y $@
+
+	_msg_success 'Packages installed'
+}
+

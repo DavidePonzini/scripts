@@ -25,9 +25,10 @@ function _msg_error() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
+		_colored_text_n "[-] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
 		_colored_text "$1" $_TEXT_COLOR_RED 1>&2
 	else
-		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
 		_colored_text "${2}" $_TEXT_COLOR_RED 1>&2
 	fi
 }
@@ -39,9 +40,10 @@ function _msg_warning() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
+		_colored_text_n "[!] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
 		_colored_text "$1" $_TEXT_COLOR_YELLOW 1>&2
 	else
-		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
 		_colored_text "${2}" $_TEXT_COLOR_YELLOW 1>&2
 	fi
 }
@@ -53,9 +55,10 @@ function _msg_info() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
+		_colored_text_n "[i] " $_TEXT_STYLE_BOLD 1>&2
 		_colored_text "$1" 1>&2
 	else
-		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD 1>&2
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD 1>&2
 		_colored_text "${2}" 1>&2
 	fi
 }
@@ -67,9 +70,10 @@ function _msg_success() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
+		_colored_text_n "[+] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_GREEN 1>&2
 		_colored_text "$1" $_TEXT_COLOR_GREEN 1>&2
 	else
-		_colored_text_n "${1}: " $_TEXT_STYLE_BOLD $_TEXT_COLOR_GREEN 1>&2
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_GREEN 1>&2
 		_colored_text "${2}" $_TEXT_COLOR_GREEN 1>&2
 	fi
 }
@@ -87,7 +91,7 @@ function _msg_ask() {
 	_text_color_reset 1>&2
 
 	_text_color_set $_TEXT_STYLE_BOLD $_TEXT_COLOR_BLUE 1>&2
-	echo -ne "${1}: " 1>&2
+	echo -ne "[?] ${1}: " 1>&2
 
 	_text_color_reset 1>&2
 	_text_color_set $_TEXT_STYLE_ITALIC $_TEXT_COLOR_BLUE 1>&2
@@ -98,16 +102,24 @@ function _msg_ask() {
 	echo "$answer"
 }
 
-function _msg_tmp() {
+function _msg_continue() {
 	if [ "$#" -lt 1 ]; then
-		_msg_usage '_msg_success <message>' '_msg_success <title> <message>'
-		return 255
+		prompt="Continue? (y/n) "
+	else
+		prompt="${1}. Continue? (y/n) "
 	fi
 
-	if [ "$#" -lt 2 ]; then
-		_colored_text_n "$1\r" $_TEXT_STYLE_DIM 1>&2
-	else
-		_colored_text_n "${1}: " 1>&2
-		_colored_text_n "${2}\r" $_TEXT_STYLE_DIM 1>&2
-	fi
+	while true; do
+		_text_color_reset 1>&2
+		_text_color_set $_TEXT_COLOR_YELLOW 1>&2
+
+		read -p "${prompt}" ans
+		_text_color_reset 1>&2
+
+		case "$ans" in
+			[Yy]* ) break;;
+			[Nn]* ) exit;;
+    		esac
+	done
 }
+

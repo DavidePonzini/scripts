@@ -14,21 +14,32 @@ device="$1"
 
 # format device
 mkfs.fat -F 32 -n DAVRESCUE $device
+fatlabel $device -i E8092
+_msg_success 'Formatted device'
 
 # mount
 dir=$(mktemp -d)
 mount $device $dir
+_msg_success 'Mounted device'
+
+# create folders
+mkdir -p $dir/EFI/boot
+mkdir -p $dir/boot
+mkdir -p $dir/iso
 
 # copy config
-mkdir -p $dir/EFI/boot
-#cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
-cp -v $SCRIPTS/rescue/.grub.efi $dir/EFI/boot/bootx64.efi
-mkdir -p $dir/boot/grub
-cp -v -r $SCRIPTS/rescue/.grub $dir/boot/grub
+cp $SCRIPTS/rescue/.grub.efi $dir/EFI/boot/bootx64.efi		#cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
+cp -r $SCRIPTS/rescue/.grub $dir/boot/grub
+_msg_success 'Copied configuration'
 
 # install GRUB
 grub-install --target=x86_64-efi --boot-directory=$dir --efi-directory=$dir --removable $device
+_msg_success 'Installed grub'
 
 # unmount and clean-up
 umount $dir
 rmdir $dir
+_msg_success 'Unmounted device'
+
+_msg_done
+_msg_info 'Remember to manually copy iso files to /iso folder'
