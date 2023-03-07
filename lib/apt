@@ -3,7 +3,7 @@
 source ${SCRIPTS}/lib/messages
 source ${SCRIPTS}/lib/user
 
-
+# automatically installs any package passed as argument, without asking for user confirmation
 function _auto_install() {
 	_require_root
 

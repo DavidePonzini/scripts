@@ -2,7 +2,8 @@
 
 source ${SCRIPTS}/lib/text-color
 
-
+# message explaining how to use a command
+# if multiple arguments are provided, print each on a separate line (for alternate usages)
 function _msg_usage() {
 	if [ "$#" -lt 1 ]; then
 		_msg_usage '_msg_usage <message1> [message2] ...'
@@ -18,6 +19,8 @@ function _msg_usage() {
 	_text_color_reset 1>&2
 }
 
+# message indicating an error
+# prints a red string, optionally with a custom marker
 function _msg_error() {
 	if [ "$#" -lt 1 ]; then
 		_msg_usage '_msg_error <message>' '_msg_error <title> <message>'
@@ -26,13 +29,15 @@ function _msg_error() {
 
 	if [ "$#" -lt 2 ]; then
 		_colored_text_n "[-] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
-		_colored_text "$1" $_TEXT_COLOR_RED 1>&2
+		_colored_text "${1}" $_TEXT_COLOR_RED 1>&2
 	else
 		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
 		_colored_text "${2}" $_TEXT_COLOR_RED 1>&2
 	fi
 }
 
+# message indicating a warning
+# prints a yellow string, optionally with a custom marker
 function _msg_warning() {
 	if [ "$#" -lt 1 ]; then
 		_msg_usage '_msg_warning <message>' '_msg_warning <title> <message>'
@@ -41,13 +46,15 @@ function _msg_warning() {
 
 	if [ "$#" -lt 2 ]; then
 		_colored_text_n "[!] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
-		_colored_text "$1" $_TEXT_COLOR_YELLOW 1>&2
+		_colored_text "${1}" $_TEXT_COLOR_YELLOW 1>&2
 	else
 		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
 		_colored_text "${2}" $_TEXT_COLOR_YELLOW 1>&2
 	fi
 }
 
+# message indicating an information
+# prints a normal string, optionally with a custom marker
 function _msg_info() {
 	if [ "$#" -lt 1 ]; then
 		_msg_usage '_msg_info <message>' '_msg_info <title> <message>'
@@ -56,13 +63,33 @@ function _msg_info() {
 
 	if [ "$#" -lt 2 ]; then
 		_colored_text_n "[i] " $_TEXT_STYLE_BOLD 1>&2
-		_colored_text "$1" 1>&2
+		_colored_text "${1}" 1>&2
 	else
 		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD 1>&2
 		_colored_text "${2}" 1>&2
 	fi
 }
 
+# message indicating a temporary information
+# prints a normal string, optionally with a custom marker
+# the string is terminated with '\r', so that it will be overwritten by any following text
+function _msg_info_tmp() {
+	if [ "$#" -lt 1 ]; then
+		_msg_usage '_msg_info_tmp <message>' '_msg_info_tmp <title> <message>'
+		return 255
+	fi
+
+	if [ "$#" -lt 2 ]; then
+		_colored_text_n "[i] " $_TEXT_STYLE_BOLD $_TEXT_STYLE_ITALIC 1>&2
+		_colored_text_n "${1}\r" $_TEXT_STYLE_ITALIC 1>&2
+	else
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_STYLE_ITALIC 1>&2
+		_colored_text_n "${2}\r" $_TEXT_STYLE_ITALIC 1>&2
+	fi
+}
+
+# message indicating a successfully completed action
+# prints a green string, optionally with a custom marker
 function _msg_success() {
 	if [ "$#" -lt 1 ]; then
 		_msg_usage '_msg_success <message>' '_msg_success <title> <message>'
@@ -78,10 +105,12 @@ function _msg_success() {
 	fi
 }
 
+# prints a string indicating that the current script has been completed
 function _msg_done() {
 	_colored_text ' Done ' $_TEXT_STYLE_BOLD $_TEXT_COLOR_WHITE $_TEXT_BACKGROUND_GREEN 1>&2
 }
 
+# prints a question and returns the answer
 function _msg_ask() {
 	if [ "$#" -lt 1 ]; then
 		_msg_usage '_msg_ask <question>'
@@ -102,6 +131,10 @@ function _msg_ask() {
 	echo "$answer"
 }
 
+# prints a question asking the user if they want to continue
+# 	a positive answer makes the program continues its normal execution
+# 	a negative answer terminates the program
+# optionally supports a custom question
 function _msg_continue() {
 	if [ "$#" -lt 1 ]; then
 		prompt="Continue? (y/n) "
