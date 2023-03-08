@@ -1,7 +1,9 @@
 #!/bin/bash -e
 
+source ${SCRIPTS}/lib/messages
+
 if [ $# -lt 1 ]; then
-	echo -e "\033[32m[WARN]\033[0m Setting port to 41144" >&2
+	_msg_warn 'Setting port to 41144'
 	port=41144
 else
 	port=$1
