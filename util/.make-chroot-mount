@@ -1,8 +1,16 @@
 #!/bin/bash -e
 
+_source $SCRIPTS/messages
 _source $SCRIPTS/user
 
 _require_root
+
+if [ "$#" -lt 1 ]; then
+	_msg_info 'Using current dir'
+	dir=.
+else
+	dir="$1"
+fi
 
 mount --verbose --bind /dev $dir/dev
 mount --verbose --bind /dev/pts $dir/dev/pts
