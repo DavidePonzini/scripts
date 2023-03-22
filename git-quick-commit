@@ -19,3 +19,5 @@ fi
 
 git commit -m "$r"
 git push
+
+_msg_done
