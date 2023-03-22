@@ -8,6 +8,8 @@ if [ -z "$(git status --porcelain)" ]; then
 fi
 
 git add .
+_msg_success "Staged changes"
+
 git status
 
 r=`_msg_ask 'Reason'`
@@ -18,6 +20,9 @@ if [ -z "$r" ]; then
 fi
 
 git commit -m "$r"
+_msg_success "Committed changes"
+
 git push
+_msg_success "Uploaded commit"
 
 _msg_done
