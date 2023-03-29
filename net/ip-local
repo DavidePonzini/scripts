@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+
+_msg_info 'Local IP Address' $(hostname -I)

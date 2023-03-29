@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+
+
+apt update
+_msg_success 'Downloaded package information'
+
+apt dist-upgrade -y
+_msg_success 'Installed package upgrades'
+
+apt autoremove -y
+_msg_success 'Removed unused packages'
+
+apt autoclean
+_msg_success 'Cleaned up'

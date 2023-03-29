@@ -1,28 +1,22 @@
 SCRIPTS = /scripts
 
 
-full-update:
+full_update:
 	git pull
-	make -C $(SCRIPTS) update
-
-update:
-	apt update
-	apt dist-upgrade -y
-	apt autoremove -y
-	apt autoclean
+	./update
 
 git_config:
 	git config --global user.email "davide.ponzini95@gmail.com"
 	git config --global user.name "Davide Ponzini"
 
 bash:
-	sed -i "s|^export SCRIPTS=.*|export SCRIPTS=$(SCRIPTS)|" ./config/.bashrc
+	sed -i "s|^export SCRIPTS=.*$|export SCRIPTS=$(SCRIPTS)|" ./config/.bashrc
 	./config/setup_bash
 
 grub:
 	rm -f /etc/default/grub /etc/grub.d/40_custom
 	cp ./config/.grub /etc/default/grub			# grub config
-	cp ./config/.grub_40_custom /etc/grub.d/40_custom	# clonezilla entry
+	cp ./config/.grub_40_custom /etc/grub.d/40_custom	# custom entries
 	sudo update-grub
 
 disable_gdm:
@@ -36,12 +30,3 @@ export_terminal_profile:
 
 import_terminal_profile:
 	dconf load /org/gnome/terminal/legacy/profiles:/ < ./config/.gnome-terminal-profiles.dconf
-
-disable_lid_close:
-	sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
-	systemctl restart systemd-logind.service
-
-bios_local_time:
-	timedatectl set-local-rtc 1 --adjust-system-clock
-	systemctl restart systemd-logind.service
-

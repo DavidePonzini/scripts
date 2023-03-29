@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-IP=`curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'`
-
-echo IP: $IP
-geoiplookup $IP
-
-exit 0

@@ -1,5 +1,0 @@
-#!/bin/sh -e
-
-curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'
-
-exit 0

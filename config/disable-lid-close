@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+
+sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
+systemctl restart systemd-logind.service
+
+_msg_success 'Closing the lid will now do nothing'

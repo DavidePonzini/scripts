@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+
+timedatectl set-local-rtc 1 --adjust-system-clock
+systemctl restart systemd-logind.service
+
+_msg_success 'BIOS will now use local time'

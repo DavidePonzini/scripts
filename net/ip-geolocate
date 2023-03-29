@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+source ${SCRIPTS}/lib/apt
+
+_auto_install geoip-bin
+
+ip=`curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//'`
+_msg_info 'IP Address' $ip
+
+location=$(geoiplookup $ip)
+_msg_info 'Location' "$location"
