@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+source ${SCRIPTS}/lib/user
+
+_require_root
+
+systemctl set-default multi-user
+
+_msg_success 'GDM disabled at startup'

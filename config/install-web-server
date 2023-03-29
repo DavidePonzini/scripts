@@ -8,6 +8,5 @@ _auto_install apache2 mysql-server php libapache2-mod-php php-mysql phpmyadmin p
 mysql <<< "DROP USER IF EXISTS 'dba'@'localhost';"
 mysql <<< "CREATE USER 'dba'@'localhost' IDENTIFIED BY 'dav';"
 #mysql <<< "GRANT ALL PRIVILEGES ON *.* TO 'dba'@'localhost';"
-_msg_success "Created admin account: 'dba'@'localhost', password: 'dav'"
 
-_msg_done
+_msg_success "Created admin account: 'dba'@'localhost', password: 'dav'"

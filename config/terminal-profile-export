@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/messages
+
+file=${SCRIPTS}/config/.gnome-terminal-profiles.dconf
+
+dconf dump /org/gnome/terminal/legacy/profiles:/ > $file
+
+_msg_success 'Exported terminal profile'

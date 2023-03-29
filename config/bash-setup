@@ -16,8 +16,8 @@ fi
 
 
 copy(){
-	rm -fv "${DIR}/${1}"
-	ln -sv "${SCRIPTS}/config/${1}" "${DIR}/${1}"
+	rm -f "${DIR}/${1}"
+	ln -s "${SCRIPTS}/config/.bash/${1}" "${DIR}/${1}"
 }
 
 
@@ -25,4 +25,4 @@ copy .bash_aliases
 copy .bashrc
 copy .dircolors
 
-_msg_success "Bash setup complete ($1)"
+_msg_success "Bash setup complete ($DIR)"
