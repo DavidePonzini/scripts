@@ -22,7 +22,7 @@ fi
 git commit --quiet -m "$r"
 _msg_success "Committed changes"
 
-git push --quiet --progress
+git push --quiet
 _msg_success "Uploaded commit"
 
 _msg_done
