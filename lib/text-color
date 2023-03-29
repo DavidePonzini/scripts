@@ -79,5 +79,4 @@ function _colored_text() {
 
 	_colored_text_n "$@"
 	printf %${pad_len}s # | tr ' ' '*'
-	echo
 }
