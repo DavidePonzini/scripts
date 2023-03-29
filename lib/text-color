@@ -73,7 +73,11 @@ function _colored_text_n() {
 # prints a string with a new line at the end
 # supports multiple optional formatting flags
 function _colored_text() {
-	_colored_text_n "$@"
+	msg_len=${#1}
+	term_len=$(tput cols)
+	pad_len=$((term_len - msg_len))
 
+	_colored_text_n "$@"
+	printf %${pad_len}s # | tr ' ' '*'
 	echo
 }
