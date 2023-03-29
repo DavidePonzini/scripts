@@ -22,6 +22,6 @@ fi
 git commit --quiet -m "$r"
 _msg_success "Committed changes"
 
-_msg_tmp 'Uploading commit...'
+_msg_info_tmp 'Uploading commit...'
 git push --quiet
 _msg_success 'Uploaded commit'
