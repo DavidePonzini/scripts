@@ -19,7 +19,7 @@ if [ -z "$r" ]; then
 	_msg_warning "Using default commit message" "$r"
 fi
 
-git commit -m "$r"
+git commit -q -m "$r"
 _msg_success "Committed changes"
 
 git push
