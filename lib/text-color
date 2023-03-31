@@ -47,13 +47,13 @@ function _text_color_set() {
 			continue
 		fi
 
-		echo -ne "\e[${col}m"
+		printf "\e[${col}m"
 	done
 }
 
 # resets the current font to its default settings
 function _text_color_reset() {
-	echo -ne '\e[0m'
+	printf '\e[0m'
 }
 
 # prints a string without a new line
@@ -65,7 +65,10 @@ function _colored_text_n() {
 	_text_color_reset
 	_text_color_set $@
 
-	echo -ne "$text"
+	printf "$text"
+
+	text_len=${#text}
+	_CURRENT_LINE_LEN=$((_CURRENT_LINE_LEN + text_len))
 
 	_text_color_reset
 }
@@ -75,8 +78,10 @@ function _colored_text_n() {
 function _colored_text() {
 	msg_len=${#1}
 	term_len=$(tput cols)
-	pad_len=$((term_len - msg_len))
+	pad_len=$((term_len - msg_len - _CURRENT_LINE_LEN))
 
 	_colored_text_n "$@"
-	printf %${pad_len}s # | tr ' ' '*'
+	printf "%${pad_len}s\n" # | tr ' ' '*'
+
+	_CURRENT_LINE_LEN=0
 }
