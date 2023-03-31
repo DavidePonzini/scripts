@@ -1,12 +1,10 @@
 #!/bin/bash -e
 
+source ${SCRIPTS}/lib/messages
 source ${SCRIPTS}/lib/user
 
 _require_root
 
-
-# Determines how the output is formatted
-FORMAT="\t%s\n"
 
 # Temporary file used by `print()`
 tmp=`mktemp`
@@ -17,16 +15,15 @@ HW=`mktemp`
 
 
 
-# Get relevant lines,
-#	remove formatting,
-#	print them according to $FORMAT
+# Get relevant lines, remove formatting and print them
 function print
 {
 	grep "$1" $HW > $tmp
 
 	while read line; do
-		line=`echo $line`
-		printf $FORMAT "${line#*$1 }"
+		# trim spaces
+		line=$(echo $line)
+		printf "\t${line#*$1}\n"
 	done < $tmp
 }
 
@@ -38,21 +35,19 @@ function print
 lshw -short > $HW
 
 # Print relevant information
-echo "Processor:"
+_msg_info "Processor:"
 	print "processor"
-echo "Memory:"
+_msg_info "Memory:"
 	print "memory"
-echo "Graphic Cards:"
+_msg_info "Graphic Cards:"
 	print "display"
-echo "Network:"
+_msg_info "Network:"
 	print "network"
-echo "Disks:"
+_msg_info "Disks:"
 	print "disk"
-echo "Volumes:"
+_msg_info "Volumes:"
 	print "volume"
 
 # remove temporary files
 rm -f $TMP $HW
 
-
-exit 0
