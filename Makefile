@@ -1,9 +1,9 @@
 SCRIPTS = /scripts
 
 
-full_update:
+update:
 	git pull
-	./update
+	./update-packages
 
 git_config:
 	git config --global user.email "davide.ponzini95@gmail.com"
