@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
 source ${SCRIPTS}/lib/messages
+source ${SCRIPTS}/lib/user
+
+_require_root
 
 
 apt update
