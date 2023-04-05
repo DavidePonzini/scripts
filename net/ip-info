@@ -37,7 +37,9 @@ _colored_text_n "CAP: " $_TEXT_STYLE_BOLD
 _colored_text "$(get .postal)"
 
 _colored_text_n "Coordinates: " $_TEXT_STYLE_BOLD
-_colored_text "$(get .loc)"
+_colored_text_n "$(get .loc) ("
+_colored_text_n "https://google.com/maps/@$(get .loc),10z" $_TEXT_STYLE_ITALIC
+_colored_text ")"
 
 _colored_text_n "Timezone: " $_TEXT_STYLE_BOLD
 _colored_text "$(get .timezone)"
