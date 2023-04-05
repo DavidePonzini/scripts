@@ -11,7 +11,7 @@ host=$1
 
 
 if [ -z "$2" ]; then
-	_msg_warn 'Setting port to 41144'
+	_msg_info 'Setting port to 41144'
 	port=41144
 else
 	port=$2
