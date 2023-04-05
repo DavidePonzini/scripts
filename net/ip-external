@@ -1,6 +1,9 @@
 #!/bin/bash -e
 
-source ${SCRIPTS}/lib/messages
+function get() {
+	echo $ip_info | jq "$1" | cut -d '"' -f 2
+}
 
-ip=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
-_msg_info 'External IP Address' $ip
+ip_info=$(curl --silent ipinfo.io)
+
+get '.ip'

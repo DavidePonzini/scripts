@@ -1,0 +1,43 @@
+#!/bin/bash -e
+
+source ${SCRIPTS}/lib/text-color
+
+
+function get() {
+	echo $ip_info | jq "$1" | cut -d '"' -f 2
+}
+
+if [ "$#" -lt 1 ]; then
+	ip='localhost'
+else
+	ip="$1"
+fi
+
+# local ip
+if [ "$ip" == 'localhost' ]; then
+	_colored_text_n "Local IP: " $_TEXT_STYLE_BOLD
+	_colored_text "$(hostname -I)"
+fi
+
+
+if [ "$ip" == 'localhost' ]; then
+	ip_info=$(curl --silent ipinfo.io)
+else
+	ip_info=$(curl --silent ipinfo.io/$ip)
+fi
+
+_colored_text_n "External IP: " $_TEXT_STYLE_BOLD
+_colored_text "$(get .ip)"
+
+echo
+_colored_text_n "Location: " $_TEXT_STYLE_BOLD
+_colored_text "$(get .city), $(get .region) ($(get .country))"
+
+_colored_text_n "CAP: " $_TEXT_STYLE_BOLD
+_colored_text "$(get .postal)"
+
+_colored_text_n "Coordinates: " $_TEXT_STYLE_BOLD
+_colored_text "$(get .loc)"
+
+_colored_text_n "Timezone: " $_TEXT_STYLE_BOLD
+_colored_text "$(get .timezone)"
