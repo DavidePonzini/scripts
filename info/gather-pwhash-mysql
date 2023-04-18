@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+source $SCRIPTS/lib/messages
+source $SCRIPTS/lib/user
+
+_require_root
+
+query="SELECT DISTINCT CONCAT(user, ':', authentication_string) FROM mysql.user WHERE authentication_string <> '';"
+
+mysql --skip-column-names <<< "$query"
