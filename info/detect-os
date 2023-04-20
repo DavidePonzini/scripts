@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ${SCRIPTS}/lib/messages
-
 
 lowercase(){
     echo "$1" | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/"
@@ -59,11 +57,11 @@ else
 
 fi
 
-_msg_info "OS:         $OS"
-_msg_info "Dist:       $DIST"
-_msg_info "  Based on: $DistroBasedOn"
-_msg_info "Pseudonym:  $PSUEDONAME"
-_msg_info "Rev:        $REV"
-_msg_info "Kernel:     $KERNEL"
-_msg_info "Machine:    $MACH"
+echo "OS:         $OS"
+echo "Dist:       $DIST"
+echo "  Based on: $DistroBasedOn"
+echo "Pseudonym:  $PSUEDONAME"
+echo "Rev:        $REV"
+echo "Kernel:     $KERNEL"
+echo "Machine:    $MACH"
 

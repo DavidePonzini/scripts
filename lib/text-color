@@ -78,7 +78,7 @@ function _colored_text_n() {
 function _colored_text() {
 	msg_len=${#1}
 	term_len=$(tput cols)
-	pad_len=$((term_len - msg_len - _CURRENT_LINE_LEN))
+	pad_len=$(((term_len - msg_len % term_len - _CURRENT_LINE_LEN)))
 
 	_colored_text_n "$@"
 	printf "%${pad_len}s\n" # | tr ' ' '*'
