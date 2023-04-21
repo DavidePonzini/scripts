@@ -62,10 +62,10 @@ function _msg_info() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
-		_colored_text_n "[i] " $_TEXT_STYLE_BOLD 1>&2
+		_colored_text_n "[*] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_BLUE 1>&2
 		_colored_text "${1}" 1>&2
 	else
-		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD 1>&2
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_BLUE 1>&2
 		_colored_text "${2}" 1>&2
 	fi
 }
@@ -80,10 +80,10 @@ function _msg_info_tmp() {
 	fi
 
 	if [ "$#" -lt 2 ]; then
-		_colored_text_n "[i] " $_TEXT_STYLE_BOLD $_TEXT_STYLE_ITALIC 1>&2
+		_colored_text_n "[*] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_BLUE 1>&2
 		_colored_text_n "${1}\r" $_TEXT_STYLE_ITALIC 1>&2
 	else
-		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_STYLE_ITALIC 1>&2
+		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_STYLE_ITALIC $_TEXT_COLOR_BLUE 1>&2
 		_colored_text_n "${2}\r" $_TEXT_STYLE_ITALIC 1>&2
 	fi
 }
