@@ -29,10 +29,10 @@ function _msg_error() {
 
 	if [ "$#" -lt 2 ]; then
 		_colored_text_n "[-] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
-		_colored_text "${1}" $_TEXT_COLOR_RED 1>&2
+		_colored_text "${1}" 1>&2
 	else
 		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_RED 1>&2
-		_colored_text "${2}" $_TEXT_COLOR_RED 1>&2
+		_colored_text "${2}" 1>&2
 	fi
 }
 
@@ -46,10 +46,10 @@ function _msg_warning() {
 
 	if [ "$#" -lt 2 ]; then
 		_colored_text_n "[!] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
-		_colored_text "${1}" $_TEXT_COLOR_YELLOW 1>&2
+		_colored_text "${1}" 1>&2
 	else
 		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_YELLOW 1>&2
-		_colored_text "${2}" $_TEXT_COLOR_YELLOW 1>&2
+		_colored_text "${2}" 1>&2
 	fi
 }
 
@@ -98,10 +98,10 @@ function _msg_success() {
 
 	if [ "$#" -lt 2 ]; then
 		_colored_text_n "[+] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_GREEN 1>&2
-		_colored_text "$1" $_TEXT_COLOR_GREEN 1>&2
+		_colored_text "$1" 1>&2
 	else
 		_colored_text_n "[${1}] " $_TEXT_STYLE_BOLD $_TEXT_COLOR_GREEN 1>&2
-		_colored_text "${2}" $_TEXT_COLOR_GREEN 1>&2
+		_colored_text "${2}" 1>&2
 	fi
 }
 
@@ -123,7 +123,7 @@ function _msg_ask() {
 	echo -ne "[?] ${1}: " 1>&2
 
 	_text_color_reset 1>&2
-	_text_color_set $_TEXT_STYLE_ITALIC $_TEXT_COLOR_BLUE 1>&2
+	_text_color_set $_TEXT_STYLE_ITALIC 1>&2
 	read answer
 
 	_text_color_reset 1>&2

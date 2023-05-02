@@ -6,7 +6,8 @@ import sys
 
 import pandas as pd
 import pandasql as pdsql
-import argparse
+
+import arg_parser
 
 
 def read_file(filepath):
@@ -37,10 +38,9 @@ def execute_query(dataset, query):
 
 
 if __name__ == "__main__":
-    args = argparse.ArgumentParser()
-    args.add_argument('input', help='Input filename (.xlsx or .csv)')
-    args.add_argument('output', nargs='?', help='Output filename (.xlsx or .csv)')
-    args = args.parse_args()
+    arg_parser.parser.add_argument('input', help='Input filename (.xlsx or .csv)')
+    arg_parser.parser.add_argument('output', nargs='?', help='Output filename (.xlsx or .csv)')
+    args = arg_parser.parse_args()
 
     print('Notes:')
     print('- Use \'dataset\' in FROM clause')
