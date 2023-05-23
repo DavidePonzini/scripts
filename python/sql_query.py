@@ -7,7 +7,7 @@ import sys
 import pandas as pd
 import pandasql as pdsql
 
-import arg_parser
+import arg_parser as arg_parser
 
 
 def read_file(filepath):

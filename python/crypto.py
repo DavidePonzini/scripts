@@ -1,4 +1,4 @@
-import arg_parser
+import arg_parser as arg_parser
 
 # applies bitwise xor on a given message and a given key
 def bitwise_xor(message: str, key: str):
