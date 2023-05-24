@@ -1,9 +1,0 @@
-#!/bin/bash -e
-
-function get() {
-	echo $ip_info | jq "$1" | cut -d '"' -f 2
-}
-
-ip_info=$(curl --silent ipinfo.io)
-
-get '.ip'
