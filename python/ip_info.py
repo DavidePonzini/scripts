@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from dav_tools import messages, argument_parser
 
 import socket

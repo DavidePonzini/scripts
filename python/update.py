@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from dav_tools import commands, messages, user, argument_parser, ArgumentAction
 
 user.require_root(auto_elevate=True)

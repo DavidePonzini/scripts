@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 # Author: Davide Ponzini
 # Date: 22/06/2022
 

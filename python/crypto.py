@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from dav_tools import argument_parser
 
 # applies bitwise xor on a given message and a given key
