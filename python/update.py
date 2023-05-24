@@ -1,7 +1,8 @@
 from dav_tools import commands, messages, user, argument_parser, ArgumentAction
 
-user.require_root()
+user.require_root(auto_elevate=True)
 
+argument_parser.set_description('Performs a full pc update')
 argument_parser.add_argument('--update', help='check for updates', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
 argument_parser.add_argument('--download-only', help='download updates but skip installation', action=ArgumentAction.STORE_TRUE)
 argument_parser.add_argument('--cleanup', help='removed unnecessary packages', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)

@@ -22,7 +22,7 @@ def get_external_ip_info(ip=None):
 
 if __name__ == '__main__':
     argument_parser.set_description('Get information about an IP address')
-    argument_parser.add_argument('ip', help='IP address to get info about. If None, use this machine IP address', nargs='?')
+    argument_parser.add_argument('ip', help='IP address to get info about. If None, use the current machine IP address', nargs='?')
 
     if argument_parser.args.ip is None:
         messages.info('Local IP:', get_local_ip_address(),
@@ -35,8 +35,8 @@ if __name__ == '__main__':
                   text_options=[[messages.TextFormat.Style.BOLD], []])
     messages.info('Location:', f'{external_ip_info["city"]}, {external_ip_info["region"]} ({external_ip_info["postal"]}) - {external_ip_info["country"]}',
                   text_options=[[messages.TextFormat.Style.BOLD], []])
-    messages.info('Coordinates:', external_ip_info['loc'],
-                  text_options=[[messages.TextFormat.Style.BOLD], []])
+    messages.info('Coordinates:', external_ip_info['loc'], f'(https://www.google.com/maps/@{external_ip_info["loc"]})',
+                  text_options=[[messages.TextFormat.Style.BOLD], [], [messages.TextFormat.Style.ITALIC, messages.TextFormat.Color.DARKGRAY]])
     messages.info('Timezone:', external_ip_info['timezone'],
                   text_options=[[messages.TextFormat.Style.BOLD], []])
     messages.info('Provider:', external_ip_info['org'],
