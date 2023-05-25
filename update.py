@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-from dav_tools import commands, messages, user, argument_parser, ArgumentAction
+from dav_tools import commands, messages, requirements, argument_parser, ArgumentAction
 
-user.require_root(auto_elevate=True)
+requirements.require_root()
+requirements.require_os('Linux')
 
 argument_parser.set_description('Performs a full pc update')
 argument_parser.add_argument('--update', help='check for updates', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
