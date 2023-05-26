@@ -66,13 +66,13 @@ if __name__ == '__main__':
         longest_network = max(passwords, key=len)
         text_min_len=[len(longest_network)]
         
-        messages.info('Network', 'Password', text_min_len=text_min_len,
-                         text_options=[[messages.TextFormat.Style.BOLD], [messages.TextFormat.Style.BOLD]],
+        messages.message('', 'Network', 'Password', text_min_len=[3] + text_min_len,
+                         additional_text_options=[[], [messages.TextFormat.Style.BOLD], [messages.TextFormat.Style.BOLD]],
         )
 
         for network,passwd in passwords.items():
             if passwd is None:
-                messages.success(network, 'None', text_min_len=text_min_len,
+                messages.success(network, '<None>', text_min_len=text_min_len,
                                  text_options=[[], [messages.TextFormat.Style.ITALIC]])
             else:
                 messages.success(network, passwd, text_min_len=text_min_len,
