@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-from dav_tools import requirements, messages, argument_parser, ArgumentAction
+from dav_tools import requirements, messages, argument_parser, ArgumentAction, commands
 
 import platform
 import glob
 import re
+import sys
 
 
 def get_wifipass_linux() -> dict[str, str]:
@@ -26,7 +27,19 @@ def get_wifipass_linux() -> dict[str, str]:
     return result
 
 def get_wifipass_windows() -> dict[str, str]:
-    return {}
+    result = {}
+    
+    profiles = commands.get_output('netsh wlan show profiles', return_type= bytes.decode)
+    profiles = re.findall(r'\s{2,}:\s(.*?)\r', profiles)
+    
+    for profile in profiles:
+        password = commands.get_output(f'netsh wlan show profile "{profile}" key=clear', return_type=bytes.decode)
+        if re.search(r'Security key\s+:\sAbsent', password):
+            password = None
+        else:
+            password = re.findall(r'Key Content\s*: (.*?)\r', password)[0]
+        result[profile] = password
+    return result
 
 
 if __name__ == '__main__':
@@ -44,6 +57,10 @@ if __name__ == '__main__':
     else:
         messages.critical_error('OS not supported')
 
+    if len(passwords) == 0:
+        messages.error('No passwords detected')
+        sys.exit(0)
+
     if argument_parser.args.output is None:
         longest_network = max(passwords, key=len)
         text_min_len=[len(longest_network)]
@@ -53,8 +70,12 @@ if __name__ == '__main__':
         )
 
         for network,passwd in passwords.items():
-            messages.success(network, passwd, text_min_len=text_min_len,
-                             text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else []
+            if passwd is None:
+                messages.success(network, 'None', text_min_len=text_min_len,
+                                 text_options=[[], [messages.TextFormat.Style.ITALIC]])
+            else:
+                messages.success(network, passwd, text_min_len=text_min_len,
+                                 text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else []
             )
     else:
         with open(argument_parser.args.output, 'w') as f:
