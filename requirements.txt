@@ -1,4 +1,4 @@
-dav-tools
-requests
+dav_tools
 pandas
 pandasql
+Requests
