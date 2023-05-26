@@ -10,7 +10,7 @@ install: bash git_config
 
 python-requirements:
 	python3 -m pip install --upgrade pipreqs
-	pipreqs --force --mode no-pin
+	pipreqs --force --mode gt
 
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)

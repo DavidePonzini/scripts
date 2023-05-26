@@ -43,6 +43,7 @@ def get_wifipass_windows() -> dict[str, str]:
 
 
 if __name__ == '__main__':
+    argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Retrieves locally stored passwords for each network this computer has connected to')
     argument_parser.add_argument('-o', '--output', help='file to store the passwords on, in .csv format')
     argument_parser.add_argument('--show-password', help='show the password in cleartext (only applies if printing to screen)', action=ArgumentAction.BOOLEAN_OPTIONAL, default=False)

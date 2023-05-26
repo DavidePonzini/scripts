@@ -23,6 +23,7 @@ def get_external_ip_info(ip=None):
     
 
 if __name__ == '__main__':
+    argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Get information about an IP address')
     argument_parser.add_argument('ip', help='IP address to get info about. If None, use the current machine IP address', nargs='?')
 

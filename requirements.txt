@@ -1,4 +1,4 @@
-dav_tools
-pandas
-pandasql
-Requests
+dav_tools>=0.0.7
+pandas>=2.0.1
+pandasql>=0.7.3
+Requests>=2.31.0
