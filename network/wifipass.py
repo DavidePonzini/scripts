@@ -72,11 +72,11 @@ if __name__ == '__main__':
 
         for network,passwd in passwords.items():
             if passwd is None:
-                messages.success(network, '<None>', text_min_len=text_min_len,
-                                 text_options=[[], [messages.TextFormat.Style.ITALIC]])
+                messages.success(network, 'None', text_min_len=text_min_len,
+                                 text_options=[[], [messages.TextFormat.Style.ITALIC, messages.TextFormat.Style.DIM]])
             else:
                 messages.success(network, passwd, text_min_len=text_min_len,
-                                 text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else []
+                                 text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else [[], []]
             )
     else:
         with open(argument_parser.args.output, 'w') as f:
