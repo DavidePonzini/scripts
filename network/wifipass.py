@@ -29,7 +29,7 @@ def get_wifipass_linux() -> dict[str, str]:
 def get_wifipass_windows() -> dict[str, str]:
     result = {}
     
-    profiles = commands.get_output('netsh wlan show profiles', return_type= bytes.decode)
+    profiles = commands.get_output('netsh wlan show profiles', return_type=bytes.decode)
     profiles = re.findall(r'\s{2,}:\s(.*?)\r', profiles)
     
     for profile in profiles:
@@ -72,11 +72,11 @@ if __name__ == '__main__':
 
         for network,passwd in passwords.items():
             if passwd is None:
-                messages.success(network, '<None>', text_min_len=text_min_len,
-                                 text_options=[[], [messages.TextFormat.Style.ITALIC]])
+                messages.info(network, 'None', text_min_len=text_min_len,
+                                 text_options=[[], [messages.TextFormat.Style.ITALIC, messages.TextFormat.Style.DIM]])
             else:
-                messages.success(network, passwd, text_min_len=text_min_len,
-                                 text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else []
+                messages.info(network, passwd, text_min_len=text_min_len,
+                                 text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else [[], []]
             )
     else:
         with open(argument_parser.args.output, 'w') as f:
