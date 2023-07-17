@@ -9,8 +9,7 @@ if __name__ == '__main__':
     argument_parser.add_argument('--download-only', help='download updates but skip installation', action=ArgumentAction.STORE_TRUE)
     argument_parser.add_argument('--cleanup', help='removed unnecessary packages', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
 
-    requirements.require_os('Linux')
-    requirements.require_root()
+    requirements.require(root=True, os=['Linux'])
 
     try:
         if argument_parser.args.update:

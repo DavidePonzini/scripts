@@ -19,6 +19,8 @@ if __name__ == '__main__':
     argument_parser.add_argument('device', help='device to change MAC address')
     argument_parser.add_argument('mac', help='new MAC address')
     argument_parser.args
+    
+    requirements.require(root=True, os=['Linux'])
 
     if platform.system() == 'Linux':
         requirements.require_root()
