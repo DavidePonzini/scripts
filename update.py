@@ -1,16 +1,11 @@
 #!/usr/bin/env python3
 
+import platform
+
 from dav_tools import commands, messages, requirements, argument_parser, ArgumentAction
 
-if __name__ == '__main__':
-    argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
-    argument_parser.set_description('Performs a full pc update')
-    argument_parser.add_argument('--update', help='check for updates', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
-    argument_parser.add_argument('--download-only', help='download updates but skip installation', action=ArgumentAction.STORE_TRUE)
-    argument_parser.add_argument('--cleanup', help='removed unnecessary packages', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
 
-    requirements.require(root=True, os=['Linux'])
-
+def update_linux():
     try:
         if argument_parser.args.update:
             commands.execute('apt update')
@@ -37,3 +32,27 @@ if __name__ == '__main__':
         messages.error(e)
     except KeyboardInterrupt:
         messages.warning('Interrupted')
+
+def update_windows():
+    try:
+        commands.execute('powershell -command "Install-Module PSWindowsUpdate"')
+        commands.execute('powershell -command "Import-Module PSWindowsUpdate"')
+        commands.execute('powershell -command "Get-WindowsUpdate"')
+        commands.execute('powershell -command "Install-WindowsUpdate"')
+    except commands.CalledProcessError as e:
+        messages.error(e)
+
+
+if __name__ == '__main__':
+    argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
+    argument_parser.set_description('Performs a full pc update')
+    argument_parser.add_argument('--update', help='check for updates', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
+    argument_parser.add_argument('--download-only', help='download updates but skip installation', action=ArgumentAction.STORE_TRUE)
+    argument_parser.add_argument('--cleanup', help='removed unnecessary packages', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
+
+    requirements.require(root=True, os=['Linux', 'Windows'])
+
+    if platform.system() == 'Linux':
+        update_linux()
+    elif platform.system() == 'Windows':
+        update_windows()
