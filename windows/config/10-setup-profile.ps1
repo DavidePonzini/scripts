@@ -1,0 +1,1 @@
+Copy-Item C:/scripts-windows/config/.Profile.ps1 $PSHOME/Profile.ps1
