@@ -37,8 +37,10 @@ def update_windows():
     try:
         commands.execute('powershell -command "Install-Module PSWindowsUpdate"')
         commands.execute('powershell -command "Import-Module PSWindowsUpdate"')
-        commands.execute('powershell -command "Get-WindowsUpdate"')
+        messages.info('Installed prerequisites')
+        
         commands.execute('powershell -command "Install-WindowsUpdate"')
+        messages.success('Installed updates')
     except commands.CalledProcessError as e:
         messages.error(e)
 
