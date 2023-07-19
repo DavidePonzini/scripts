@@ -29,11 +29,11 @@ def get_wifipass_linux() -> dict[str, str]:
 def get_wifipass_windows() -> dict[str, str]:
     result = {}
     
-    profiles = commands.get_output('netsh wlan show profiles', return_type=bytes.decode)
+    profiles = commands.get_output('netsh wlan show profiles', on_success=bytes.decode)
     profiles = re.findall(r'\s{2,}:\s(.*?)\r', profiles)
     
     for profile in profiles:
-        password = commands.get_output(f'netsh wlan show profile "{profile}" key=clear', return_type=bytes.decode)
+        password = commands.get_output(f'netsh wlan show profile "{profile}" key=clear', on_success=bytes.decode)
         if re.search(r'Security key\s+:\sAbsent', password):
             password = None
         else:
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     argument_parser.add_argument('--show-password', help='show the password in cleartext (only applies if printing to screen)', action=ArgumentAction.BOOLEAN_OPTIONAL, default=False)
     argument_parser.args
 
-    requirements.require_os('Linux', 'Windows')
+    requirements.require(os=['Linux', 'Windows'])
 
     if platform.system() == 'Linux':
         passwords = get_wifipass_linux()
