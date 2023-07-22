@@ -35,10 +35,12 @@ def update_linux():
 
 def update_windows():
     try:
+        messages.progress('Installing prerequisites...')
         commands.execute('powershell -command "Install-Module PSWindowsUpdate"')
         commands.execute('powershell -command "Import-Module PSWindowsUpdate"')
         messages.info('Installed prerequisites')
         
+        messages.progress('Checking for updates...')
         commands.execute('powershell -command "Install-WindowsUpdate"')
         messages.success('Installed updates')
     except commands.CalledProcessError as e:
