@@ -30,6 +30,7 @@ if __name__ == '__main__':
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Restart Network interface')
     argument_parser.add_argument('interface', help='interface name to restart')
+    argument_parser.args
 
     requirements.require(root=True, os=['Linux', 'Windows'])
 
