@@ -65,6 +65,11 @@ class Image:
                     draw.point((xx, yy), (255, 255, 255))
 
         return self
+    
+    def save(self, filename):
+        messages.progress('saving image')
+        self.image.save(filename)
+        messages.success('image saved')
 
 
 
@@ -72,7 +77,8 @@ class Image:
 if __name__ == '__main__':
     argument_parser.add_argument('image', help='input file')
     argument_parser.add_argument('height', nargs='?', help='number of pixels on Y axis. X axis is automatically recalculated to preserve proportions', type=int, default=0)
-    argument_parser.add_argument('--grid', action=ArgumentAction.STORE_TRUE, help='show pixel grid')
+    argument_parser.add_argument('-g', '--grid', action=ArgumentAction.STORE_TRUE, help='show pixel grid')
+    argument_parser.add_argument('-o', '--output', help='save result to file')
 
     argument_parser.args
 
@@ -84,4 +90,9 @@ if __name__ == '__main__':
     if argument_parser.args.grid:
         image.draw_grid(argument_parser.args.height)
 
-    image.show()
+    if argument_parser.args.output is None:
+        image.show()
+    else:
+        image.save(argument_parser.args.output)
+
+    
