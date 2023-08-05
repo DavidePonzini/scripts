@@ -41,7 +41,7 @@ def update_windows():
         messages.info('Installed prerequisites')
         
         messages.progress('Checking for updates...')
-        commands.execute('powershell -command "Install-WindowsUpdate"')
+        commands.execute('powershell -command "Install-WindowsUpdate -AcceptAll"')
         messages.success('Installed updates')
     except commands.CalledProcessError as e:
         messages.error(e)
