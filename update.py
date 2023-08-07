@@ -41,10 +41,12 @@ def update_windows():
         messages.info('Installed prerequisites')
         
         messages.progress('Checking for updates...')
-        commands.execute('powershell -command "Install-WindowsUpdate -AcceptAll"')
+        commands.execute('powershell -command "Get-WindowsUpdate -Install -AcceptAll -IgnoreReboot -Verbose"')
         messages.success('Installed updates')
     except commands.CalledProcessError as e:
         messages.error(e)
+    except KeyboardInterrupt:
+        messages.warning('Interrupted')
 
 
 if __name__ == '__main__':
