@@ -9,7 +9,7 @@ import sys
 
 
 def get_wifipass_linux() -> dict[str, str]:
-    requirements.require_root()
+    requirements.require(root=True)
 
     DIRECTORY = '/etc/NetworkManager/system-connections/'
     pattern = re.compile(r'psk=')
