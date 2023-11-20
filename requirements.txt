@@ -1,5 +1,0 @@
-dav_tools>=0.1.1
-pandas>=2.0.3
-pandasql>=0.7.3
-Pillow>=10.0.0
-Requests>=2.31.0
