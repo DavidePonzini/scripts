@@ -16,7 +16,7 @@ if __name__ == '__main__':
         sys.exit(0)
 
     commands.execute('git add .')
-    messages.success('Stages changes')
+    messages.success('Staged changes')
 
     commands.execute('git status')
 
