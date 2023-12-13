@@ -21,7 +21,7 @@ git_repo_status() {
         return
     fi
 
-    echo -ne "$(colour "01;34;3m") (git:"
+    echo -ne "$(colour "01;34m") (git:"
 
     # Check for uncommitted changes
     if [[ ! -z $(git status --porcelain) ]]; then
@@ -49,7 +49,7 @@ git_repo_status() {
         echo -ne "$(colour "00;30;3m")pull"
     fi
 
-    echo -ne "$(colour "01;34;3m"))"
+    echo -ne "$(colour "01;34m"))"
 }
 
 
