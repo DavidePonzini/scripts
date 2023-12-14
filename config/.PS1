@@ -41,7 +41,7 @@ git_repo_status() {
 
     # git fetch origin --quiet
     # Check for commits to push
-    if [[ ! -z $(git log origin/main..HEAD) ]]; then
+    if [[ ! -z $(git log origin..HEAD) ]]; then
         echo -ne "$(colour "01;32;3m")push"
     else
         echo -ne "$(colour "00;32;2;3m")push"
@@ -50,7 +50,7 @@ git_repo_status() {
     echo -ne "$(colour "01;34;3m")|"
 
     # Check for commits to pull
-    if [[ ! -z $(git log HEAD..origin/main --oneline) ]]; then
+    if [[ ! -z $(git log HEAD..origin --oneline) ]]; then
         echo -ne "$(colour "01;36;3m")pull"
     else
         echo -ne "$(colour "00;36;2;3m")pull"
