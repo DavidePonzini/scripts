@@ -32,7 +32,7 @@ git_repo_status() {
 
     # Check for uncommitted changes
     if [[ ! -z $(git status --porcelain) ]]; then
-        echo -ne "$(colour "00;1;3m")edits"
+        echo -ne "$(colour "00;1;3m")edits=$(git status --porcelain | wc -l)"
     else
         echo -ne "$(colour "00;37;2;3m")edits"
     fi
