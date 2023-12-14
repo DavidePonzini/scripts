@@ -56,7 +56,7 @@ git_repo_status() {
         echo -ne "$(colour "00;36;2;3m")pull"
     fi
 
-    echo -ne "$(colour "m")$(colour "01;34m")) "
+    echo -ne "$(colour "m")$(colour "01;34m"))\t"
 }
 
 
@@ -78,8 +78,8 @@ fi
 
 # Set PS1
 PS1='\
-\[$(colour "01;30m")\]($SHLVL) \
 \[$(git_repo_status)\]\
+\[$(colour "01;30m")\]($SHLVL) \
 \[$(colour "00;00m")\]${debian_chroot:+($debian_chroot)}\
 \[$(colour "$priv" )\]\u@\h\
 \[$(colour "00;00m")\]:\
