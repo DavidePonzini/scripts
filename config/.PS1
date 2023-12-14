@@ -14,20 +14,27 @@ colour()
 
 ### GIT REPO ###
 git_repo_status() {
-    local is_clean=true
+    local is_repo=false
+    local dir="$PWD"
+    while [[ "$dir" != "/" ]]; do
+        if [[ -d "$dir/.git" ]]; then
+            is_repo=true
+            break
+        fi
+        dir="$(dirname "$dir")"
+    done
 
-    if [[ ! -d .git ]]; then
-        # not in a repo
+    if ! "$is_repo"; then
         return
     fi
 
-    echo -ne "$(colour "01;34m") (git:"
+    echo -ne "$(colour "01;34m")(git:"
 
     # Check for uncommitted changes
     if [[ ! -z $(git status --porcelain) ]]; then
         echo -ne "$(colour "00;1;3m")edits"
     else
-        echo -ne "$(colour "00;30;3m")edits"
+        echo -ne "$(colour "00;37;2;3m")edits"
     fi
 
     echo -ne "$(colour "01;34;3m")|"
@@ -37,7 +44,7 @@ git_repo_status() {
     if [[ ! -z $(git log origin/main..HEAD) ]]; then
         echo -ne "$(colour "01;32;3m")push"
     else
-        echo -ne "$(colour "00;30;3m")push"
+        echo -ne "$(colour "00;32;2;3m")push"
     fi
 
     echo -ne "$(colour "01;34;3m")|"
@@ -46,10 +53,10 @@ git_repo_status() {
     if [[ ! -z $(git log HEAD..origin/main --oneline) ]]; then
         echo -ne "$(colour "01;36;3m")pull"
     else
-        echo -ne "$(colour "00;30;3m")pull"
+        echo -ne "$(colour "00;36;2;3m")pull"
     fi
 
-    echo -ne "$(colour "01;34m"))"
+    echo -ne "$(colour "m")$(colour "01;34m")) "
 }
 
 
@@ -72,8 +79,9 @@ fi
 # Set PS1
 PS1='\
 \[$(colour "01;30m")\]($SHLVL) \
+\[$(git_repo_status)\]\
 \[$(colour "00;00m")\]${debian_chroot:+($debian_chroot)}\
 \[$(colour "$priv" )\]\u@\h\
 \[$(colour "00;00m")\]:\
 \[$(colour "01;36m")\]\w\
-\[$(git_repo_status)$(colour "00;00m")\]\$ '
+\[$(colour "00;00m")\]\$ '
