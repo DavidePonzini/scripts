@@ -54,6 +54,7 @@ def update_windows():
     messages.success('Installed updates')
 
 def update_python():
+    print('a')
     commands.execute('python -m pip install --upgrade pip')
     messages.success('Updated pip to latest version')
 
@@ -66,10 +67,10 @@ if __name__ == '__main__':
     argument_parser.add_argument('--cleanup', help='removed unnecessary packages', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
     argument_parser.add_argument('--python', help='update python package manager', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
 
+    requirements.require(root=True, os=['Linux', 'Windows'])
+
     if(argument_parser.args.python):
         run_update(update_python)
-
-    requirements.require(root=True, os=['Linux', 'Windows'])
 
     if platform.system() == 'Linux':
         run_update(update_linux,
