@@ -54,7 +54,6 @@ def update_windows():
     messages.success('Installed updates')
 
 def update_python():
-    print('a')
     commands.execute('python -m pip install --upgrade pip')
     messages.success('Updated pip to latest version')
 
