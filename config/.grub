@@ -5,7 +5,7 @@
 
 
 # Default option: user specified
-GRUB_DEFAULT=2
+GRUB_DEFAULT=0
 
 # Default option: last selected
 #GRUB_DEFAULT=saved
