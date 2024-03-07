@@ -28,35 +28,18 @@ git_repo_status() {
         return
     fi
 
-    echo -ne "$(colour "01;34m")(git:"
+    echo -ne "$(colour "01;34m")[git:"
+
+    # Get branch name, change color depending on edits
+    branch="$(git rev-parse --abbrev-ref HEAD)"
+    echo -ne "$(colour "00;37m")$branch"
 
     # Check for uncommitted changes
     if [[ ! -z $(git status --porcelain) ]]; then
-        echo -ne "$(colour "00;1;3m")edits=$(git status --porcelain | wc -l)"
-    else
-        echo -ne "$(colour "00;37;2;3m")edits"
+        echo -ne "$(colour "01;37m"){$(git status --porcelain | wc -l)}"
     fi
 
-    echo -ne "$(colour "01;34;3m")|"
-
-    # git fetch origin --quiet
-    # Check for commits to push
-    if [[ ! -z $(git log origin..HEAD) ]]; then
-        echo -ne "$(colour "01;32;3m")push"
-    else
-        echo -ne "$(colour "00;32;2;3m")push"
-    fi
-
-    echo -ne "$(colour "01;34;3m")|"
-
-    # Check for commits to pull
-    if [[ ! -z $(git log HEAD..origin --oneline) ]]; then
-        echo -ne "$(colour "01;36;3m")pull"
-    else
-        echo -ne "$(colour "00;36;2;3m")pull"
-    fi
-
-    echo -ne "$(colour "m")$(colour "01;34m"))\t"
+    echo -ne "$(colour "01;34m")] "
 }
 
 
@@ -78,8 +61,8 @@ fi
 
 # Set PS1
 PS1='\
-\[$(git_repo_status)\]\
 \[$(colour "01;30m")\]($SHLVL) \
+\[$(git_repo_status)\]\
 \[$(colour "00;00m")\]${debian_chroot:+($debian_chroot)}\
 \[$(colour "$priv" )\]\u@\h\
 \[$(colour "00;00m")\]:\
