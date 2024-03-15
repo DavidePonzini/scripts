@@ -3,7 +3,7 @@
 ### COLOR ###
 color_prompt=yes
 
-colour()
+PS1_color()
 {
     if [ "$color_prompt" = yes ]; then
         echo -ne "\033[$1";
@@ -13,7 +13,7 @@ colour()
 }
 
 ### GIT REPO ###
-git_repo_status() {
+PS1_git_repo_status() {
     local is_repo=false
     local dir="$PWD"
     while [[ "$dir" != "/" ]]; do
@@ -28,18 +28,24 @@ git_repo_status() {
         return
     fi
 
-    echo -ne "$(colour "01;34m")[git:"
+    echo -ne "$(PS1_color "01;34m")[git:"
 
     # Get branch name, change color depending on edits
     branch="$(git rev-parse --abbrev-ref HEAD)"
-    echo -ne "$(colour "00;37m")$branch"
+    echo -ne "$(PS1_color "00;37m")$branch"
 
     # Check for uncommitted changes
     if [[ ! -z $(git status --porcelain) ]]; then
-        echo -ne "$(colour "01;37m"){$(git status --porcelain | wc -l)}"
+        echo -ne "$(PS1_color "01;37m"){$(git status --porcelain | wc -l)}"
     fi
 
-    echo -ne "$(colour "01;34m")] "
+    echo -ne "$(PS1_color "01;34m")] "
+}
+
+PS1_make_status() {
+    if [ -f 'Makefile' ]; then
+        echo -ne "$(PS1_color "01;31m")[make] "
+    fi
 }
 
 
@@ -50,7 +56,7 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
 fi
 
 
-# Set prompt colour based on user privileges
+# Set prompt PS1_color based on user privileges
 if [ $EUID -eq 0  ]; then
     priv='01;31m'    # Red
 elif [ ! -z "$(id | grep 'sudo')" ]; then
@@ -61,10 +67,11 @@ fi
 
 # Set PS1
 PS1='\
-\[$(colour "01;30m")\]($SHLVL) \
-\[$(git_repo_status)\]\
-\[$(colour "00;00m")\]${debian_chroot:+($debian_chroot)}\
-\[$(colour "$priv" )\]\u@\h\
-\[$(colour "00;00m")\]:\
-\[$(colour "01;36m")\]\w\
-\[$(colour "00;00m")\]\$ '
+\[$(PS1_color "01;30m")\]($SHLVL) \
+\[$(PS1_git_repo_status)\]\
+\[$(PS1_make_status)\]\
+\[$(PS1_color "00;00m")\]${debian_chroot:+($debian_chroot)}\
+\[$(PS1_color "$priv" )\]\u@\h\
+\[$(PS1_color "00;00m")\]:\
+\[$(PS1_color "01;36m")\]\w\
+\[$(PS1_color "00;00m")\]\$ '
