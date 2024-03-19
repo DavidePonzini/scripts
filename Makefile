@@ -6,11 +6,7 @@ GIT_USER_NAME="Davide Ponzini"
 
 install: bash git_config
 	sudo apt install python3 ipython3 -y
-	python3 -m pip install --upgrade pip -r requirements.txt
-
-python-requirements:
-	python3 -m pip install --upgrade pipreqs
-	pipreqs --force --mode gt
+	python3 -m pip install --upgrade pip pipreqs -r requirements.txt
 
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
