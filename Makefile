@@ -11,6 +11,7 @@ install: bash git_config
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
 	git config --global user.name $(GIT_USER_NAME)
+	git config --global pull.rebase false
 
 bash:
 	sed -i "s/^export SCRIPTS=.*$/export SCRIPTS=$(SCRIPTS)/" ./config/.bash/.bashrc
