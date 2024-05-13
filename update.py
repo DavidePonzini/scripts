@@ -54,7 +54,7 @@ def update_windows():
 
 def update_python():
     messages.info('Updating pip...')
-    commands.execute('python -m pip install --upgrade pip')
+    commands.execute('python -m pip install --upgrade pip --root-user-action=ignore')
     messages.success('Updated pip to latest version')
 
 
