@@ -31,14 +31,60 @@ $global:PSColor = @{
 }
 
 
+function Prompt_git_repo_status {
+    $is_repo = $false
+    $dir = $PWD
+
+    while ($dir -ne '') {
+        if (Test-Path "$dir\.git" -PathType Container) {
+            $is_repo = $true
+            break
+        }
+        $dir = Split-Path $dir -Parent
+    }
+    
+    if (-not $is_repo) {
+        return ''
+    }
+
+    $ESC = [char]27
+    $result = "$ESC[01;34m[git:"
+
+    # Get branch name, change color depending on edits
+    $branch = git rev-parse --abbrev-ref HEAD
+    $result += "$ESC[00;37m" + $branch
+
+    # Check for uncommitted changes
+    $git_status = git status --porcelain
+    if (-not [string]::IsNullOrEmpty($git_status)) {
+        $result += "$ESC[01;37m{" + $git_status.Split("`n").Count + "}"
+    }
+
+    $result += "$ESC[01;34m] "
+
+    return $result
+
+}
+
+function Prompt_shell_level {
+    $ESC = [char]27
+
+    if ($env:__ShellDepth -gt 1) {
+        return "$ESC[01;30m(" + $env:__ShellDepth + ") "
+    }
+
+    return ' '
+}
+
 function Prompt {
     $ESC = [char]27
 
     $prompt = "$ESC[1mPS"
-    $prompt += "$ESC[0m(" + $ENV:__ShellDepth + ") "
+    $prompt += Prompt_shell_level
+    $prompt += Prompt_git_repo_status
     $prompt += "$ESC[01;32m" + $env:USERNAME + "@" + $env:USERDOMAIN + " "
     $prompt += "$ESC[01;36m" + $PWD
-    $prompt += "$ESC[0m" + '>' * ($nestedPromptLevel + 1) + ' '
+    $prompt += "$ESC[0m " + '>' * ($nestedPromptLevel + 1) + ' '
 
     return $prompt
 }
