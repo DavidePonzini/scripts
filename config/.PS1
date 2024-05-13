@@ -48,7 +48,11 @@ PS1_make_status() {
     fi
 }
 
-
+PS1_shell_level() {
+	if [ "$SHLVL" -gt 1 ]; then
+		echo -ne "$(PS1_color "01;30m")($SHLVL) "
+	fi
+}
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
@@ -67,11 +71,11 @@ fi
 
 # Set PS1
 PS1='\
-\[$(PS1_color "01;30m")\]($SHLVL) \
+\[$(PS1_shell_level)\
 \[$(PS1_git_repo_status)\]\
 \[$(PS1_make_status)\]\
 \[$(PS1_color "00;00m")\]${debian_chroot:+($debian_chroot)}\
 \[$(PS1_color "$priv" )\]\u@\h\
 \[$(PS1_color "00;00m")\]:\
 \[$(PS1_color "01;36m")\]\w\
-\[$(PS1_color "00;00m")\]\$ '
+\[$(PS1_color "00;00m")\] > '
