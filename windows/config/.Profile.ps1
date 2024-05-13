@@ -73,14 +73,13 @@ function Prompt_shell_level {
         return "$ESC[01;30m(" + $env:__ShellDepth + ") "
     }
 
-    return ' '
+    return ''
 }
 
 function Prompt {
     $ESC = [char]27
 
-    $prompt = "$ESC[1mPS"
-    $prompt += Prompt_shell_level
+    $prompt = Prompt_shell_level
     $prompt += Prompt_git_repo_status
     $prompt += "$ESC[01;32m" + $env:USERNAME + "@" + $env:USERDOMAIN + " "
     $prompt += "$ESC[01;36m" + $PWD
