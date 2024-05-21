@@ -91,4 +91,4 @@ fi
 export SCRIPTS=/scripts
 
 # set PS1 to something more fancy
-source $SCRIPTS/config/.PS1
+source $SCRIPTS/config/.bash/.PS1
