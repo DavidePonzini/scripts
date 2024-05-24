@@ -2,7 +2,7 @@ GIT_USER_EMAIL="davide.ponzini95@gmail.com"
 GIT_USER_NAME="Davide Ponzini"
 
 
-install-all: git_config python
+# install-all: git_config python
 
 python:
 	sudo apt install python3 python-is-python3 ipython3 -y
