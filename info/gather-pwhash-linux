@@ -1,8 +1,5 @@
 #!/bin/bash -e
 
-source $SCRIPTS/lib/messages
-source $SCRIPTS/lib/user
-
-_require_root
+python -m dav_tools.requirements --root --os Linux
 
 unshadow /etc/passwd /etc/shadow

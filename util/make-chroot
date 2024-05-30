@@ -1,9 +1,6 @@
 #!/bin/bash -e
 
-source $SCRIPTS/lib/messages
-source $SCRIPTS/lib/user
-
-_require_root
+python -m dav_tools.requirements --root --os Linux
 
 if [ "$#" -lt 1 ]; then
 	dir=$(mktemp -d)
@@ -22,9 +19,9 @@ mount --verbose --bind /proc $dir/proc
 mount --verbose --bind /sys $dir/sys
 
 # copy mount-unmount scripts
-cp -v $SCRIPTS/util/.make-chroot-mount $dir/mount
-cp -v $SCRIPTS/util/.make-chroot-umount $dir/umount
-cp -v -r $SCRIPTS $dir/
-$SCRIPTS/config/setup_bash $dir/root
+cp -v /scripts//util/.make-chroot-mount $dir/mount
+cp -v /scripts//util/.make-chroot-umount $dir/umount
+cp -v -r /scripts/ $dir/
+/scripts//config/setup_bash.py $dir/root
 
 chroot $dir

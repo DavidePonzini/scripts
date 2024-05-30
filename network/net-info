@@ -1,22 +1,17 @@
 #!/bin/bash -e
 
-source $SCRIPTS/lib/messages
-
-_msg_info_tmp  'IP Address'
-_msg_info      "IP Address: $(hostname -I)"
-
-_msg_info_tmp  'External IP Address'
-_msg_info      "External IP Address: $($SCRIPTS/network/ip-external)"
+python -m dav_tools.messages success "IP Address: $(hostname -I)"
+# python -m dav_tools.messages success "External IP Address: $($SCRIPTS/network/ip-external)"
 
 echo
-_msg_info_tmp 'Executing Speedtest...'
-speedtest=$(speedtest --simple --bytes)
+python -m dav_tools.messages info 'Executing Speedtest...'
+# speedtest=$(speedtest --simple --bytes)
 speedtest=$(speedtest --json | jq '.ping,.download,.upload')
     ping=$(echo "$speedtest" | cut -d ',' -f 1)
 download=$(echo "$speedtest" | cut -d ',' -f 2)
   upload=$(echo "$speedtest" | cut -d ',' -f 3)
 
-_msg_info "Ping: ${ping} ms"
-_msg_info "Download: ${download} Mbps"
-_msg_info "Upload: ${upload} Mbps"
+python -m dav_tools.messages success "Ping: ${ping} ms"
+python -m dav_tools.messages success "Download: ${download} Mbps"
+python -m dav_tools.messages success "Upload: ${upload} Mbps"
 

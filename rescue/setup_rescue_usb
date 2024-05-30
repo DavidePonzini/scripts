@@ -1,12 +1,9 @@
 #!/bin/bash -e
 
-source $SCRIPTS/lib/messages
-source $SCRIPTS/lib/user
-
-_require_root
+python -m dav_tools.requirements --root --os Linux
 
 if [ "$#" -lt 1 ]; then
-	_msg_usage "$0 <device>"
+	echo "usage: $0 <device>"
 	exit 1
 fi
 
@@ -15,12 +12,12 @@ device="$1"
 # format device
 mkfs.fat -F 32 -n DAVRESCUE $device
 fatlabel $device -i E8092
-_msg_success 'Formatted device'
+python -m dav_tools.messages success 'Formatted device'
 
 # mount
 dir=$(mktemp -d)
 mount $device $dir
-_msg_success 'Mounted device'
+python -m dav_tools.messages success 'Mounted device'
 
 # create folders
 mkdir -p $dir/EFI/boot
@@ -30,16 +27,16 @@ mkdir -p $dir/iso
 # copy config
 cp $SCRIPTS/rescue/.grub.efi $dir/EFI/boot/bootx64.efi		#cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
 cp -r $SCRIPTS/rescue/.grub $dir/boot/grub
-_msg_success 'Copied configuration'
+python -m dav_tools.messages success 'Copied configuration'
 
 # install GRUB
 grub-install --target=x86_64-efi --boot-directory=$dir --efi-directory=$dir --removable $device
-_msg_success 'Installed grub'
+python -m dav_tools.messages success 'Installed grub'
 
 # unmount and clean-up
 umount $dir
 rmdir $dir
-_msg_success 'Unmounted device'
+python -m dav_tools.messages success 'Unmounted device'
 
 _msg_done
-_msg_info 'Remember to manually copy iso files to /iso folder'
+python -m dav_tools.messages info 'Remember to manually copy iso files to /iso folder'

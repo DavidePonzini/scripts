@@ -6,4 +6,4 @@ mysql <<< "DROP USER IF EXISTS 'dba'@'localhost';"
 mysql <<< "CREATE USER 'dba'@'localhost' IDENTIFIED BY 'dav';"
 #mysql <<< "GRANT ALL PRIVILEGES ON *.* TO 'dba'@'localhost';"
 
-echo "Created admin account: 'dba'@'localhost', password: 'dav'"
+python -m dav_tools.messages success "Created admin account: 'dba'@'localhost', password: 'dav'"

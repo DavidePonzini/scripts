@@ -1,9 +1,6 @@
 #!/bin/bash -e
 
-source ${SCRIPTS}/lib/messages
-source ${SCRIPTS}/lib/user
-
-_require_root
+python -m dav_tools.requirements --root --os Linux
 
 
 # Temporary file used by `print()`
@@ -35,17 +32,17 @@ function print
 lshw -short > $HW
 
 # Print relevant information
-_msg_info "Processor:"
+python -m dav_tools.messages info "Processor:"
 	print "processor"
-_msg_info "Memory:"
+python -m dav_tools.messages info "Memory:"
 	print "memory"
-_msg_info "Graphic Cards:"
+python -m dav_tools.messages info "Graphic Cards:"
 	print "display"
-_msg_info "Network:"
+python -m dav_tools.messages info "Network:"
 	print "network"
-_msg_info "Disks:"
+python -m dav_tools.messages info "Disks:"
 	print "disk"
-_msg_info "Volumes:"
+python -m dav_tools.messages info "Volumes:"
 	print "volume"
 
 # remove temporary files

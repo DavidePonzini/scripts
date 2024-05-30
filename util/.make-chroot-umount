@@ -1,8 +1,6 @@
 #!/bin/bash -e
 
-source $SCRIPTS/user
-
-_require_root
+python -m dav_tools.requirements --root --os Linux
 
 umount --verbose dev/pts
 umount --verbose dev

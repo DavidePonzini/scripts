@@ -1,12 +1,9 @@
 #!/bin/bash -e
 
-_source $SCRIPTS/messages
-_source $SCRIPTS/user
-
-_require_root
+python -m dav_tools.requirements --root --os Linux
 
 if [ "$#" -lt 1 ]; then
-	_msg_info 'Using current dir'
+	python -m dav_tools.messages info 'Using current dir'
 	dir=.
 else
 	dir="$1"

@@ -38,6 +38,7 @@ def execute_query(dataset, query):
 
 
 if __name__ == "__main__":
+    argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Performs a SQL query on an .xlsx or .csv file')
     argument_parser.add_argument('input', help='Input filename (.xlsx or .csv)')
     argument_parser.add_argument('output', nargs='?', help='Output filename (.xlsx or .csv)')

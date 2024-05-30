@@ -1,9 +1,7 @@
 #!/bin/bash -e
 
-source ${SCRIPTS}/lib/messages
-
 if [ $# -lt 1 ]; then
-	_msg_info 'Setting port to 41144'
+	python -m dav_tools.messages info 'Setting port to 41144'
 	port=41144
 else
 	port=$1
