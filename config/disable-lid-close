@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+python -m dav_tools.requirements --root --os Linux
+
+
+sed -i 's/#HandleLidSwitch=.*/HandleLidSwitch=ignore/' /etc/systemd/logind.conf
+systemctl restart systemd-logind.service
+
+python -m dav_tools.messages success 'Closing the lid will now do nothing'
