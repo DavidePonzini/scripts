@@ -11,6 +11,10 @@ python:
 	python -m pip install --upgrade pip pipreqs dav-tools
 	python ./py-install-packages.py
 
+postgresql:
+	sudo apt install postgresql libpq-dev -y
+	python -m pip install --upgrade psycopg2
+
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
 	git config --global user.name $(GIT_USER_NAME)
