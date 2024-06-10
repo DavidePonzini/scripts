@@ -3,7 +3,7 @@
 from dav_tools import messages, commands
 
 messages.info('Generating requirements file')
-commands.execute('pipreqs --mode no-pin --force')
+commands.execute('python -m pipreqs.pipreqs --mode no-pin --force')
 messages.success('Generated requirements file')
 
 messages.info('Installing requirements')
