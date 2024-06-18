@@ -76,12 +76,23 @@ function Prompt_shell_level {
     return ''
 }
 
+function Prompt_user_priv {
+    $ESC = [char]27
+
+    $is_running_as_admin = (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator);
+
+    if ($is_running_as_admin) {
+        return "$ESC[01;31m"  + $env:USERNAME + "@" + $env:USERDOMAIN + " ";
+    }
+    return "$ESC[01;32m"  + $env:USERNAME + "@" + $env:USERDOMAIN + " ";
+}
+
 function Prompt {
     $ESC = [char]27
 
     $prompt = Prompt_shell_level
     $prompt += Prompt_git_repo_status
-    $prompt += "$ESC[01;32m" + $env:USERNAME + "@" + $env:USERDOMAIN + " "
+    $prompt += Prompt_user_priv
     $prompt += "$ESC[01;36m" + $PWD
     $prompt += "$ESC[0m " + '>' * ($nestedPromptLevel + 1) + ' '
 
