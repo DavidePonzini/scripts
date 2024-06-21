@@ -31,7 +31,7 @@ messages.info('Copied bash configuration')
 copy('.bash_aliases')
 messages.info('Copied bash aliases')
 
-copy('.bashrc')
+copy('.dircolors')
 messages.info('Copied directory colors for command `ls`')
 
 messages.success('Setup complete')
