@@ -56,5 +56,5 @@ alias speedtest='speedtest --bytes --simple'
 alias sudo='sudo --preserve-env=SCRIPTS'
 alias ffmpeg='ffmpeg -hide_banner'
 alias pipreqs='pipreqs --mode no-pin --force'
-alias aws-ssh='ssh ubuntu@ec2-15-237-153-101.eu-west-3.compute.amazonaws.com -i /home/dav/.ssh/davide_ponzini_key_240610.pem'
+alias aws-ssh='ssh ubuntu@15.237.153.101 -i /home/dav/.ssh/davide_ponzini_key_240610.pem'
 
