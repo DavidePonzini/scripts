@@ -38,5 +38,4 @@ umount $dir
 rmdir $dir
 python -m dav_tools.messages success 'Unmounted device'
 
-_msg_done
 python -m dav_tools.messages info 'Remember to manually copy iso files to /iso folder'
