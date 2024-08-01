@@ -25,8 +25,8 @@ mkdir -p $dir/boot
 mkdir -p $dir/iso
 
 # copy config
-cp $SCRIPTS/rescue/.grub.efi $dir/EFI/boot/bootx64.efi		#cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
-cp -r $SCRIPTS/rescue/.grub $dir/boot/grub
+cp /scripts/rescue/.grub.efi $dir/EFI/boot/bootx64.efi		#cp -v /boot/grub/x86_64-efi/grub.efi $dir/EFI/boot/bootx64.efi
+cp -r /scripts/rescue/.grub $dir/boot/grub
 python -m dav_tools.messages success 'Copied configuration'
 
 # install GRUB
