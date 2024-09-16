@@ -27,14 +27,17 @@ def restart_windows():
 
 
 if __name__ == '__main__':
+    requirements.require(root=True, os=[requirements.OS.LINUX, requirements.OS.WINDOWS])
+
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Restart Network interface')
-    argument_parser.add_argument('interface', help='interface name to restart')
+    if platform.system() == requirements.OS.WINDOWS:
+        argument_parser.add_argument('interface', help='interface name to restart')
+    
     argument_parser.args
 
-    requirements.require(root=True, os=['Linux', 'Windows'])
 
-    if platform.system() == 'Linux':
+    if platform.system() == requirements.OS.LINUX:
         restart_linux()
-    elif platform.system() == 'Windows':
+    elif platform.system() == requirements.OS.WINDOWS:
         restart_windows()
