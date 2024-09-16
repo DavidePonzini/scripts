@@ -15,10 +15,10 @@ def restart_linux():
     except KeyboardInterrupt:
         messages.warning('Interrupted')
 
-def restart_windows():
+def restart_windows(interface: str):
     try:
             messages.progress('Restarting...')
-            commands.execute(f'powershell -command "Restart-NetAdapter \\"{argument_parser.args.interface}\\""')
+            commands.execute(f'powershell -command "Restart-NetAdapter \\"{interface}\\""')
             messages.success('Restarted')
     except commands.CalledProcessError as e:
         messages.error(e)
@@ -40,4 +40,4 @@ if __name__ == '__main__':
     if platform.system() == requirements.OS.LINUX:
         restart_linux()
     elif platform.system() == requirements.OS.WINDOWS:
-        restart_windows()
+        restart_windows(argument_parser.args.interface)
