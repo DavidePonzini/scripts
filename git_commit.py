@@ -8,6 +8,7 @@ from dav_tools import argument_parser, commands, messages
 if __name__ == '__main__':
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Quickly commits and uploads all changes performed on the current directory')
+    argument_parser.add_argument('path', help='files (or folders) to commit', nargs='*', default=['.'])
     argument_parser.add_argument('-m', '--message', help='commit message', default=None)
 
 
@@ -15,7 +16,7 @@ if __name__ == '__main__':
         messages.success('Nothing to commit')
         sys.exit(0)
 
-    commands.execute('git add .')
+    commands.execute(f'git add {" ".join(argument_parser.args.path)}')
     messages.success('Staged changes')
 
     commands.execute('git status')
