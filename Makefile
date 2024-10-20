@@ -20,3 +20,5 @@ git_config:
 	git config --global user.name $(GIT_USER_NAME)
 	git config --global pull.rebase false
 
+programs:
+	sudo apt install -y landscape-common	# system info in motd
