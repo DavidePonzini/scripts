@@ -128,6 +128,12 @@ PS1_git_repo_status() {
         echo -ne "$(PS1_color "01;37m"){$(git status --porcelain | wc -l)}"
     fi
 
+    # Check for stash
+    if [[ ! -z $(git stash list) ]]; then
+        echo -ne "$(PS1_color "01;35m")#"
+    fi
+
+
     echo -ne "$(PS1_color "01;34m")] "
 }
 
