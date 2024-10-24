@@ -19,6 +19,7 @@ git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
 	git config --global user.name $(GIT_USER_NAME)
 	git config --global pull.rebase false
+	git config --global alias.history "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all"
 
 programs:
 	sudo apt install -y landscape-common	# system info in motd
