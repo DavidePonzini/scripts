@@ -1,22 +1,21 @@
 #!/usr/bin/env python
 
-from dav_tools import messages, argument_parser
+from dav_tools import messages, argument_parser, files, requirements
 from pathlib import Path
 import sys
 import os
 
 
 def copy(filename):
-    source = sys.path[0]
-    destination = argument_parser.args.home_path
+    files.copy_file(
+        f'{sys.path[0]}/.bash/{filename}', f'{argument_parser.args.home_path}/{filename}',
+        symlink=True
+    )
 
-    original = Path(f'{source}/.bash/{filename}')
-    target = Path(f'{destination}/{filename}')
 
-    if target.exists():
-        target.unlink()
-
-    target.symlink_to(original)
+requirements.require(
+    os=[requirements.OS.LINUX],
+)
 
 
 argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
