@@ -60,6 +60,11 @@ function Prompt_git_repo_status {
         $result += "$ESC[01;37m{" + $git_status.Split("`n").Count + "}"
     }
 
+    $git_stash = git stash list
+    if (-not [string]::IsNullOrEmpty($git_stash)) {
+        $result += "$ESC[01;35m#"
+    }
+
     $result += "$ESC[01;34m] "
 
     return $result
