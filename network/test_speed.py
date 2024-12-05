@@ -4,7 +4,7 @@ from speedtest import Speedtest
 from dav_tools import messages
 
 
-s = Speedtest()
+s = Speedtest(secure=True)
 
 messages.progress('Testing download...')
 download = s.download()
