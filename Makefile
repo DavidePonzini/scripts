@@ -8,8 +8,7 @@ python:
 	sudo apt install $(PYTHON_INTERPRETER)-full ipython3 -y
 	sudo rm -f /usr/bin/python
 	sudo ln -s /usr/bin/$(PYTHON_INTERPRETER) /usr/bin/python		# link generic `python` to latest version
-	python -m pip install --upgrade pip pipreqs dav-tools
-	python ./py-install-packages.py
+	python -m pip install --upgrade -r requirements.txt
 
 postgresql:
 	sudo apt install postgresql libpq-dev -y
