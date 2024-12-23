@@ -38,7 +38,8 @@ def get_wifipass_windows() -> dict[str, str]:
         if re.search(r'(Security key\s+:\sAbsent|Chiave di sicurezza\s+:\sAssente)', password):
             password = None
         else:
-            password = re.findall(r'Key Content\s*: (.*?)\r', password)[0] or re.findall(r'Contenuto chiave\s*: (.*?)\r', password)[0]
+            password = re.findall(r'(Key Content\s*: (.*?)\r|Contenuto chiave\s*: (.*?)\r)', password)[0]
+            password = password[1] if password[1] else password[2]
 
         result[profile] = password
     return result
