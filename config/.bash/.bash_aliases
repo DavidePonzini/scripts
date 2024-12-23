@@ -30,5 +30,5 @@ alias motd='for i in /etc/update-motd.d/*; do if [ -x "$i" ] && [ "$i" != "/etc/
 alias lsblk='lsblk -o NAME,PATH,SIZE,STATE,TYPE,MODE,MODEL,FSTYPE,FSVER,MOUNTPOINT,LABEL,PARTLABEL,UUID'
 alias mkfs.fat32='mkfs.fat -F 32'
 alias ffmpeg='ffmpeg -hide_banner'
-alias pipreqs='pipreqs --mode no-pin --force'
+alias pipreqs='pipreqs --mode gt --force'
 alias aws-ssh='ssh ubuntu@15.237.153.101 -i /home/dav/.ssh/davide_ponzini_key_240610.pem'

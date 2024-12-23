@@ -34,10 +34,12 @@ def get_wifipass_windows() -> dict[str, str]:
     
     for profile in profiles:
         password = commands.get_output(f'netsh wlan show profile "{profile}" key=clear', on_success=bytes.decode)
-        if re.search(r'Security key\s+:\sAbsent', password):
+
+        if re.search(r'(Security key\s+:\sAbsent|Chiave di sicurezza\s+:\sAssente)', password):
             password = None
         else:
-            password = re.findall(r'Key Content\s*: (.*?)\r', password)[0]
+            password = re.findall(r'Key Content\s*: (.*?)\r', password)[0] or re.findall(r'Contenuto chiave\s*: (.*?)\r', password)[0]
+
         result[profile] = password
     return result
 
