@@ -1,14 +1,16 @@
-# Programs
+# Installation
 1. Chrome
 1. Git
 1. Python
+
+### Programs
 1. 7-zip
 1. Notepad++
 1. VLC
 1. Faststone Image Viewer
 1. BitTorrent
 
-## Optional
+### Optional
 1. Office
 1. FileZilla
 
@@ -19,8 +21,9 @@
 1. `Win+E` opens **This PC**
 1. Set default actions for **closing the lid** and pressing the **power button**
 1. Set **sleep timeout** for inactivity to 15 min
-1. Antivirus: exclude `D:/PROTECTED`
-1. Antivirus: exclude BitTorrent
+1. Setup antivirus exclusions
+    - `D:/PROTECTED`
+    - BitTorrent
 
-# Finish
+# Backup
 1. Backup the entire system!
