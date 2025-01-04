@@ -3,18 +3,25 @@ GIT_USER_NAME="Davide Ponzini"
 PYTHON=python3
 VENV=./.venv
 
-# install-all: git_config python
+ifeq ($(OS),Windows_NT)
+	VENV_BIN=$(VENV)/Scripts
+else
+	VENV_BIN=$(VENV)/bin
+endif
+
+
+venv:
+	python -m venv $(VENV)
+	$(VENV_BIN)/python -m pip install --upgrade -r requirements.txt
 
 python:
 	sudo apt install $(PYTHON)-full $(PYTHON)-pip ipython3 -y
 	sudo rm -f /usr/bin/python
 	sudo ln -s /usr/bin/$(PYTHON) /usr/bin/python				# link generic `python` to latest version
-	python -m venv $(VENV)							# setup venv
-	$(VENV)/bin/python -m pip install --upgrade -r requirements.txt
 
 postgresql:
 	sudo apt install postgresql libpq-dev -y
-	$(VENV)/bin/python -m pip install --upgrade psycopg2
+	$(VENV_BIN)/python -m pip install --upgrade psycopg2
 
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
