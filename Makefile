@@ -1,19 +1,20 @@
 GIT_USER_EMAIL="davide.ponzini95@gmail.com"
 GIT_USER_NAME="Davide Ponzini"
-PYTHON_INTERPRETER=python3
+PYTHON=python3
+VENV=./.venv
 
 # install-all: git_config python
 
 python:
-	sudo apt install $(PYTHON_INTERPRETER)-full $(PYTHON_INTERPRETER)-pip ipython3 -y
+	sudo apt install $(PYTHON)-full $(PYTHON)-pip ipython3 -y
 	sudo rm -f /usr/bin/python
-	sudo ln -s /usr/bin/$(PYTHON_INTERPRETER) /usr/bin/python		# link generic `python` to latest version
-	python -m venv .							# setup venv
-	./bin/python -m pip install --upgrade -r requirements.txt
+	sudo ln -s /usr/bin/$(PYTHON) /usr/bin/python				# link generic `python` to latest version
+	python -m venv $(VENV)							# setup venv
+	$(VENV)/bin/python -m pip install --upgrade -r requirements.txt
 
 postgresql:
 	sudo apt install postgresql libpq-dev -y
-	./bin/python -m pip install --upgrade psycopg2
+	$(VENV)/bin/python -m pip install --upgrade psycopg2
 
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
