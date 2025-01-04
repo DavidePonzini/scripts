@@ -52,21 +52,21 @@ def update_windows():
     commands.execute('powershell -command "Get-WindowsUpdate -Install -AcceptAll -IgnoreReboot -Verbose"')
     messages.success('Installed updates')
 
-def update_python():
-    messages.info('Updating pip...')
-    commands.execute('python -m pip install --upgrade pip --root-user-action=ignore')
-    messages.success('Updated pip to latest version')
+# def update_python():
+#     messages.info('Updating pip...')
+#     commands.execute('/usr/bin/env python -m pip install --upgrade pip --root-user-action=ignore')
+#     messages.success('Updated pip to latest version')
 
 
 if __name__ == '__main__':
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
     argument_parser.set_description('Performs a full pc update')
-    argument_parser.add_argument('--python', help='update python package manager', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
+    # argument_parser.add_argument('--python', help='update python package manager', action=ArgumentAction.BOOLEAN_OPTIONAL, default=True)
 
     requirements.require(root=True, os=['Linux', 'Windows'])
 
-    if(argument_parser.args.python):
-        run_update(update_python)
+    # if(argument_parser.args.python):
+    #     run_update(update_python)
 
     if platform.system() == 'Linux':
         run_update(update_linux)
