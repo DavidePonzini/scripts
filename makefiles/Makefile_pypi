@@ -2,42 +2,43 @@
 # Type: PyPi
 # Author: Davide Ponzini
 
+NAME=dav-tools
+VENV=./venv
 
-NAME=toypandas
-PY=python
+ifeq ($(OS),Windows_NT)
+	VENV_BIN=$(VENV)/Scripts
+else
+	VENV_BIN=$(VENV)/bin
+endif
 
+
+venv:
+	python -m venv --clear $(VENV)
+	$(VENV_BIN)/python -m pip install --upgrade -r requirements.txt
 
 prepare: test documentation
 	:
 
 install: uninstall build
-	$(PY) -m pip install ./dist/*.whl
+	$(VENV_BIN)/python -m pip install ./dist/*.whl
 
-build:
+build: venv
 	sudo rm -rf dist/
-	$(PY) -m build
+	$(VENV_BIN)/python -m build
 
 uninstall:
-	$(PY) -m pip uninstall -y $(NAME)
+	$(VENV_BIN)/python -m pip uninstall -y $(NAME)
 
 documentation:
 	make html -C docs/
 
 test: install
-	pytest
-
-requirements.txt:
-	$(PY) -m pip install pipreqs
-	pipreqs --mode no-pin --force
-
-required-packages: requirements.txt
-	$(PY) -m pip install --upgrade build autoapi pytest -r requirements.txt
+	$(VENV_BIN)/python -m pytest
 
 upload: prepare
-	$(PY) -m pip install --upgrade twine
-	$(PY) -m twine upload --verbose dist/*
+	$(VENV_BIN)/python -m pip install --upgrade twine
+	$(VENV_BIN)/python -m twine upload --verbose dist/*
 
 download: uninstall
-	$(PY) -m pip install $(NAME)
+	$(VENV_BIN)/python -m pip install $(NAME)
 
-########## Makefile end ##########
