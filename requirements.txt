@@ -1,4 +1,4 @@
-dav_tools>=0.4.0
+dav_tools>=0.4.3
 pandas==2.2.3
 pandasql==0.7.3
 Pillow==11.0.0
