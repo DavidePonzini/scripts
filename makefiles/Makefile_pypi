@@ -1,4 +1,7 @@
-# Makefile by Davide Ponzini
+########## Makefile start ##########
+# Type: PyPi
+# Author: Davide Ponzini
+
 
 NAME=toypandas
 PY=python
@@ -37,3 +40,4 @@ upload: prepare
 download: uninstall
 	$(PY) -m pip install $(NAME)
 
+########## Makefile end ##########
