@@ -17,7 +17,7 @@
 # Setup
 1. Run scripts in `/scripts/windows/config`
 1. Run `python -m pip install -r /scripts/requirements.txt`
-1. Move folders to `D:\`
+1. Move folders to `D:\\`
 1. `Win+E` opens **This PC**
 1. Set default actions for **closing the lid** and pressing the **power button**
 1. Set **sleep timeout** for inactivity to 15 min
