@@ -1,14 +1,12 @@
 #!/bin/bash -e
+# Activate the virtual environment
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/../venv/bin/activate"
 
 apt install apache2 mysql-server php libapache2-mod-php php-mysql phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
 
 mysql <<< "DROP USER IF EXISTS 'dba'@'localhost';"
 mysql <<< "CREATE USER 'dba'@'localhost' IDENTIFIED BY 'dav';"
 #mysql <<< "GRANT ALL PRIVILEGES ON *.* TO 'dba'@'localhost';"
-
-
-# Activate the virtual environment
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source "$SCRIPT_DIR/../venv/bin/activate"
 
 python -m dav_tools.messages success "Created admin account: 'dba'@'localhost', password: 'dav'"

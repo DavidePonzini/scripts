@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 from dav_tools import requirements, messages, argument_parser, ArgumentAction, commands
 

@@ -1,4 +1,7 @@
 #!/bin/bash -e
+# Activate the virtual environment
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$SCRIPT_DIR/../venv/bin/activate"
 
 if [ $# -lt 1 ]; then
 	python -m dav_tools.messages info "usage: $0 <host> [port]"

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 # Author: Davide Ponzini
 # Date: 22/06/2022
