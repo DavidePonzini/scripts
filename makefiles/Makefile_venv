@@ -1,8 +1,8 @@
 ########## Makefile start ##########
-# Type: PyPi
 # Author: Davide Ponzini
 
-VENV=./venv
+VENV=venv
+REQUIREMENTS=requirements.txt
 
 ifeq ($(OS),Windows_NT)
 	VENV_BIN=$(VENV)/Scripts
@@ -11,9 +11,14 @@ else
 endif
 
 
-venv:
+$(VENV):
 	python -m venv --clear $(VENV)
-	$(VENV_BIN)/python -m pip install --upgrade -r requirements.txt
+	touch -a $(REQUIREMENTS)
+	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
+
+$(VENV)_upgrade: $(VENV)
+	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
 
 
 ########## Makefile end ##########
+
