@@ -27,5 +27,5 @@ if __name__ == '__main__':
 
     # fail2ban
     files.copy_file(f'{sys.path[0]}/.config/jail.local', '/etc/fail2ban/jail.local',)
-    commands.execute('service ssh restart')
+    commands.execute('service fail2ban restart')
     messages.success('Configured fail2ban')
