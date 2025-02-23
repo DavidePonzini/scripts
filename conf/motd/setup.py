@@ -18,7 +18,7 @@ files.copy_file(f'{sys.path[0]}/.files/motd-news', '/etc/default/motd-news')
 messages.info('Disabled news')
 
 # fail2ban
-if commands.get_output('which fail2ban-client') != '':
+if commands.get_output('which fail2ban-client', on_error=lambda: None) != '':
    files.copy_file(f'{sys.path[0]}/.files/88-fail2ban', '/etc/update-motd.d/88-fail2ban')
    messages.info('Enabled fail2ban')
 else:
