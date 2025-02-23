@@ -8,7 +8,7 @@ import os
 
 def copy(filename):
     files.copy_file(
-        f'{sys.path[0]}/.bash/{filename}', f'{argument_parser.args.home_path}/{filename}',
+        f'{sys.path[0]}/{filename}', f'{argument_parser.args.home_path}/{filename}',
         symlink=True
     )
 

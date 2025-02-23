@@ -7,7 +7,6 @@ import sys
 if __name__ == '__main__':
     argument_parser.set_description('Configure home server')
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
-    argument_parser.add_argument('--ssh_port', help='Port to use for SSH connection', default='2222', type=int)
     argument_parser.args
 
     requirements.require(root=True, os=[requirements.OS.LINUX])

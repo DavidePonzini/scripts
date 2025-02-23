@@ -11,12 +11,12 @@ requirements.require(
 
 # system info
 commands.execute('apt install -y landscape-common')
-messages.success('Enabled system info')
+messages.info('Enabled system info')
 
 # motd news
 files.copy_file(f'{sys.path[0]}/.motd-news', '/etc/default/motd-news')
-messages.success('Disabled news')
+messages.info('Disabled news')
 
 # fail2ban
 files.copy_file(f'{sys.path[0]}/.fail2ban', '/etc/update-motd.d/86-fail2ban')
-messages.success('Enabled fail2ban')
+messages.info('Enabled fail2ban')
