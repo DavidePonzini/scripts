@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# Check if the user is root
+if [ "$(id -u)" -ne 0 ]; then
+    exit 1
+fi
+
+echo
 echo "=== Fail2ban Banned IPs by Jail ==="
 
 # Get the list of jails from fail2ban-client
@@ -12,4 +19,3 @@ for jail in $jail_list; do
 done
 
 echo "==================================="
-echo
