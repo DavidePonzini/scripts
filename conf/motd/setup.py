@@ -23,4 +23,4 @@ if __name__ == '__main__':
       files.copy_file(f'{sys.path[0]}/.files/88-fail2ban', '/etc/update-motd.d/88-fail2ban')
       messages.info('Enabled fail2ban')
    else:
-      messages.info('fail2ban is not installed, skipping')
+      messages.warning('fail2ban is not installed, skipping')
