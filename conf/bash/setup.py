@@ -6,8 +6,12 @@ import os
 
 
 def copy(filename):
+    dest = f'{argument_parser.args.home_path}/{filename}'
+    
+    files.delete_file(dest)
+
     files.copy_file(
-        f'{sys.path[0]}/.files/{filename}', f'{argument_parser.args.home_path}/{filename}',
+        f'{sys.path[0]}/.files/{filename}', dest,
         symlink=True
     )
 
