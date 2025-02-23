@@ -2,6 +2,7 @@ GIT_USER_EMAIL="davide.ponzini95@gmail.com"
 GIT_USER_NAME="Davide Ponzini"
 PYTHON=python3
 VENV=./venv
+REQUIREMENTS=requirements.txt
 
 ifeq ($(OS),Windows_NT)
 	VENV_BIN=$(VENV)/Scripts
@@ -10,9 +11,13 @@ else
 endif
 
 
-venv:
-	python -m venv --clear --prompt "${CURDIR}" $(VENV)
-	$(VENV_BIN)/python -m pip install --upgrade -r requirements.txt
+$(VENV):
+	python -m venv --clear $(VENV)
+	touch -a $(REQUIREMENTS)
+	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
+
+$(VENV)_upgrade: $(VENV)
+	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
 
 git_config:
 	git config --global user.email $(GIT_USER_EMAIL)
