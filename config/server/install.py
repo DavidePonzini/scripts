@@ -12,17 +12,20 @@ if __name__ == '__main__':
 
     requirements.require(root=True, os=[requirements.OS.LINUX])
 
-    # Install requirements
+    # install requirements
     commands.execute('apt install samba fail2ban -y')
 
-    # Samba
+    # samba
     files.copy_file(f'{sys.path[0]}/.config/smb.conf', '/etc/samba/smb.conf',)
     commands.execute('service smbd restart')
     messages.success('Configured Samba')
 
-    # SSH
+    # ssh
     files.copy_file(f'{sys.path[0]}/.config/sshd_config', '/etc/ssh/sshd_config',)
     commands.execute('service ssh restart')
     messages.success('Configured SSH')
 
-    # 
+    # fail2ban
+    files.copy_file(f'{sys.path[0]}/.config/jail.local', '/etc/fail2ban/jail.local',)
+    commands.execute('service ssh restart')
+    messages.success('Configured fail2ban')

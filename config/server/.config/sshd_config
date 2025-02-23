@@ -11,8 +11,9 @@
 
 Include /etc/ssh/sshd_config.d/*.conf
 
-Port 2222
+Port 2222               # use custom port
 #AddressFamily any
+AddressFamily inet      # listen on IPv4 only
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
@@ -31,6 +32,7 @@ Port 2222
 
 #LoginGraceTime 2m
 #PermitRootLogin prohibit-password
+PermitRootLogin no
 #StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10
@@ -54,7 +56,7 @@ Port 2222
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-#PasswordAuthentication yes
+PasswordAuthentication no
 #PermitEmptyPasswords no
 
 # Change to yes to enable challenge-response passwords (beware issues with
