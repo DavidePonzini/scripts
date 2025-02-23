@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from dav_tools import requirements, commands, messages, files, argument_parser
 import sys
 
