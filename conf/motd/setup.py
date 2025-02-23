@@ -18,5 +18,5 @@ files.copy_file(f'{sys.path[0]}/.files/motd-news', '/etc/default/motd-news')
 messages.info('Disabled news')
 
 # fail2ban
-files.copy_file(f'{sys.path[0]}/.files/fail2ban', '/etc/update-motd.d/86-fail2ban')
+files.copy_file(f'{sys.path[0]}/.files/88-fail2ban', '/etc/update-motd.d/88-fail2ban')
 messages.info('Enabled fail2ban')
