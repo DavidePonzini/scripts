@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 from dav_tools import messages, argument_parser, files, requirements
-from pathlib import Path
 import sys
 import os
 
 
 def copy(filename):
     files.copy_file(
-        f'{sys.path[0]}/{filename}', f'{argument_parser.args.home_path}/{filename}',
+        f'{sys.path[0]}/.files/{filename}', f'{argument_parser.args.home_path}/{filename}',
         symlink=True
     )
 
