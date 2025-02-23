@@ -7,6 +7,9 @@ import sys
 if __name__ == '__main__':
     argument_parser.set_description('Configure home server')
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
+    argument_parser.add_argument('--samba', help='Install and configure Samba', action='store_true', default=False)
+    argument_parser.add_argument('--ssh', help='Install and configure SSH', action='store_true', default=False)
+    argument_parser.add_argument('--fail2ban', help='Install and configure fail2ban', action='store_true', default=False)
     argument_parser.args
 
     requirements.require(root=True, os=[requirements.OS.LINUX])
