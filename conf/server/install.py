@@ -27,16 +27,16 @@ if __name__ == '__main__':
         commands.execute(f'apt install {" ".join(packages)} -y')
 
     # samba
-    files.copy_file(f'{sys.path[0]}/.conf/smb.conf', '/etc/samba/smb.conf',)
+    files.copy_file(f'{sys.path[0]}/.files/smb.conf', '/etc/samba/smb.conf',)
     commands.execute('service smbd restart')
     messages.success('Configured Samba')
 
     # ssh
-    files.copy_file(f'{sys.path[0]}/.conf/sshd_config', '/etc/ssh/sshd_config',)
+    files.copy_file(f'{sys.path[0]}/.files/sshd_config', '/etc/ssh/sshd_config',)
     commands.execute('service ssh restart')
     messages.success('Configured SSH')
 
     # fail2ban
-    files.copy_file(f'{sys.path[0]}/.conf/jail.local', '/etc/fail2ban/jail.local',)
+    files.copy_file(f'{sys.path[0]}/.files/jail.local', '/etc/fail2ban/jail.local',)
     commands.execute('service fail2ban restart')
     messages.success('Configured fail2ban')
