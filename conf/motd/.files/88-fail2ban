@@ -15,6 +15,6 @@ for jail in $jail_list; do
     jail=$(echo $jail)
     # Count the banned IPs by counting the fields in the banned IP list
     count=$(fail2ban-client status "$jail" | grep "Banned IP list:" | awk -F': +' '{print NF-1}')
-    echo "$jail: $count"
+    echo "  $jail: $count"
 done
 
