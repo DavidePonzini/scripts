@@ -8,7 +8,8 @@ import os
 def copy(filename):
     dest = f'{argument_parser.args.home_path}/{filename}'
     
-    files.delete_file(dest)
+    if files.delete_file(dest):
+        messages.info(f'Removed existing {filename} file')
 
     files.copy_file(
         f'{sys.path[0]}/.files/{filename}', dest,
