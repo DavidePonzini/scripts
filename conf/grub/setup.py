@@ -2,6 +2,7 @@
 
 from dav_tools import requirements, commands, messages, files, argument_parser, ArgumentAction
 import sys
+import os
 
 
 if __name__ == '__main__':
@@ -18,6 +19,10 @@ if __name__ == '__main__':
     if argument_parser.args.custom:
         files.copy_file(f'{sys.path[0]}/.files/grub_40_custom', '/etc/grub.d/40_custom')
         messages.info('Copied custom entries')
+    else:
+        if os.path.exists('/etc/grub.d/40_custom'):
+            os.remove('/etc/grub.d/40_custom')
+            messages.info('Deleted custom entries')
 
     commands.execute('update-grub')
     messages.success('Configured complete')
