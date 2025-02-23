@@ -14,9 +14,9 @@ commands.execute('apt install -y landscape-common')
 messages.info('Enabled system info')
 
 # motd news
-files.copy_file(f'{sys.path[0]}/.motd-news', '/etc/default/motd-news')
+files.copy_file(f'{sys.path[0]}/.conf/motd-news', '/etc/default/motd-news')
 messages.info('Disabled news')
 
 # fail2ban
-files.copy_file(f'{sys.path[0]}/.fail2ban', '/etc/update-motd.d/86-fail2ban')
+files.copy_file(f'{sys.path[0]}/.conf/fail2ban', '/etc/update-motd.d/86-fail2ban')
 messages.info('Enabled fail2ban')
