@@ -10,11 +10,19 @@ echo "Fail2ban Banned IPs by Jail"
 
 # Get the list of jails from fail2ban-client
 jail_list=$(fail2ban-client status | grep "Jail list:" | cut -d: -f2 | tr ',' ' ')
-for jail in $jail_list; do 
+for jail in $jail_list; do
     # Trim any leading/trailing whitespace
     jail=$(echo $jail)
-    # Count the banned IPs by counting the fields in the banned IP list
-    count=$(fail2ban-client status "$jail" | grep "Banned IP list:" | awk -F': +' '{print NF-1}')
+    
+    # Extract the banned IP list, then count the IPs
+    ip_list=$(fail2ban-client status "$jail" | grep "Banned IP list:" | cut -d: -f2)
+    
+    # If ip_list is empty, count is zero; otherwise, split by comma and count non-empty lines
+    if [ -z "$ip_list" ]; then
+        count=0
+    else
+        count=$(echo "$ip_list" | tr ',' '\n' | sed '/^[[:space:]]*$/d' | wc -l)
+    fi
+
     echo "  $jail: $count"
 done
-
