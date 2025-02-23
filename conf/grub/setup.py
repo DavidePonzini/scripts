@@ -25,6 +25,6 @@ if __name__ == '__main__':
             messages.info('Deleted custom entries')
 
     commands.execute('update-grub')
-    messages.success('Configured complete')
+    messages.success('Updated grub configuration')
 
 
