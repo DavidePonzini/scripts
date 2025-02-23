@@ -4,7 +4,7 @@ from dav_tools import requirements, commands, files, messages
 import sys
 
 
-def install_fail2ban():
+def install_fail2ban(result):
       files.copy_file(f'{sys.path[0]}/.files/88-fail2ban', '/etc/update-motd.d/88-fail2ban')
       messages.info('Enabled fail2ban')
 
