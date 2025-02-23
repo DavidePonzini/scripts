@@ -3,17 +3,7 @@ ignoreip = 127.0.0.1/8
 bantime = 31536000              # 1 year
 findtime = 600
 maxretry = 3
-backend = auto
-usedns = warn
 destemail = davide.ponzini95@gmail.com
-sendername = Fail2Ban
-banaction = iptables-multiport
-mta = sendmail
-protocol = tcp
-chain = INPUT
-action_ = %(banaction)...
-action_mw = %(banaction)...
-action_mwl = %(banaction)s...
 
 [sshd]
 enabled = true
