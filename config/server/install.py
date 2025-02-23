@@ -21,7 +21,7 @@ if __name__ == '__main__':
     messages.success('Configured Samba')
 
     # SSH
-    files.copy_file(f'{sys.path[0]}/.config/ssh/sshd_config', '/etc/ssh/sshd_config',)
+    files.copy_file(f'{sys.path[0]}/.config/sshd_config', '/etc/ssh/sshd_config',)
     commands.execute('service ssh restart')
     messages.success('Configured SSH')
 
