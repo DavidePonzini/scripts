@@ -17,7 +17,7 @@ if __name__ == '__main__':
     messages.info('Copied grub configuration')
 
     if argument_parser.args.custom:
-        files.copy_file(f'{sys.path[0]}/.files/grub_40_custom', '/etc/grub.d/40_custom')
+        files.copy_file(f'{sys.path[0]}/.files/40_custom', '/etc/grub.d/40_custom')
         messages.info('Copied custom entries')
     else:
         if os.path.exists('/etc/grub.d/40_custom'):
