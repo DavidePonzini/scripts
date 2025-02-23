@@ -19,9 +19,8 @@ if __name__ == '__main__':
    messages.info('Disabled news')
 
    # fail2ban
-   try:
-      commands.get_output('which fail2ban-client')
+   if commands.is_installed('fail2ban'):
       files.copy_file(f'{sys.path[0]}/.files/88-fail2ban', '/etc/update-motd.d/88-fail2ban')
       messages.info('Enabled fail2ban')
-   except:
+   else:
       messages.info('fail2ban is not installed, skipping')
