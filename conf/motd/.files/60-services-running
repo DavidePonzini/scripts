@@ -8,7 +8,7 @@ SERVICES=('fail2ban' 'ssh' 'apache2' 'mysql' 'postgresql')
 check_service() {
   local service="$1"
   if systemctl is-active --quiet "$service"; then
-    echo -e "  \e[32m[+] $service\e[0m"
+    echo -e "  [+] $service"
   else
     echo -e "  \e[31m[-] $service\e[0m"
   fi
