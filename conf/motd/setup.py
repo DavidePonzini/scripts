@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
    # fail2ban
    if commands.is_installed('fail2ban-client'):
-      files.copy_file(f'{sys.path[0]}/.files/88-fail2ban', '/etc/update-motd.d/88-fail2ban')
+      files.copy_file(f'{sys.path[0]}/.files/60-service-running-fail2ban', '/etc/update-motd.d/60-service-running-fail2ban')
       messages.info('Enabled fail2ban')
    else:
       messages.warning('fail2ban is not installed, skipping')
