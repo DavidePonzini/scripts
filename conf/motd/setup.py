@@ -18,9 +18,6 @@ if __name__ == '__main__':
    files.copy_file(f'{sys.path[0]}/.files/motd-news', '/etc/default/motd-news')
    messages.info('Disabled news')
 
-   # fail2ban
-   if commands.is_installed('fail2ban-client'):
-      files.copy_file(f'{sys.path[0]}/.files/60-service-running-fail2ban', '/etc/update-motd.d/60-service-running-fail2ban')
-      messages.info('Enabled fail2ban')
-   else:
-      messages.warning('fail2ban is not installed, skipping')
+   # services running
+   files.copy_file(f'{sys.path[0]}/.files/60-services-running', '/etc/update-motd.d/60-services-running')
+   messages.info('Enabled services running')
