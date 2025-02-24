@@ -1,28 +1,5 @@
 #!/bin/bash
 
-# Check if the user is root
-if [ "$(id -u)" -ne 0 ]; then
-    exit 1
-fi
+SERVICE="fail2ban"
 
-echo
-echo "Fail2ban Banned IPs by Jail"
-
-# Get the list of jails from fail2ban-client
-jail_list=$(fail2ban-client status | grep "Jail list:" | cut -d: -f2 | tr ',' ' ')
-for jail in $jail_list; do
-    # Trim any leading/trailing whitespace
-    jail=$(echo $jail)
-    
-    # Extract the banned IP list, then count the IPs
-    ip_list=$(fail2ban-client status "$jail" | grep "Banned IP list:" | cut -d: -f2)
-    
-    # If ip_list is empty, count is zero; otherwise, split by comma and count non-empty lines
-    if [ -z "$ip_list" ]; then
-        count=0
-    else
-        count=$(echo "$ip_list" | tr ',' '\n' | sed '/^[[:space:]]*$/d' | wc -l)
-    fi
-
-    echo "  $jail: $count"
-done
+systemctl is-active --quiet "$SERVICE" && echo -e "\e[32m$SERVICE is running\e[0m" || echo -e "\e[31m$SERVICE is NOT running\e[0m"
