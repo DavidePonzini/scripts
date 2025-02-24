@@ -1,22 +1,24 @@
 #!/bin/bash
 
 # Define a list of services to check
-SERVICES=("fail2ban" "ssh")
+SERVICES=('fail2ban' 'ssh' 'apache2' 'mysql' 'postgresql')
 
-# Print an empty line
-echo
 
 # Function to check service status using if/else
 check_service() {
   local service="$1"
   if systemctl is-active --quiet "$service"; then
-    echo -e "\e[32m$service is running\e[0m"
+    echo -e "  \e[32m[+] $service\e[0m"
   else
-    echo -e "\e[31m$service is not running\e[0m"
+    echo -e "  \e[31m[-] $service\e[0m"
   fi
 }
 
+
 # Iterate over the services and check each one
+echo
+echo 'Services status:'
+
 for service in "${SERVICES[@]}"; do
   check_service "$service"
 done
