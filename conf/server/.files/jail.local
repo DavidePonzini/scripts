@@ -10,3 +10,15 @@ enabled = true
 port = 2222
 filter = sshd
 logpath = /var/log/auth.log
+
+[smb]
+enabled = true
+port    = 137,138,139,445
+filter  = smb
+logpath = /var/log/samba/log.smbd
+
+[nmb]
+enabled = true
+port    = 137,138
+filter  = smb
+logpath = /var/log/samba/log.nmbd
