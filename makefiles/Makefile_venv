@@ -1,6 +1,3 @@
-########## Makefile start ##########
-# Author: Davide Ponzini
-
 VENV=venv
 REQUIREMENTS=requirements.txt
 
@@ -9,6 +6,9 @@ ifeq ($(OS),Windows_NT)
 else
 	VENV_BIN=$(VENV)/bin
 endif
+
+
+.PHONY: $(VENV)_upgrade
 
 
 $(VENV):
@@ -20,5 +20,4 @@ $(VENV)_upgrade: $(VENV)
 	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
 
 
-########## Makefile end ##########
 

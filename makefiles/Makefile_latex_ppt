@@ -1,3 +1,5 @@
+.PHONY: add_remote rebase
+
 add_remote:
 	git remote add template git@github.com:DavidePonzini/dav_theme.git
 

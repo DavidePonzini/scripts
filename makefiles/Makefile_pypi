@@ -1,8 +1,4 @@
-########## Makefile start ##########
-# Type: PyPi
-# Author: Davide Ponzini
-
-NAME=dav-tools
+NAME=dav_tools
 VENV=./venv
 
 ifeq ($(OS),Windows_NT)
@@ -11,10 +7,16 @@ else
 	VENV_BIN=$(VENV)/bin
 endif
 
+.PHONY: $(VENV)_upgrade prepare install build uninstall documentation test upload download
 
-venv:
+$(VENV):
 	python -m venv --clear $(VENV)
-	$(VENV_BIN)/python -m pip install --upgrade -r requirements.txt
+	touch -a $(REQUIREMENTS)
+	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
+
+$(VENV)_upgrade: $(VENV)
+	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
+
 
 prepare: test documentation
 	:

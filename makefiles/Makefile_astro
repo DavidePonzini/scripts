@@ -3,6 +3,8 @@ DIR=/var/www/html/
 # To add submodules use in root directory:
 #	git submodule add <url> public/...
 
+.PHONY: init build copy clean
+
 init:
 	npm install
 	git submodule update --init --recursive
