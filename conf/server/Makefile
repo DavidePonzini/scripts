@@ -7,6 +7,16 @@ else
 endif
 
 
+.PHONY:
+	echo "Please specify a target to run."
+
+apache:
+	apt install apache2 mysql-server php libapache2-mod-php php-mysql phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
+	mysql <<< "DROP USER IF EXISTS 'dba'@'localhost';"
+	mysql <<< "CREATE USER 'dba'@'localhost' IDENTIFIED BY 'dav';"
+	$(VENV_BIN)/python -m dav_tools.messages info "Created admin account: 'dba'@'localhost', password: 'dav'"
+	$(VENV_BIN)/python -m dav_tools.messages success "Apache configured successfully."
+
 samba:
 	apt install -y samba
 	cp .files/smb.conf /etc/samba/smb.conf
@@ -25,9 +35,3 @@ fail2ban:
 	service fail2ban restart
 	$(VENV_BIN)/python -m dav_tools.messages success "Fail2Ban configured successfully."
 
-apache:
-	apt install apache2 mysql-server php libapache2-mod-php php-mysql phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
-	mysql <<< "DROP USER IF EXISTS 'dba'@'localhost';"
-	mysql <<< "CREATE USER 'dba'@'localhost' IDENTIFIED BY 'dav';"
-	$(VENV_BIN)/python -m dav_tools.messages info "Created admin account: 'dba'@'localhost', password: 'dav'"
-	$(VENV_BIN)/python -m dav_tools.messages success "Apache configured successfully."
