@@ -11,6 +11,9 @@ else
 endif
 
 
+.PHONY: $(VENV) $(VENV)_upgrade git_config python postgresql common_apps
+
+
 $(VENV):
 	python -m venv --clear $(VENV)
 	touch -a $(REQUIREMENTS)
