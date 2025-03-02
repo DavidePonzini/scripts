@@ -15,7 +15,7 @@ endif
 
 
 $(VENV):
-	python -m venv --clear $(VENV)
+	python -m venv --prompt "${CURDIR}" $(VENV)
 	touch -a $(REQUIREMENTS)
 	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
 
