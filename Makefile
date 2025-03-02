@@ -35,12 +35,6 @@ python:
 	sudo rm -f /usr/bin/python
 	sudo ln -s /usr/bin/$(PYTHON) /usr/bin/python				# link generic `python` to latest version
 
-postgresql:
-	sudo apt install postgresql libpq-dev -y
-	$(VENV_BIN)/python -m pip install --upgrade psycopg2
-
-common_apps:
-	sudo apt install ubuntu-restricted-extras vlc
 endif
 
 

@@ -10,7 +10,9 @@ endif
 MESSAGE=$(VENV_BIN)/python -m dav_tools.messages
 
 
-.PHONY: apache apache-certbot samba ssh fail2ban
+.PHONY: apache apache-certbot samba ssh fail2ban postgresql common
+
+
 
 apache:
 	sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
@@ -42,3 +44,11 @@ fail2ban:
 	sudo cp .files/jail.local /etc/fail2ban/jail.local
 	sudo service fail2ban restart
 	@$(MESSAGE) success 'Fail2Ban configured successfully.'
+
+postgresql:
+	sudo apt install postgresql libpq-dev -y
+	$(VENV_BIN)/python -m pip install --upgrade psycopg2
+
+common:
+	sudo apt install ubuntu-restricted-extras vlc
+
