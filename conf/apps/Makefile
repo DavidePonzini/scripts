@@ -1,5 +1,6 @@
 SHELL=/bin/bash
 VENV=../../venv
+USER=DavidePonzini
 
 ifeq ($(OS),Windows_NT)
         VENV_BIN=$(VENV)/Scripts
@@ -38,6 +39,8 @@ ssh:
 	sudo cp .files/ssh/sshd_config /etc/ssh/sshd_config
 	sudo service ssh restart
 	@$(MESSAGE) success 'SSH configured successfully.'
+	ssh-import-id gh:$(USER)
+	@$(MESSAGE) success "Imported SSH keys from GitHub user $(USER)."
 
 fail2ban:
 	sudo apt install -y fail2ban
