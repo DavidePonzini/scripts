@@ -29,26 +29,34 @@ apache-certbot:
 
 samba:
 	sudo apt install -y samba
-	sudo cp .files/smb.conf /etc/samba/smb.conf
+	sudo cp .files/samba/smb.conf /etc/samba/smb.conf
 	sudo service smbd restart
 	@$(MESSAGE) success 'Samba configured successfully.'
 
 ssh:
 	sudo apt install -y openssh-server
-	sudo cp .files/sshd_config /etc/ssh/sshd_config
+	sudo cp .files/ssh/sshd_config /etc/ssh/sshd_config
 	sudo service ssh restart
 	@$(MESSAGE) success 'SSH configured successfully.'
 
 fail2ban:
 	sudo apt install -y fail2ban
-	sudo cp .files/jail.local /etc/fail2ban/jail.local
+	sudo cp .files/fail2ban/jail.local /etc/fail2ban/jail.local
 	sudo service fail2ban restart
 	@$(MESSAGE) success 'Fail2Ban configured successfully.'
 
 postgresql:
 	sudo apt install postgresql libpq-dev -y
 	$(VENV_BIN)/python -m pip install --upgrade psycopg2
+	@$(MESSAGE) success 'Installed PostgreSQL.'
 
 common:
 	sudo apt install ubuntu-restricted-extras vlc
 
+transmission:
+	sudo apt install transmission-daemon
+	sudo service transmission-daemon stop
+	sudo cp .files/transmission-daemon/settings.json /etc/transmission-daemon/settings.json
+	sudo service transmission-daemon start
+	sudo service transmission-daemon status
+	@$(MESSAGE) success 'Transmission daemon configures successfully'
