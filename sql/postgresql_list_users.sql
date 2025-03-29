@@ -1,11 +1,11 @@
 SELECT
 	u.usename AS "User",
 	CONCAT_WS(', ',
-		CASE WHEN r.rolsuper THEN 'Superuser' ELSE '' END,
-		CASE WHEN r.rolcreaterole THEN 'Create role' ELSE '' END,
-		CASE WHEN r.rolcreatedb THEN 'Create DB' ELSE '' END,
-		CASE WHEN r.rolreplication THEN 'Replication' ELSE '' END,
-		CASE WHEN r.rolbypassrls THEN 'Bypass RLS' ELSE '' END) AS "Attributes",
+		CASE WHEN r.rolsuper THEN 'Superuser' ELSE NULL END,
+		CASE WHEN r.rolcreaterole THEN 'Create role' ELSE NULL END,
+		CASE WHEN r.rolcreatedb THEN 'Create DB' ELSE NULL END,
+		CASE WHEN r.rolreplication THEN 'Replication' ELSE NULL END,
+		CASE WHEN r.rolbypassrls THEN 'Bypass RLS' ELSE NULL END) AS "Attributes",
 	ARRAY(SELECT b.rolname
 		FROM pg_catalog.pg_auth_members m
 		JOIN pg_catalog.pg_roles b ON (m.roleid = b.oid)
