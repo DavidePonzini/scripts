@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define a list of services to check
-SERVICES=('fail2ban' 'ssh' 'vsftpd' 'apache2' 'mysql' 'postgresql' 'transmission-daemon')
+SERVICES=('ssh' 'fail2ban' 'vsftpd' 'apache2' 'mysql' 'postgresql' 'docker' 'transmission-daemon')
 
 
 # Function to check service status using if/else
