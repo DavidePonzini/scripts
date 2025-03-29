@@ -10,7 +10,7 @@ if __name__ == '__main__':
     argument_parser.set_description('Quickly commits and uploads all changes performed on the current directory')
     argument_parser.add_argument('path', help='files (or folders) to commit', nargs='*', default=['.'])
     argument_parser.add_argument('-m', '--message', help='commit message', default=None)
-
+    argument_parser.args
 
     if commands.get_output('git status --porcelain') == b'': 
         messages.success('Nothing to commit')
