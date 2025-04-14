@@ -24,7 +24,7 @@ if __name__ == '__main__':
     commands.execute('git branch -M main')
     messages.success('Created "main" branch')
 
-    commands.execute(f'git remote add origin {argument_parser.args.remove_url}')
+    commands.execute(f'git remote add origin {argument_parser.args.remote_url}')
     messages.success('Added remote url')
 
     messages.progress('Uploading commit...')
