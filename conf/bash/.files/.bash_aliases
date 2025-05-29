@@ -21,7 +21,7 @@ alias lsblk='lsblk -o NAME,PATH,SIZE,STATE,TYPE,MODE,MODEL,FSTYPE,FSVER,MOUNTPOI
 alias mkdir='mkdir -v'
 alias mkfs.fat32='mkfs.fat -F 32'
 alias motd='for i in /etc/update-motd.d/*; do if [ -x "$i" ] && [ "$i" != "/etc/update-motd.d/98-fsck-at-reboot" ]; then $i; fi; done'
-alias mv='rsync -aP --remove-source-files'
+alias mv='mv -v'
 alias mysql='mysql --table'
 alias nano='nano -ixAUl'
 alias pipreqs='python -m pipreqs --mode gt --force'
