@@ -17,7 +17,7 @@ check_service() {
 
 # Iterate over the services and check each one
 echo
-echo 'Services status:'
+echo ' Services status:'
 
 for service in "${SERVICES[@]}"; do
   check_service "$service"
