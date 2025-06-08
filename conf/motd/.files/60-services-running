@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Define a list of services to check
-SERVICES=('ssh' 'fail2ban' 'vsftpd' 'apache2' 'mysql' 'postgresql' 'docker' 'transmission-daemon')
+SERVICES=('ssh' 'fail2ban' 'docker' 'apache2' 'mysql' 'postgresql' 'qbittorrent-nox')
 
 
 # Function to check service status using if/else
 check_service() {
   local service="$1"
   if systemctl is-active --quiet "$service"; then
-    echo -e "  [+] $service"
+    echo -e "  \e[36m[+] $service\e[0m"
   else
-    echo -e "  \e[31m[-] $service\e[0m"
+    echo -e "  \e[33m[-] $service\e[0m"
   fi
 }
 

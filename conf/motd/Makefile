@@ -23,4 +23,7 @@ motd:
 	sudo cp .files/60-services-running /etc/update-motd.d/60-services-running
 	@$(MESSAGE) success 'Now showing running services'
 
+	sudo cp .files/61-docker-ps /etc/update-motd.d/61-docker-ps
+	@$(MESSAGE) success 'Now showing docker containers'
+
 
