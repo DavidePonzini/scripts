@@ -69,3 +69,9 @@ transmission:
 	sudo service transmission-daemon start
 	sudo service transmission-daemon status
 	@$(MESSAGE) success 'Transmission daemon configured successfully'
+
+qbittorrent:
+	sudo apt install qbittorrent-nox
+	sudo cp .files/qbittorrent-nox/qbittorrent-nox.service /etc/systemd/system/qbittorrent-nox.service
+	sudo systemctl enable qbittorrent-nox
+	@$(MESSAGE) success 'qBitTorrent daemon configured successfully'
