@@ -1,24 +1,25 @@
 #!/bin/bash
 
 # Define a list of services to check
-SERVICES=('ssh' 'fail2ban' 'docker' 'apache2' 'mysql' 'postgresql' 'qbittorrent-nox')
+SERVICES=('ssh' 'fail2ban' 'docker' 'nginx' 'apache2' 'mysql' 'postgresql' 'qbittorrent-nox')
 
-
-# Function to check service status using if/else
-check_service() {
-  local service="$1"
-  if systemctl is-active --quiet "$service"; then
-    echo -e "  \e[36m[+] $service\e[0m"
-  else
-    echo -e "  \e[33m[-] $service\e[0m"
-  fi
-}
-
-
-# Iterate over the services and check each one
 echo
 echo ' Services status:'
 
 for service in "${SERVICES[@]}"; do
-  check_service "$service"
+    # Enabled or disabled
+    if systemctl is-enabled --quiet "$service" 2>/dev/null; then
+        ENABLE_MARK='[*]'
+    else
+        ENABLE_MARK='[ ]'
+    fi
+
+    # Active or inactive
+    if systemctl is-active --quiet "$service"; then
+        SERVICE_COLOR="\e[36m$service\e[0m"  # cyan
+    else
+        SERVICE_COLOR="\e[90m$service\e[0m"  # gray
+    fi
+
+    echo -e "  $ENABLE_MARK $SERVICE_COLOR"
 done
