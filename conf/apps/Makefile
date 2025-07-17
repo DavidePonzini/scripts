@@ -62,14 +62,6 @@ postgresql:
 common:
 	sudo apt install ubuntu-restricted-extras vlc
 
-transmission:
-	sudo apt install transmission-daemon
-	sudo service transmission-daemon stop
-	sudo cp .files/transmission-daemon/settings.json /etc/transmission-daemon/settings.json
-	sudo service transmission-daemon start
-	sudo service transmission-daemon status
-	@$(MESSAGE) success 'Transmission daemon configured successfully'
-
 qbittorrent:
 	sudo apt install qbittorrent-nox
 	sudo cp .files/qbittorrent-nox/qbittorrent-nox.service /etc/systemd/system/qbittorrent-nox.service
