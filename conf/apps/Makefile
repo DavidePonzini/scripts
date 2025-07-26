@@ -15,6 +15,22 @@ MESSAGE=$(VENV_BIN)/python -m dav_tools.messages
 
 
 
+nginx:
+	sudo apt install nginx -y
+	@$(MESSAGE) success 'Installed Nginx'
+	sudo cp .files/nginx/ponzidav.conf /etc/nginx/sites-available/ponzidav.conf
+	sudo ln -sf /etc/nginx/sites-available/ponzidav.conf /etc/nginx/sites-enabled/ponzidav.conf
+	sudo nginx -t
+	sudo systemctl reload nginx
+	@$(MESSAGE) success 'Configured reverse proxy'
+
+nginx-certbot:
+	sudo apt install certbot python3-certbot-nginx -y
+	sudo certbot --nginx -d ponzidav.com -d www.ponzidav.com -d lensql.ponzidav.com -d dev.lensql.ponzidav.com -d gpt4ct.ponzidav.com
+	@$(MESSAGE) success 'Certbot configured successfully'
+	sudo certbot renew --dry-run
+	@$(MESSAGE) success 'Certbot renewal tested successfully'
+
 apache:
 	sudo apt install apache2 mysql-server php libapache2-mod-php php-mysql phpmyadmin php-mbstring php-zip php-gd php-json php-curl -y
 	@$(MESSAGE) success 'Installed Apache'
