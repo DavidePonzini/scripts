@@ -1,0 +1,5 @@
+.PHONY: compile
+
+compile:
+	docker run --rm -v "$$PWD":/work -w /work texlive/texlive:latest latexmk -pdf -interaction=nonstopmode -file-line-error -auxdir=build main.tex
+	docker run --rm -v "$$PWD":/work -w /work texlive/texlive:latest latexmk -c
