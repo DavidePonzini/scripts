@@ -1,4 +1,4 @@
-Clear-Host
+# Clear-Host
 
 echo "Username: ........ $($env:USERNAME)"
 echo "Computer name: ... $($env:COMPUTERNAME)"
