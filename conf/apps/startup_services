@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# Script to enable or disable autostart of services using dialog
+
+# Check if the script is run as root
+if [[ $EUID -ne 0 ]]; then
+    echo "This script must be run as root (use sudo)"
+    exit 1
+fi
+
+# Check if dialog is installed
+if ! command -v dialog &> /dev/null; then
+    echo "The 'dialog' utility is required but not installed. Please install it using 'sudo apt install dialog'."
+    exit 1
+fi
+
+# Create a temporary file
+TEMP_FILE=$(mktemp /tmp/services_selected.XXXXXX)
+
+# Get a list of available systemd services (without the .service suffix)
+mapfile -t services < <(systemctl list-unit-files --type=service --no-pager --no-legend | awk '{print $1}' | sed 's/.service$//')
+
+# Build dialog items
+dialog_items=()
+for service in "${services[@]}"; do
+    if systemctl is-enabled --quiet "$service"; then
+        status="enabled"
+        item_status="on"
+    else
+        status="disabled"
+        item_status="off"
+    fi
+    dialog_items+=("$service" "$status" "$item_status")
+done
+
+# Show checklist dialog
+dialog --checklist "Select services to enable autostart (Press SPACE to toggle selection)" 0 0 0 "${dialog_items[@]}" 2> "$TEMP_FILE"
+
+# Check if dialog was cancelled
+if [[ $? -ne 0 ]]; then
+    echo "Operation cancelled."
+    rm -f "$TEMP_FILE"
+    exit 1
+fi
+
+# Read selected services
+read -ra selected_services <<< "$(cat "$TEMP_FILE")"
+
+# Apply autostart changes
+for service in "${services[@]}"; do
+    if systemctl is-enabled --quiet "$service"; then
+        current_status="enabled"
+    else
+        current_status="disabled"
+    fi
+
+    if [[ " ${selected_services[@]} " =~ " $service " ]]; then
+        desired_status="enabled"
+    else
+        desired_status="disabled"
+    fi
+
+    if [[ "$current_status" != "$desired_status" ]]; then
+        if [[ "$desired_status" == "enabled" ]]; then
+            echo "Enabling autostart for $service..."
+            systemctl enable "$service"
+        else
+            echo "Disabling autostart for $service..."
+            systemctl disable "$service"
+        fi
+    fi
+done
+
+# Clean up
+rm -f "$TEMP_FILE"

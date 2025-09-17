@@ -1,0 +1,26 @@
+#!/bin/bash
+
+echo
+echo ' Docker containers:'
+
+all_containers=$(docker ps -a --format '{{.Names}}')
+running_containers=$(docker ps --format '{{.Names}}')
+
+for name in $all_containers; do
+    # Check restart policy
+    restart_policy=$(docker inspect -f '{{.HostConfig.RestartPolicy.Name}}' "$name")
+    if [[ "$restart_policy" != "no" && "$restart_policy" != "" ]]; then
+        RESTART_MARK='[*]'
+    else
+        RESTART_MARK='[ ]'
+    fi
+
+    # Check running state
+    if echo "$running_containers" | grep -q "^$name$"; then
+        COLOR='\e[36m'  # cyan
+    else
+        COLOR='\e[90m'  # gray
+    fi
+
+    echo -e "  ${COLOR}${RESTART_MARK} $name\e[0m"
+done
