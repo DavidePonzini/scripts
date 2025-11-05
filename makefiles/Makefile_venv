@@ -8,7 +8,7 @@ else
 endif
 
 
-.PHONY: $(VENV)_upgrade
+.PHONY: $(VENV)_upgrade ipython
 
 
 $(VENV):
@@ -19,5 +19,6 @@ $(VENV):
 $(VENV)_upgrade: $(VENV)
 	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
 
-
+ipython: $(VENV)
+	$(VENV_BIN)/ipython
 
