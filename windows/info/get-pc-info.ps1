@@ -1,11 +1,11 @@
-Clear-Host
+# Clear-Host
 
 echo "Username: ........ $($env:USERNAME)"
 echo "Computer name: ... $($env:COMPUTERNAME)"
 echo "OS: .............. $($env:OS)"
 
 echo ""
-echo "==================== CPU ===================="
+echo "==================== DRIVES ===================="
 echo "Home drive: ...... $($env:HOMEDRIVE)"
 ./get-hdd-usage.ps1
 
