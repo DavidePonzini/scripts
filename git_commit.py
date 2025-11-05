@@ -10,6 +10,7 @@ if __name__ == '__main__':
     argument_parser.set_description('Quickly commits and uploads all changes performed on the current directory')
     argument_parser.add_argument('path', help='files (or folders) to commit', nargs='*', default=[])
     argument_parser.add_argument('-m', '--message', help='commit message', default=None)
+    argument_parser.add_argument('-p', '--push', help='push changes to remote', action='store_true')
     argument_parser.args
 
     if commands.get_output('git status --porcelain') == b'': 
@@ -42,6 +43,7 @@ if __name__ == '__main__':
     commands.execute(f'git commit --quiet -m "{commit_message}"')
     messages.success('Committed changes')
 
-    messages.progress('Uploading commit...')
-    commands.execute(f'git push --quiet')
-    messages.success('Uploaded commit')
+    if argument_parser.args.push:
+        messages.progress('Uploading commit...')
+        commands.execute(f'git push --quiet')
+        messages.success('Uploaded commit')
