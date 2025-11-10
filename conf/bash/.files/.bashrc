@@ -149,6 +149,24 @@ PS1_shell_level() {
 	fi
 }
 
+PS1_background_jobs() {
+    local job_count_running=$(jobs -r | wc -l);
+    local job_count_stopped=$(jobs -s | wc -l);
+    if [ "$job_count_running" -gt 0 ] || [ "$job_count_stopped" -gt 0 ]; then
+        echo -ne "$(PS1_color "01;35m") ["
+        if [ "$job_count_running" -gt 0 ]; then
+            echo -ne "$(PS1_color "01;32m")▷$job_count_running";
+        fi
+        if [ "$job_count_running" -gt 0 ] && [ "$job_count_stopped" -gt 0 ]; then
+            echo -ne " ";
+        fi
+        if [ "$job_count_stopped" -gt 0 ]; then
+            echo -ne "$(PS1_color "01;33m")□$job_count_stopped";
+        fi
+        echo -ne "$(PS1_color "01;35m")]";
+    fi
+}
+
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
@@ -173,4 +191,5 @@ PS1='\
 \[$(PS1_color "$priv" )\]\u@\h\
 \[$(PS1_color "00;00m")\]:\
 \[$(PS1_color "01;36m")\]\w\
+\[$(PS1_background_jobs)\]\
 \[$(PS1_color "00;00m")\] > '
