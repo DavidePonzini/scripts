@@ -11,7 +11,8 @@ if __name__ == '__main__':
     argument_parser.add_argument('path', help='files (or folders) to commit', nargs='*', default=[])
     argument_parser.add_argument('-m', '--message', help='commit message', default=None)
     argument_parser.add_argument('-p', '--push', help='push changes to remote', action='store_true')
-    argument_parser.args
+    argument_parser.add_argument('-v', '--verbose', help='show diff', action='store_true')
+    argument_parser.parse_args()
 
     if commands.get_output('git status --porcelain') == b'': 
         messages.success('Nothing to commit')
@@ -22,7 +23,10 @@ if __name__ == '__main__':
         messages.success('Staged changes')
 
     # display changes for the user
-    commands.execute('git status')
+    if argument_parser.args.verbose:
+        commands.execute('git status -v')
+    else:
+        commands.execute('git status')
 
     if commands.get_output('git diff --cached ') == b'':
         messages.warning('No changes staged for commit')
@@ -36,7 +40,7 @@ if __name__ == '__main__':
             if len(commit_message) == 0:
                 commit_message = f'Quick commit ({date.today()})'
                 messages.warning(f'Using default commit message: "{commit_message}"')
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, EOFError):
             messages.warning('Aborted')
             sys.exit(1)
 
