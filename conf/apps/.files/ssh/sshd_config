@@ -11,9 +11,19 @@
 
 Include /etc/ssh/sshd_config.d/*.conf
 
-Port 2222               # use custom port
+# When systemd socket activation is used (the default), the socket
+# configuration must be re-generated after changing Port, AddressFamily, or
+# ListenAddress.
+#
+# For changes to take effect, run:
+#
+#   systemctl daemon-reload
+#   systemctl restart ssh.socket
+#
+#Port 22
+Port 2222		# DAV: use custom port
 #AddressFamily any
-AddressFamily inet      # listen on IPv4 only
+AddressFamily inet	# DAV: listen on IPv4 only
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
@@ -32,7 +42,7 @@ AddressFamily inet      # listen on IPv4 only
 
 #LoginGraceTime 2m
 #PermitRootLogin prohibit-password
-PermitRootLogin no
+PermitRootLogin no	# DAV: disable root login
 #StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10

@@ -57,7 +57,7 @@ samba:
 	@$(MESSAGE) success 'Samba configured successfully'
 
 ssh:
-	sudo apt install -y openssh-server
+	sudo apt install -y openssh-server ssh-import-id
 	sudo cp .files/ssh/sshd_config /etc/ssh/sshd_config
 	sudo service ssh restart
 	@$(MESSAGE) success 'SSH configured successfully'
