@@ -1,9 +1,9 @@
 #!/bin/bash -e
 # Activate the virtual environment
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-source "$SCRIPT_DIR/../venv/bin/activate"
+PYTHON="$SCRIPT_DIR/../venv/bin/python"
 
-python -m dav_tools.requirements --root --os Linux
+$PYTHON -m dav_tools.requirements --root --os Linux
 
 
 # Temporary file used by `print()`
@@ -35,17 +35,17 @@ function print
 lshw -short > $HW
 
 # Print relevant information
-python -m dav_tools.messages info "Processor:"
+$PYTHON -m dav_tools.messages info "Processor:"
 	print "processor"
-python -m dav_tools.messages info "Memory:"
+$PYTHON -m dav_tools.messages info "Memory:"
 	print "memory"
-python -m dav_tools.messages info "Graphic Cards:"
+$PYTHON -m dav_tools.messages info "Graphic Cards:"
 	print "display"
-python -m dav_tools.messages info "Network:"
+$PYTHON -m dav_tools.messages info "Network:"
 	print "network"
-python -m dav_tools.messages info "Disks:"
+$PYTHON -m dav_tools.messages info "Disks:"
 	print "disk"
-python -m dav_tools.messages info "Volumes:"
+$PYTHON -m dav_tools.messages info "Volumes:"
 	print "volume"
 
 # remove temporary files
