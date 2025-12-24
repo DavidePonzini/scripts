@@ -103,3 +103,7 @@ function Prompt {
 
     return $prompt
 }
+
+
+# Aliases
+Set-Alias pythons 'C:\scripts\venv\Scripts\python.exe'
