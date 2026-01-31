@@ -34,17 +34,14 @@ if __name__ == '__main__':
 
     if argument_parser.args.message is not None:
         commit_message = argument_parser.args.message
+        commands.execute(f'git commit --quiet -m "{commit_message}"')
     else:
         try:
-            commit_message = messages.ask('Reason')
-            if len(commit_message) == 0:
-                commit_message = f'Quick commit ({date.today()})'
-                messages.warning(f'Using default commit message: "{commit_message}"')
+            commands.execute('git commit')
         except (KeyboardInterrupt, EOFError):
             messages.warning('Aborted')
             sys.exit(1)
 
-    commands.execute(f'git commit --quiet -m "{commit_message}"')
     messages.success('Committed changes')
 
     if argument_parser.args.push:
