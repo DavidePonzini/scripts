@@ -37,7 +37,8 @@ python:
 	sudo rm -f /usr/bin/python
 	sudo ln -s /usr/bin/$(PYTHON) /usr/bin/python				# link generic `python` to latest version
 
+
+terminal:
+	sudo apt install eza -y
+
 endif
-
-
-
