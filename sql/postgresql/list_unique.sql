@@ -14,3 +14,4 @@ GROUP BY
     kcu.table_name,
     kcu.constraint_name,
     tc.constraint_type;
+;
