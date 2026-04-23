@@ -19,6 +19,8 @@ nginx:
 	sudo apt install nginx -y
 	@$(MESSAGE) success 'Installed Nginx'
 	sudo cp .files/nginx/ponzidav.conf /etc/nginx/sites-available/ponzidav.conf
+	sudo cp .files/nginx/snippets/proxy-with-maintenance.conf /etc/nginx/snippets/proxy-with-maintenance.conf
+	sudo cp .files/nginx/www/maintenance.html /var/www/html/maintenance.html
 	sudo ln -sf /etc/nginx/sites-available/ponzidav.conf /etc/nginx/sites-enabled/ponzidav.conf
 	sudo nginx -t
 	sudo systemctl reload nginx
