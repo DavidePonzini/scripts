@@ -33,7 +33,7 @@ git_config:
 
 ifneq ($(OS),Windows_NT)
 python:
-	sudo apt install $(PYTHON)-full $(PYTHON)-pip ipython3 -y
+	sudo apt install $(PYTHON)-full $(PYTHON)-pip libpq-dev $(PYTHON)-dev build-essential -y
 	sudo rm -f /usr/bin/python
 	sudo ln -s /usr/bin/$(PYTHON) /usr/bin/python				# link generic `python` to latest version
 
