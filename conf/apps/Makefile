@@ -15,6 +15,9 @@ MESSAGE=$(VENV_BIN)/python -m dav_tools.messages
 
 
 
+common:
+	sudo apt install ubuntu-restricted-extras vlc htop gnome-shell-extension-manager
+
 nginx:
 	sudo apt install nginx -y
 	@$(MESSAGE) success 'Installed Nginx'
@@ -76,9 +79,6 @@ postgresql:
 	sudo apt install postgresql libpq-dev -y
 	$(VENV_BIN)/python -m pip install --upgrade psycopg2
 	@$(MESSAGE) success 'Installed PostgreSQL'
-
-common:
-	sudo apt install ubuntu-restricted-extras vlc
 
 qbittorrent:
 	sudo apt install qbittorrent-nox
