@@ -5,11 +5,11 @@
 
 
 # Default option: user specified
-GRUB_DEFAULT=0
+#GRUB_DEFAULT=0
 
 # Default option: last selected
-#GRUB_DEFAULT=saved
-#GRUB_SAVEDEFAULT=true
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
 
 # Timeout
 #GRUB_TIMEOUT_STYLE=hidden
