@@ -103,36 +103,42 @@ PS1_color()
 
 ### GIT REPO ###
 PS1_git_repo_status() {
-    local is_repo=false
-    local dir="$PWD"
-    while [[ "$dir" != "/" ]]; do
-        if [[ -d "$dir/.git" ]]; then
-            is_repo=true
-            break
-        fi
-        dir="$(dirname "$dir")"
-    done
+    local branch status behind ahead
 
-    if ! "$is_repo"; then
-        return
-    fi
+    git rev-parse --is-inside-work-tree &>/dev/null || return
+
+    branch=$(git branch --show-current)
+    [[ -n "$branch" ]] || branch=$(git rev-parse --short HEAD)
+
+    status=$(git status --porcelain)
 
     echo -ne "$(PS1_color "01;34m")[git:"
-
-    # Get branch name, change color depending on edits
-    branch="$(git rev-parse --abbrev-ref HEAD)"
     echo -ne "$(PS1_color "00;37m")$branch"
 
-    # Check for uncommitted changes
-    if [[ ! -z $(git status --porcelain) ]]; then
-        echo -ne "$(PS1_color "01;37m"){$(git status --porcelain | wc -l)}"
+    # Show commits behind/ahead of the configured upstream.
+    if git rev-parse --verify '@{upstream}' &>/dev/null; then
+        read -r behind ahead < <(
+            git rev-list --left-right --count '@{upstream}...HEAD'
+        )
+
+        if (( ahead > 0 )); then
+            echo -ne "$(PS1_color "01;32m")↑$ahead"
+        fi
+
+        if (( behind > 0 )); then
+            echo -ne "$(PS1_color "01;31m")↓$behind"
+        fi
     fi
 
-    # Check for stash
-    if [[ ! -z $(git stash list) ]]; then
+    # Show number of modified/untracked files.
+    if [[ -n "$status" ]]; then
+        echo -ne "$(PS1_color "01;37m"){$(wc -l <<< "$status")}"
+    fi
+
+    # Show whether the repository has stashed changes.
+    if git rev-parse --verify refs/stash &>/dev/null; then
         echo -ne "$(PS1_color "01;35m")#"
     fi
-
 
     echo -ne "$(PS1_color "01;34m")] "
 }
