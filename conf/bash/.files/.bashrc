@@ -87,8 +87,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 
-
-###### SET PS1 #####
 ### COLOR ###
 color_prompt=yes
 
@@ -100,6 +98,43 @@ PS1_color()
         echo -n "";
     fi;
 }
+
+
+
+### AUTOMATIC DAILY GIT FETCH ###
+_git_fetch_last_repo=''
+
+git_fetch_once_daily() {
+    local repo_root fetch_head last_fetch today
+
+    # Reset when outside a repository, so entering it again is detected.
+    repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+        _git_fetch_last_repo=''
+        return
+    }
+
+    # Do nothing when moving between directories in the same repository.
+    if [[ "$repo_root" == "$_git_fetch_last_repo" ]]; then
+        return
+    fi
+    _git_fetch_last_repo=$repo_root
+
+    fetch_head=$(git -C "$repo_root" rev-parse --git-path FETCH_HEAD)
+    today=$(date +%F)
+
+    if [[ -f "$fetch_head" ]]; then
+        last_fetch=$(date -r "$fetch_head" +%F)
+        [[ "$last_fetch" == "$today" ]] && return
+    fi
+
+    echo -e "$(PS1_color "2;3m")Fetching Git repository...$(PS1_color "00;00m")"
+    git -C "$repo_root" fetch -v
+}
+
+PROMPT_COMMAND="git_fetch_once_daily${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+
+
+###### SET PS1 #####
 
 ### GIT REPO ###
 PS1_git_repo_status() {
