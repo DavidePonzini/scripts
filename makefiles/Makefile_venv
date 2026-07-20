@@ -1,4 +1,4 @@
-VENV=venv
+VENV=.venv
 REQUIREMENTS=requirements.txt
 
 ifeq ($(OS),Windows_NT)
@@ -19,6 +19,4 @@ $(VENV):
 $(VENV)_upgrade: $(VENV)
 	$(VENV_BIN)/python -m pip install --upgrade -r $(REQUIREMENTS)
 
-ipython: $(VENV)
-	$(VENV_BIN)/ipython
 
