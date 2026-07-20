@@ -31,7 +31,7 @@ nginx:
 
 nginx-certbot:
 	sudo apt install certbot python3-certbot-nginx -y
-	sudo certbot --nginx -d ponzidav.com -d www.ponzidav.com -d lensql.ponzidav.com -d dev.lensql.ponzidav.com -d gpt4ct.ponzidav.com
+	sudo certbot --nginx -d ponzidav.com -d www.ponzidav.com -d lensql.ponzidav.com -d dev.lensql.ponzidav.com -d gpt4ct.ponzidav.com -d dnd.ponzidav.com
 	@$(MESSAGE) success 'Certbot configured successfully'
 	sudo certbot renew --dry-run
 	@$(MESSAGE) success 'Certbot renewal tested successfully'
