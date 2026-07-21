@@ -43,6 +43,10 @@ if __name__ == '__main__':
 
     if commands.get_output('git status --porcelain') == b'': 
         messages.success('Nothing to commit')
+
+        if argument_parser.args.push:
+            git_push()
+
         sys.exit(0)
 
     if len(argument_parser.args.path) > 0:
