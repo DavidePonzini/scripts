@@ -1,7 +1,7 @@
 GIT_USER_EMAIL="davide.ponzini95@gmail.com"
 GIT_USER_NAME="Davide Ponzini"
 PYTHON=python3
-VENV=./venv
+VENV=.venv
 REQUIREMENTS=requirements.txt
 
 ifeq ($(OS),Windows_NT)
