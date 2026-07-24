@@ -2,7 +2,7 @@
 
 ## Python environment
 
-This project uses a local virtual environment managed through the Makefile and stored in `venv/`.
+This project uses a local virtual environment managed through the Makefile and stored in `.venv/`.
 
 Agents must always use the project virtual environment and never rely on the system Python installation.
 
@@ -13,20 +13,20 @@ Agents must always use the project virtual environment and never rely on the sys
 Create the environment:
 
 ```bash
-make venv
+make .venv
 ```
 
 Upgrade/update the environment and dependencies:
 
 ```bash
-make venv_upgrade
+make .venv_upgrade
 ```
 
-Before running Python commands, ensure `.venv/` exists.  
+Before running Python commands, ensure `..venv/` exists.  
 If it does not exist, create it with:
 
 ```bash
-make venv
+make .venv
 ```
 
 ---
