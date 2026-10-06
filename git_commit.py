@@ -4,6 +4,7 @@ from datetime import date
 import sys
 
 from dav_tools import argument_parser, commands, messages
+import subprocess
 
 
 def git_add(*paths: str):
@@ -37,6 +38,7 @@ if __name__ == '__main__':
     argument_parser.add_argument('path', help='files (or folders) to commit', nargs='*', default=[])
     argument_parser.add_argument('-m', '--message', help='commit message', default=None)
     argument_parser.add_argument('-a', '--amend', help='amend', action='store_true')
+    argument_parser.add_argument('-M', '--generate-message', help='generate commit message', action='store_true')
     argument_parser.add_argument('-p', '--push', help='push changes to remote', action='store_true')
     argument_parser.add_argument('-v', '--verbose', help='show diff', action='store_true')
     argument_parser.parse_args()
@@ -58,7 +60,8 @@ if __name__ == '__main__':
     else:
         commands.execute('git status')
 
-    if commands.get_output('git diff --cached ') == b'':
+    diff = commands.get_output('git diff --cached ') 
+    if diff == b'':
         messages.warning('No changes staged for commit')
 
         if argument_parser.args.push:
@@ -66,7 +69,21 @@ if __name__ == '__main__':
 
         sys.exit(0)
 
-    git_commit(amend=argument_parser.args.amend, message=argument_parser.args.message)
+    if argument_parser.args.message:
+        message = argument_parser.args.message
+    elif argument_parser.args.generate_message:
+        message = subprocess.check_output(
+            [
+                'codex',
+                'exec',
+                'Write a concise Git commit message for this diff. Use Conventional Commits. Output only the commit message. Diff:\n\n' + diff.decode('utf-8'),
+            ],
+            text=True
+        ).strip()
+    else:
+        message = None
+
+    git_commit(amend=argument_parser.args.amend, message=message)
 
     if argument_parser.args.push:
         git_push()
