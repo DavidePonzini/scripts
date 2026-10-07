@@ -76,9 +76,10 @@ if __name__ == '__main__':
             [
                 'codex',
                 'exec',
-                'Write a concise Git commit message for this diff. Use Conventional Commits. Output only the commit message. Diff:\n\n' + diff.decode('utf-8'),
+                'Write a concise Git commit message for the following diff. Use Conventional Commits. Output only the commit message.'
             ],
-            text=True
+            text=True,
+            input=diff.decode('utf-8'),
         ).strip()
     else:
         message = None
