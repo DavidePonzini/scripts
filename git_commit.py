@@ -76,6 +76,7 @@ if __name__ == '__main__':
             [
                 'codex',
                 'exec',
+                '--ephemeral',
                 'Write a concise Git commit message for the following diff. Use Conventional Commits. Output only the commit message.'
             ],
             text=True,
