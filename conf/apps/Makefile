@@ -16,7 +16,7 @@ MESSAGE=$(VENV_BIN)/python -m dav_tools.messages
 
 
 common:
-	sudo apt install ubuntu-restricted-extras vlc htop gnome-shell-extension-manager
+	sudo apt install ubuntu-restricted-extras vlc htop gnome-shell-extension-manager dialog
 
 nginx:
 	sudo apt install nginx -y
