@@ -1,0 +1,12 @@
+[/]
+audible-bell=false
+cursor-shape='ibeam'
+default-profile-uuid='76ddee0f61e998393307a46f6ae21e53'
+interface-style='system'
+profile-uuids=['76ddee0f61e998393307a46f6ae21e53']
+window-size=(uint32 230, uint32 55)
+
+[Profiles/76ddee0f61e998393307a46f6ae21e53]
+bold-is-bright=true
+opacity=0.9
+palette='linux'
