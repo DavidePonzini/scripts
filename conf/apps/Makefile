@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-VENV=../../venv
+VENV=../../.venv
 USER=DavidePonzini
 
 ifeq ($(OS),Windows_NT)
