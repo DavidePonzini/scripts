@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-VENV=../../venv
+VENV=../../.venv
 
 ifeq ($(OS),Windows_NT)
         VENV_BIN=$(VENV)/Scripts
