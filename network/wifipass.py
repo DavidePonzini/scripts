@@ -2,13 +2,20 @@
 
 from dav_tools import requirements, messages, argument_parser, ArgumentAction, commands
 
+import csv
 import platform
+from typing import NamedTuple
 import subprocess
 import re
 import sys
 
 
-def get_wifipass_linux() -> dict[str, str]:
+class Credentials(NamedTuple):
+    username: str | None
+    password: str | None
+
+
+def get_wifipass_linux() -> dict[str, Credentials]:
     # Ask NetworkManager rather than depending on where profiles are stored.
     # Run as the desktop user first so user-owned secrets can be available.
     def nmcli(*args: str) -> str:
@@ -27,19 +34,25 @@ def get_wifipass_linux() -> dict[str, str]:
     for uuid in uuids:
         profile = nmcli(
             '--show-secrets', '--fields',
-            'connection.id,connection.type,802-11-wireless-security.psk',
+            'connection.id,connection.type,802-11-wireless-security.psk,'
+            '802-1x.identity,802-1x.password,'
+            '802-11-wireless-security.leap-username,802-11-wireless-security.leap-password',
             'connection', 'show', 'uuid', uuid,
         )
         # Split only the first colon: names and passwords may contain colons.
         properties = dict(line.split(':', 1) for line in profile.splitlines() if ':' in line)
         if properties.get('connection.type') != '802-11-wireless':
             continue
-        password = properties.get('802-11-wireless-security.psk', '')
-        if password:
-            result[properties['connection.id']] = password
+        username = (properties.get('802-1x.identity')
+                    or properties.get('802-11-wireless-security.leap-username'))
+        password = (properties.get('802-1x.password')
+                    or properties.get('802-11-wireless-security.leap-password')
+                    or properties.get('802-11-wireless-security.psk'))
+        if username or password:
+            result[properties['connection.id']] = Credentials(username, password)
     return result
 
-def get_wifipass_windows() -> dict[str, str]:
+def get_wifipass_windows() -> dict[str, Credentials]:
     result = {}
     
     profiles = commands.get_output('netsh wlan show profiles', on_success=bytes.decode)
@@ -54,13 +67,13 @@ def get_wifipass_windows() -> dict[str, str]:
             password = re.findall(r'(Key Content\s*: (.*?)\r|Contenuto chiave\s*: (.*?)\r)', password)[0]
             password = password[1] if password[1] else password[2]
 
-        result[profile] = password
+        result[profile] = Credentials(None, password)
     return result
 
 
 if __name__ == '__main__':
     argument_parser.set_developer_info('Davide Ponzini', 'davide.ponzini95@gmail.com')
-    argument_parser.set_description('Retrieves locally stored passwords for each network this computer has connected to')
+    argument_parser.set_description('Retrieves locally stored Wi-Fi usernames and passwords')
     argument_parser.add_argument('-o', '--output', help='file to store the passwords on, in .csv format')
     argument_parser.add_argument('--show-password', help='show the password in cleartext (only applies if printing to screen)', action=ArgumentAction.BOOLEAN_OPTIONAL, default=False)
     argument_parser.args
@@ -79,27 +92,29 @@ if __name__ == '__main__':
         messages.critical_error('OS not supported')
 
     if len(passwords) == 0:
-        messages.error('No passwords detected')
+        messages.error('No saved credentials detected')
         sys.exit(0)
 
     if argument_parser.args.output is None:
-        longest_network = max(passwords, key=len)
-        text_min_len=[len(longest_network)]
-        
-        messages.message('', 'Network', 'Password', text_min_len=[3] + text_min_len,
-                         additional_text_options=[[], [messages.TextFormat.Style.BOLD], [messages.TextFormat.Style.BOLD]],
-        )
+        text_min_len = [max(len('Network'), *(len(name) for name in passwords)),
+                        max(len('Username'), *(len(c.username or '') for c in passwords.values()))]
+        bold = [messages.TextFormat.Style.BOLD]
+        messages.message('', 'Network', 'Username', 'Password',
+                         text_min_len=[3] + text_min_len,
+                         additional_text_options=[[], bold, bold, bold])
 
-        for network,passwd in passwords.items():
-            if passwd is None:
-                messages.info(network, 'None', text_min_len=text_min_len,
-                                 text_options=[[], [messages.TextFormat.Style.ITALIC, messages.TextFormat.Style.DIM]])
-            else:
-                messages.info(network, passwd, text_min_len=text_min_len,
-                                 text_options=[[], [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]] if not argument_parser.args.show_password else [[], []]
-            )
+        for network, credentials in passwords.items():
+            password_style = []
+            if credentials.password is None:
+                password_style = [messages.TextFormat.Style.ITALIC, messages.TextFormat.Style.DIM]
+            elif not argument_parser.args.show_password:
+                password_style = [messages.TextFormat.Style.INVISIBLE, messages.TextFormat.Style.REVERSE]
+            messages.info(network, credentials.username or '',
+                          credentials.password if credentials.password is not None else 'Unavailable',
+                          text_min_len=text_min_len, text_options=[[], [], password_style])
     else:
-        with open(argument_parser.args.output, 'w') as f:
-            print('network,password', file=f)
-            for network,passwd in passwords.items():
-                print(f'{network},{passwd}', file=f)
+        with open(argument_parser.args.output, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['network', 'username', 'password'])
+            for network, credentials in passwords.items():
+                writer.writerow([network, credentials.username, credentials.password])
