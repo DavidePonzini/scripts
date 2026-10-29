@@ -3,27 +3,40 @@
 from dav_tools import requirements, messages, argument_parser, ArgumentAction, commands
 
 import platform
-import glob
+import subprocess
 import re
 import sys
 
 
 def get_wifipass_linux() -> dict[str, str]:
-    requirements.require(root=True)
+    # Ask NetworkManager rather than depending on where profiles are stored.
+    # Run as the desktop user first so user-owned secrets can be available.
+    def nmcli(*args: str) -> str:
+        try:
+            return subprocess.run(
+                ['nmcli', '--terse', '--escape', 'no', *args],
+                check=True, capture_output=True, text=True,
+            ).stdout
+        except FileNotFoundError as exc:
+            raise RuntimeError('nmcli is required; install the network-manager package') from exc
+        except subprocess.CalledProcessError as exc:
+            raise RuntimeError(f'NetworkManager query failed: {exc.stderr.strip()}') from exc
 
-    DIRECTORY = '/etc/NetworkManager/system-connections/'
-    pattern = re.compile(r'psk=')
     result = {}
-
-    for file_path in glob.glob(f'{DIRECTORY}/*'):
-        network = file_path.replace(DIRECTORY, '').replace('.nmconnection', '')
-
-        with open(file_path, 'r') as f:
-            for line in f:
-                if pattern.search(line):
-                    password = line.rstrip().replace('psk=', '')
-
-                    result[network] = password
+    uuids = nmcli('--get-values', 'UUID', 'connection', 'show').splitlines()
+    for uuid in uuids:
+        profile = nmcli(
+            '--show-secrets', '--fields',
+            'connection.id,connection.type,802-11-wireless-security.psk',
+            'connection', 'show', 'uuid', uuid,
+        )
+        # Split only the first colon: names and passwords may contain colons.
+        properties = dict(line.split(':', 1) for line in profile.splitlines() if ':' in line)
+        if properties.get('connection.type') != '802-11-wireless':
+            continue
+        password = properties.get('802-11-wireless-security.psk', '')
+        if password:
+            result[properties['connection.id']] = password
     return result
 
 def get_wifipass_windows() -> dict[str, str]:
@@ -55,7 +68,11 @@ if __name__ == '__main__':
     requirements.require(os=['Linux', 'Windows'])
 
     if platform.system() == 'Linux':
-        passwords = get_wifipass_linux()
+        try:
+            passwords = get_wifipass_linux()
+        except RuntimeError as exc:
+            messages.error(str(exc))
+            sys.exit(1)
     elif platform.system() == 'Windows':
         passwords = get_wifipass_windows()
     else:
