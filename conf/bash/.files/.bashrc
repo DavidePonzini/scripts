@@ -86,6 +86,16 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# Custom completions
+if ! shopt -oq posix; then
+    for custom_completion_file in ~/.bash_completion_*; do
+        if [ -f "$custom_completion_file" ] && [ -r "$custom_completion_file" ]; then
+            . "$custom_completion_file"
+        fi
+    done
+    unset custom_completion_file
+fi
+
 
 ### COLOR ###
 color_prompt=yes
@@ -238,3 +248,5 @@ PS1='\
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
